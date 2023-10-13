@@ -1,1 +1,12 @@
-notes go here
+10.9.23
+
+For this algorithm we will not change granularity and we will not worry about stop losses or stop profits or trails
+The main objective is to run a simple algorithm backtest.  We can then build a more complex version after this one is finished.
+The more complex version, will serve as the backbone and template, for many others. 
+
+For this algo, we just need drawdown analysis, buy and hold or benchmark analysis, results stats like sharpe 
+and sortino.  Also, add Seaborn only visualizations. 
+
+All thats left for a more complex, private algo backtest is granularity and stops along with figuring out what other columns you need 
+
+        Granularity set to 15 minutes allows us to know at what time we exit, we can then change the code 
