@@ -10,3 +10,8 @@ and sortino.  Also, add Seaborn only visualizations.
 All thats left for a more complex, private algo backtest is granularity and stops along with figuring out what other columns you need 
 
         Granularity set to 15 minutes allows us to know at what time we exit, we can then change the code 
+
+
+
+Readme Guide 
+https://www.freecodecamp.org/news/how-to-write-a-good-readme-file/
