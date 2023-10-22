@@ -15,3 +15,8 @@ All thats left for a more complex, private algo backtest is granularity and stop
 
 Readme Guide 
 https://www.freecodecamp.org/news/how-to-write-a-good-readme-file/
+
+
+10.21.2023
+
+Finish editing readme, main source code.  Make sure to point to project code.
