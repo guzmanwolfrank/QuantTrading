@@ -14,8 +14,8 @@ This project is a moving average cross backtest for the EURUSD currency pair.
 
 3.  Open the file in a Jupyter notebook.  
 
-4. Pip install the following modules for this 
-project using the pip install command as shown:
+4. Pip install the modules for this 
+project into your root folder using the pip install command as shown:
 
 ![carbon (2)](https://github.com/guzmanwolfrank/Trading/assets/29739578/f0f09919-20f8-4e3f-8b1c-58deb1e296e2)
 
