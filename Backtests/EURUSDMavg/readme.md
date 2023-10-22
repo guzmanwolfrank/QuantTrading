@@ -8,6 +8,33 @@ also to construct a simple enough algorithm for a beginner to edit and use.
 
 ![download](https://github.com/guzmanwolfrank/Trading/assets/29739578/7f69d82c-c6c6-4888-98f4-bae893de9b33)
 
+## Table of Contents 
+
+I. Introduction![Introduction](#)
+II. Installation
+III. Tech Stack 
+IV. Project Details
+V. Issues, Challenges and Solutions
+VI.  Results
+VII. FAQ
+VIII. Links
+IX. License
+X. Related projects
+XI. Running Tests
+XII. Badges 
+
+
+## Introduction 
+
+This project is intended to help a beginner start working on algorithms and backtests on simple quant strategies.  
+We will be using a Forex Brokerage account as a Data Provider and its Python module as well. 
+
+
+
+
+
+
+
 
 ## Installation
 
