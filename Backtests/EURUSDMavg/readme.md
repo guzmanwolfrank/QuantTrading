@@ -3,8 +3,8 @@
 
 This project is a moving average cross backtest for the EURUSD currency pair. 
 
+![download](https://github.com/guzmanwolfrank/Trading/assets/29739578/7f69d82c-c6c6-4888-98f4-bae893de9b33)
 
-![File_017.png](attachment:File_017.png)
 
 ## Installation
 
