@@ -55,13 +55,15 @@ We will run multiple iterations of the backtest through set dates in order to an
 
 ## Issues, Challenges and Solutions
 
-## Issues: 
-    One of the issues faced was selecting a module that was accurate for data.  Certain other modules have unstable connections, deprecated software and are highly unavailable during peak times. 
+### Issues: 
+
+One of the issues faced was selecting a module that was accurate for data.  Certain other modules have unstable connections, deprecated software and are highly unavailable during peak times. 
 
 Solution: 
 The best module for this backtest on currency was oandapyv20.  Oanda is a forex broker with excellent data which is reliable, accurate and highly available for clients.  
 
-    Another issue was simplicity.   By simplifying the code for the backtest, we can assure that the program is used by as many begginers as possible.  
+Another issue was order complexity. The goal was to minimize order complexity by allowing the execution to be at market prices at specific times. By doing this we bypass the need for 
+an automated stop loss and set the risk to be around the daily range on the currency pair.    
 
 
 Challenges:  
