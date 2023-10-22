@@ -10,18 +10,18 @@ also to construct a simple enough algorithm for a beginner to edit and use.
 
 ## Table of Contents 
 
-I. Introduction![Introduction](#)
-II. Installation
-III. Tech Stack 
-IV. Project Details
-V. Issues, Challenges and Solutions
-VI.  Results
-VII. FAQ
-VIII. Links
-IX. License
-X. Related projects
-XI. Running Tests
-XII. Badges 
+I. Introduction![Introduction](#) <br />
+II. Installation <br />
+III. Tech Stack  <br />
+IV. Project Details <br />
+V. Issues, Challenges and Solutions <br />
+VI.  Results <br />
+VII. FAQ <br />
+VIII. Links <br />
+IX. License <br />
+X. Related projects <br />
+XI. Running Tests <br />
+XII. Badges  <br />
 
 
 ## Introduction 
