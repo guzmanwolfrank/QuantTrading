@@ -1,7 +1,10 @@
 
 # EURUSD Backtest 
 
-This project is a moving average cross backtest for the EURUSD currency pair. 
+This project is a moving average cross backtest for the EURUSD currency pair. The main objective is to beat the benchmark, a buy and hold strategy on EURUSD, and 
+also to construct a simple enough algorithm for a beginner to edit and use. 
+
+
 
 ![download](https://github.com/guzmanwolfrank/Trading/assets/29739578/7f69d82c-c6c6-4888-98f4-bae893de9b33)
 
@@ -29,15 +32,14 @@ This project is intended to help a beginner start working on algorithms and back
 We will be using a Forex Brokerage account as a Data Provider and its Python module as well. 
 
 The strategy consists of buying on a signal that is triggered when the 10 day moving average is greater than the day's open. 
-
 The transaction then occurs on the following day's open and close. 
-
 The program will then record results into a dataframe which can then be visualized with seaborn and other python modules. 
 
-Backtest and Transaction Details: 
 
-        Currency Pair: EUR/USD 
+Backtest and Transaction Details: 
 #
+        Currency Pair: EUR/USD 
+
 
         Account Balance: $ 10,000
         Leverage : 50X
@@ -117,7 +119,7 @@ Answer 2
 
 Here are some related projects
 
-[Awesome README](https://github.com/matiassingers/awesome-readme)
+[TQQQ Backtest](https://github.com/)
 
 
 ## Tech Stack
