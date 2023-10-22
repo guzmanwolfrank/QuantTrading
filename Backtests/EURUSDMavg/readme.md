@@ -10,7 +10,7 @@ also to construct a simple enough algorithm for a beginner to edit and use.
 
 ## Table of Contents 
 
-I. Introduction![Introduction](#) <br />
+I. [Introduction](#) <br />
 II. Installation <br />
 III. Tech Stack  <br />
 IV. Project Details <br />
