@@ -17,7 +17,8 @@ This project is a moving average cross backtest for the EURUSD currency pair.
 4. Pip install the following modules for this 
 project using the pip install command as shown:
 
-***Imsert carbon image of pip install numpy, pandas, etc. 
+![carbon (2)](https://github.com/guzmanwolfrank/Trading/assets/29739578/f0f09919-20f8-4e3f-8b1c-58deb1e296e2)
+
 
 5.  Run the program in the Jupyter notebook.  Click on the Run All button after selecting a Python 3.9 kernel.  
 
@@ -48,38 +49,6 @@ Backtest and Transaction Details:
 
 
 We will run multiple iterations of the backtest through set dates in order to analyze the data and see if the strategy is worth pursuing. 
-
-
-
-
-## Project Details
-
-This project is intended to help a beginner start working on algorithms and backtests on simple quant strategies.  
-We will be using a Forex Brokerage account as a Data Provider and its Python module as well. 
-
-The strategy consists of buying on a signal that is triggered when the 10 day moving average is greater than the day's open. 
-
-The transaction then occurs on the following day's open and close. 
-
-The program will then record results into a dataframe which can then be visualized with seaborn and other python modules. 
-
-Backtest and Transaction Details: 
-
-        Currency Pair: EUR/USD 
-#
-
-        Account Balance: $ 10,000
-        Leverage : 50X
-        Average Order Size: 50,000
-        Order Entry: Buy Market at Open
-        Order Exit: Sell Market at Close
-        Margin Used: $ 1,000
-        Margin: 2%
-
-
-We will run multiple iterations of the backtest through set dates in order to analyze the data and see if the strategy is worth pursuing. 
-
-
 
 
 ## Issues, Challenges and Solutions
