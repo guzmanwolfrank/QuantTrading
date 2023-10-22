@@ -55,7 +55,7 @@ We will run multiple iterations of the backtest through set dates in order to an
 
 ## Issues, Challenges and Solutions
 
-##Issues: 
+## Issues: 
     One of the issues faced was selecting a module that was accurate for data.  Certain other modules have unstable connections, deprecated software and are highly unavailable during peak times. 
 
 Solution: 
