@@ -93,17 +93,23 @@ The solution was to find the best module with the most data integrity.  The data
 
 ### Challenge 2:  <br />
 
-    Coding a strategy on basic code that executes accurately while limiting slippage and price complexity.   
+Coding a strategy on basic code that executes accurately while limiting slippage and price complexity.   
 
-    Another challenge is downloading sufficient data while  limiting granularity in order to cap the size and latency of the data.    I wanted this to be simple, light and easy to customize.  
+Another challenge is downloading sufficient data while  limiting granularity in order to cap the size and latency of the data.    I wanted this to be simple, light and easy to customize.  
 
 ### Solution 2:  <br />
 
-    I figured out to limit task bloating and complexity by using a basic signal strategy. 
+I figured out to limit task bloating and complexity by using a basic signal strategy. We will use a simple moving average cross along with a simplified trade entry system. 
+A -1 signal equals a sell, where a 1 signals a buy.  I eliminated the sell signals in order to simplify transactions and make them buy orders at market.
+Another simplification was the use of market orders at specific times like the open and close.  
 
-    We will use a simple moving average cross along with a simplified trade entry system. 
+### Challenge 3:  <br />
 
+The next challenge is in constructing a backtest that can actually beat a benchmark.  Here the benchmark to weigh against is simply a buy and hold strategy on the EURUSD. 
 
+### Solution 3:   <br />
+
+To build a backtest that beats the benchmark I used a strategy that is simple and easily occuring.  Too many indicators and inputs can overfit the strategy and or limit the data samples. 
 
 ## Results 
 
