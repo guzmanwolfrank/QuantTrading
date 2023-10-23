@@ -150,9 +150,18 @@ Here are some related projects
 
 ## Tech Stack
 
-**Client:** React, Redux, TailwindCSS
+*Language*: python==3.11.3
+ 
+*Modules*:
 
-**Server:** Node, Express
+oandapyV20==0.6.3
+pandas==1.5.0
+numpy==1.23.3
+matplotlib==3.6.0
+seaborn==0.12.0
+DateTime==4.7
+
+*Framework*:  Jupyter, Jupyter Notebook
 
 
 ## Running Tests
