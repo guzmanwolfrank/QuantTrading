@@ -38,19 +38,20 @@ We will be using a Forex Brokerage account as a Data Provider and its Python mod
 
 ## Installation
 
-1. To install this program, you must have a jupyter notebook running on a python kernel. 
+1. To install this program, you must have a jupyter notebook running on a python kernel. <br />
 
-2.  Download the Strat.ipynb file into a root folder where you will also download the necessary python modules. 
+2.  Download the Strat.ipynb file into a root folder where you will also download the necessary python modules. <br />
 
-3.  Open the file in a Jupyter notebook.  
+3.  Open the file in a Jupyter notebook.  <br />
 
 4. Pip install the modules for this 
 project into your root folder using the pip install command as shown:
 
 ![carbon (2)](https://github.com/guzmanwolfrank/Trading/assets/29739578/f0f09919-20f8-4e3f-8b1c-58deb1e296e2)
+<br />
 
 
-5.  Run the program in the Jupyter notebook.  Click on the Run All button after selecting a Python 3.9 kernel.  
+5.  Run the program in the Jupyter notebook.  Click on the Run All button after selecting a Python 3.9 kernel.  <br />
 
 
 ## Project Details
@@ -101,7 +102,6 @@ The solution was to find the best module with the most data integrity.  The data
     I figured out to limit task bloating and complexity by using a basic signal strategy. 
 
     We will use a simple moving average cross along with a simplified trade entry system. 
-
 
 
 
