@@ -75,7 +75,7 @@ We will run multiple iterations of the backtest through set dates in order to an
 
 ## Challenges and Solutions
 
-** Challenge 1**: <br />
+**Challenge 1**: <br />
 
 One of the issues faced was selecting a proper data source. There are a myriad of data sources and modules but certain modules have unstable connections, deprecated software and are highly unavailable during peak times. 
 This can lead to incomplete, inaccurate or corrupted data.  
