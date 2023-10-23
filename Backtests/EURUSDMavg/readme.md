@@ -131,6 +131,9 @@ Some of the questions we looked to answer were:
         9.  What is the rate of return on the strategy?
         10. What were the most and least profitable trades? 
 
+        ![resultchart](https://github.com/guzmanwolfrank/Trading/assets/29739578/f3944f6e-c56c-4334-b5f9-baa2d61c62a1)
+
+
 ## Conclusion 
 
 
