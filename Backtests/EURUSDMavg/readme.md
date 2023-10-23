@@ -155,12 +155,12 @@ Here are some related projects
  
 **Modules**:
 
-oandapyV20==0.6.3
-pandas==1.5.0
-numpy==1.23.3
-matplotlib==3.6.0
-seaborn==0.12.0
-DateTime==4.7
+oandapyV20==0.6.3 <br />
+pandas==1.5.0 <br />
+numpy==1.23.3 <br />
+matplotlib==3.6.0 <br />
+seaborn==0.12.0 <br />
+DateTime==4.7 <br />
 
 **Framework**:  Jupyter, Jupyter Notebook
 
