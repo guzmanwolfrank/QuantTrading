@@ -80,12 +80,12 @@ We will run multiple iterations of the backtest through set dates in order to an
 One of the issues faced was selecting a proper data source. There are a myriad of data sources and modules but certain modules have unstable connections, deprecated software and are highly unavailable during peak times. 
 This can lead to incomplete, inaccurate or corrupted data.  
 
-### Solution 1: <br />
+**Solution 1**: <br />
 The solution was to find the best module with the most data integrity.  The data must be accurate, and reliable.  The best module for this backtest on currency was oandapyv20.  Oanda is a forex broker with excellent data which is reliable, accurate and highly available for clients.  
 
 
 
-** Challenge 2**:  <br />
+**Challenge 2**:  <br />
 
 Coding a strategy on basic code that executes accurately while limiting slippage and price complexity.   
 
