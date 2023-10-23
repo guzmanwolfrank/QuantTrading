@@ -100,6 +100,9 @@ Another simplification was the use of market orders at specific times like the o
 
 I limited granularity to the Day Chart on EURUSD in order to limit transaction frequency while being congruent to the exit strategy.  
 
+![signal](https://github.com/guzmanwolfrank/Trading/assets/29739578/18866b8e-9922-4e50-848c-4d159ec36e28)
+
+
 **Challenge 3**:  <br />
 
 The next challenge was in building a backtest was designing a simple risk mitigation system or management within the simplicity of the strategy. 
