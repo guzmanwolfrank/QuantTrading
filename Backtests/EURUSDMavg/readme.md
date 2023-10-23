@@ -113,6 +113,7 @@ I wanted to contain any possible losses to as tight an amount as possible while 
 The solution to this challenge was to close the transactions on the same day they were opened by closing on the close at 4pm. 
 This way, we can limit our losses to the average daily change from open to close on the currency pair.  
 
+![carbon (3)](https://github.com/guzmanwolfrank/Trading/assets/29739578/564b0718-0035-4391-8aed-f9fd253bb799)
 
 
 ## Results 
