@@ -16,7 +16,7 @@ III. Tech Stack  <br />
 IV. Project Details <br />
 V. Issues, Challenges and Solutions <br />
 VI.  Results <br />
-VII. FAQ <br />
+VII. Conclusion <br />
 VIII. Links <br />
 IX. License <br />
 X. Related projects <br />
@@ -28,12 +28,6 @@ XII. Badges  <br />
 
 This project is intended to help a beginner start working on algorithms and backtests on simple quant strategies.  
 We will be using a Forex Brokerage account as a Data Provider and its Python module as well. 
-
-
-
-
-
-
 
 
 ## Installation
@@ -125,15 +119,9 @@ Some of the questions we looked to answer were:
         8.  What is the average daily change?
         9.  What is the rate of return on the strategy?
         10. What were the most and least profitable trades? 
-## FAQ
 
-#### Question 1
+## Conclusion 
 
-Answer 1
-
-#### Question 2
-
-Answer 2
 
 
 ## 🔗 Links
