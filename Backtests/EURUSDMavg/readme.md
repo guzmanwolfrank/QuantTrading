@@ -38,7 +38,7 @@ We will be using a Forex Brokerage account as a Data Provider and its Python mod
 
 ## Installation
 
-1. To install this program, you must have a jupyter notebook running on a python kernel. <br />
+1. To install and run this program, you must have a jupyter notebook running on a python kernel. <br />
 
 2.  Download the Strat.ipynb file into a root folder where you will also download the necessary python modules. <br />
 
