@@ -75,7 +75,7 @@ We will run multiple iterations of the backtest through set dates in order to an
 
 ## Challenges and Solutions
 
-### Challenge 1: <br />
+** Challenge 1**: <br />
 
 One of the issues faced was selecting a proper data source. There are a myriad of data sources and modules but certain modules have unstable connections, deprecated software and are highly unavailable during peak times. 
 This can lead to incomplete, inaccurate or corrupted data.  
@@ -85,13 +85,13 @@ The solution was to find the best module with the most data integrity.  The data
 
 
 
-### Challenge 2:  <br />
+** Challenge 2**:  <br />
 
 Coding a strategy on basic code that executes accurately while limiting slippage and price complexity.   
 
 Another challenge is downloading sufficient data while  limiting granularity in order to cap the size and latency of the data.    I wanted this to be simple, light and easy to customize.  
 
-### Solution 2:  <br />
+**Solution 2**:  <br />
 
 I figured out to limit task bloating and complexity by using a basic signal strategy. We will use a simple moving average cross along with a simplified trade entry system. 
 A -1 signal equals a sell, where a 1 signals a buy.  I eliminated the sell signals in order to simplify transactions and make them buy orders at market.
@@ -99,12 +99,12 @@ Another simplification was the use of market orders at specific times like the o
 
 I limited granularity to the Day Chart on EURUSD in order to limit transaction frequency while being congruent to the exit strategy.  
 
-### Challenge 3:  <br />
+**Challenge 3**:  <br />
 
 The next challenge was in building a backtest was designing a simple risk mitigation system or management within the simplicity of the strategy. 
 I wanted to contain any possible losses to as tight an amount as possible while letting the market play out in an intraday system. 
 
-### Solution 3:   <br />
+**Solution 3**:   <br />
 
 The solution to this challenge was to close the transactions on the same day they were opened by closing on the close at 4pm. 
 This way, we can limit our losses to the average daily change from open to close on the currency pair.  
@@ -150,9 +150,9 @@ Here are some related projects
 
 ## Tech Stack
 
-*Language*: python==3.11.3
+**Language**: python==3.11.3
  
-*Modules*:
+**Modules**:
 
 oandapyV20==0.6.3
 pandas==1.5.0
@@ -161,7 +161,7 @@ matplotlib==3.6.0
 seaborn==0.12.0
 DateTime==4.7
 
-*Framework*:  Jupyter, Jupyter Notebook
+**Framework**:  Jupyter, Jupyter Notebook
 
 
 ## Running Tests
