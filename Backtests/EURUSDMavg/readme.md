@@ -66,8 +66,6 @@ The program will then record results into a dataframe which can then be visualiz
 Backtest and Transaction Details: 
 #
         Currency Pair: EUR/USD 
-
-
         Account Balance: $ 10,000
         Leverage : 50X
         Average Order Size: 50,000
@@ -80,13 +78,14 @@ Backtest and Transaction Details:
 We will run multiple iterations of the backtest through set dates in order to analyze the data and see if the strategy is worth pursuing. 
 
 
-## Issues, Challenges and Solutions
+## Challenges and Solutions
 
-### Issues: 
+### Challenges: <br />
 
-One of the issues faced was selecting a module that was accurate for data.  Certain other modules have unstable connections, deprecated software and are highly unavailable during peak times. 
+One of the issues faced was selecting a proper data source. Certain other modules have unstable connections, deprecated software and are highly unavailable during peak times. 
 
-Solution: 
+
+Solution: <br />
 The best module for this backtest on currency was oandapyv20.  Oanda is a forex broker with excellent data which is reliable, accurate and highly available for clients.  
 
 Another issue was order complexity. The goal was to minimize order complexity by allowing the execution to be at market prices at specific times. By doing this we bypass the need for 
