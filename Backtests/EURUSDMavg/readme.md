@@ -77,8 +77,8 @@ We will run multiple iterations of the backtest through set dates in order to an
 
 ### Challenge 1: <br />
 
-One of the issues faced was selecting a proper data source. Certain other modules have unstable connections, deprecated software and are highly unavailable during peak times. 
-
+One of the issues faced was selecting a proper data source. There are a myriad of data sources and modules but certain modules have unstable connections, deprecated software and are highly unavailable during peak times. 
+This can lead to incomplete, inaccurate or corrupted data.  
 
 ### Solution 1: <br />
 The solution was to find the best module with the most data integrity.  The data must be accurate, and reliable.  The best module for this backtest on currency was oandapyv20.  Oanda is a forex broker with excellent data which is reliable, accurate and highly available for clients.  
@@ -97,13 +97,19 @@ I figured out to limit task bloating and complexity by using a basic signal stra
 A -1 signal equals a sell, where a 1 signals a buy.  I eliminated the sell signals in order to simplify transactions and make them buy orders at market.
 Another simplification was the use of market orders at specific times like the open and close.  
 
+I limited granularity to the Day Chart on EURUSD in order to limit transaction frequency while being congruent to the exit strategy.  
+
 ### Challenge 3:  <br />
 
-The next challenge is in constructing a backtest that can actually beat a benchmark.  Here the benchmark to weigh against is simply a buy and hold strategy on the EURUSD. 
+The next challenge was in building a backtest was designing a simple risk mitigation system or management within the simplicity of the strategy. 
+I wanted to contain any possible losses to as tight an amount as possible while letting the market play out in an intraday system. 
 
 ### Solution 3:   <br />
 
-To build a backtest that beats the benchmark I used a strategy that is simple and easily occuring.  Too many indicators and inputs can overfit the strategy and or limit the data samples. 
+The solution to this challenge was to close the transactions on the same day they were opened by closing on the close at 4pm. 
+This way, we can limit our losses to the average daily change from open to close on the currency pair.  
+
+
 
 ## Results 
 
