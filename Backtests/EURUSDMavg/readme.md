@@ -80,25 +80,23 @@ We will run multiple iterations of the backtest through set dates in order to an
 
 ## Challenges and Solutions
 
-### Challenges: <br />
+### Challenge 1: <br />
 
 One of the issues faced was selecting a proper data source. Certain other modules have unstable connections, deprecated software and are highly unavailable during peak times. 
 
 
-###Solution: <br />
-The best module for this backtest on currency was oandapyv20.  Oanda is a forex broker with excellent data which is reliable, accurate and highly available for clients.  
-
-Another issue was order complexity. The goal was to minimize order complexity by allowing the execution to be at market prices at specific times. By doing this we bypass the need for 
-an automated stop loss and set the risk to be around the daily range on the currency pair.    
+### Solution 1: <br />
+The solution was to find the best module with the most data integrity.  The data must be accurate, and reliable.  The best module for this backtest on currency was oandapyv20.  Oanda is a forex broker with excellent data which is reliable, accurate and highly available for clients.  
 
 
-### Challenges:  <br />
 
-    Coding a strategy on basic code that executes      accurately while limiting slippage and price complexity.   
+### Challenge 2:  <br />
+
+    Coding a strategy on basic code that executes accurately while limiting slippage and price complexity.   
 
     Another challenge is downloading sufficient data while  limiting granularity in order to cap the size and latency of the data.    I wanted this to be simple, light and easy to customize.  
 
-Solutions:  
+### Solution 2:  <br />
 
     I figured out to limit task bloating and complexity by using a basic signal strategy. 
 
