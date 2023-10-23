@@ -154,7 +154,6 @@ Here are some related projects
 **Language**: python==3.11.3
  
 **Modules**:
-
 oandapyV20==0.6.3 <br />
 pandas==1.5.0 <br />
 numpy==1.23.3 <br />
