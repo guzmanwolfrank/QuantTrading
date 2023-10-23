@@ -100,6 +100,9 @@ Another simplification was the use of market orders at specific times like the o
 
 I limited granularity to the Day Chart on EURUSD in order to limit transaction frequency while being congruent to the exit strategy.  
 
+![signal](https://github.com/guzmanwolfrank/Trading/assets/29739578/18866b8e-9922-4e50-848c-4d159ec36e28)
+
+
 **Challenge 3**:  <br />
 
 The next challenge was in building a backtest was designing a simple risk mitigation system or management within the simplicity of the strategy. 
@@ -110,6 +113,7 @@ I wanted to contain any possible losses to as tight an amount as possible while 
 The solution to this challenge was to close the transactions on the same day they were opened by closing on the close at 4pm. 
 This way, we can limit our losses to the average daily change from open to close on the currency pair.  
 
+![carbon (3)](https://github.com/guzmanwolfrank/Trading/assets/29739578/564b0718-0035-4391-8aed-f9fd253bb799)
 
 
 ## Results 
@@ -126,6 +130,9 @@ Some of the questions we looked to answer were:
         8.  What is the average daily change?
         9.  What is the rate of return on the strategy?
         10. What were the most and least profitable trades? 
+
+
+![resultchart](https://github.com/guzmanwolfrank/Trading/assets/29739578/24b29768-82bc-4871-99dd-79214b5c7c0a)
 
 ## Conclusion 
 
@@ -154,7 +161,6 @@ Here are some related projects
 **Language**: python==3.11.3
  
 **Modules**:
-
 oandapyV20==0.6.3 <br />
 pandas==1.5.0 <br />
 numpy==1.23.3 <br />
