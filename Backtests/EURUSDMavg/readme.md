@@ -12,17 +12,17 @@ also to construct a simple enough algorithm for a beginner to edit and use.
 ## Table of Contents 
 
 I. [Introduction](https://github.com/guzmanwolfrank/Trading/tree/terra/Backtests/EURUSDMavg#introduction) <br />
-II. Installation <br />
-III. Tech Stack  <br />
-IV. Project Details <br />
-V. Issues, Challenges and Solutions <br />
-VI.  Results <br />
-VII. Conclusion <br />
-VIII. Links <br />
-IX. License <br />
-X. Related projects <br />
-XI. Running Tests <br />
-XII. Badges  <br />
+II. [Installation](https://github.com/guzmanwolfrank/Trading/tree/working/Backtests/EURUSDMavg#installation) <br />
+III. [Project Details](https://github.com/guzmanwolfrank/Trading/tree/working/Backtests/EURUSDMavg#project-details)  <br />
+IV. [Challenges and Solutions](https://github.com/guzmanwolfrank/Trading/tree/main/Backtests/EURUSDMavg#challenges-and-solutions) <br />
+V.  [Results](https://github.com/guzmanwolfrank/Trading/tree/main/Backtests/EURUSDMavg#results) <br />
+VI. [Conclusion](https://github.com/guzmanwolfrank/Trading/tree/main/Backtests/EURUSDMavg#conclusion) <br />
+VII. [Links](https://github.com/guzmanwolfrank/Trading/tree/main/Backtests/EURUSDMavg#links) <br />
+VIII. [License](https://github.com/guzmanwolfrank/Trading/tree/main/Backtests/EURUSDMavg#license) <br />
+IX. [Related projects](https://github.com/guzmanwolfrank/Trading/tree/main/Backtests/EURUSDMavg#) <br />
+X. [Tech Stacks](https://github.com/guzmanwolfrank/Trading/tree/working/Backtests/EURUSDMavg#tech-stack) <br />
+XI. [Running Tests](https://github.com/guzmanwolfrank/Trading/tree/working/Backtests/EURUSDMavg#running-tests)  <br />
+XI. [Badges](https://github.com/guzmanwolfrank/Trading/tree/working/Backtests/EURUSDMavg#badges)  <br />
 
 
 ## Introduction 
@@ -149,7 +149,7 @@ Some of the questions we looked to answer were:
 [MIT](https://choosealicense.com/licenses/mit/)
 
 
-## Related
+## Related Projects
 
 Here are some related projects
 
