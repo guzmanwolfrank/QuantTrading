@@ -6,7 +6,6 @@ This project is a moving average cross backtest for the EURUSD currency pair. Th
 also to construct a simple enough algorithm for a beginner to edit and use. 
 
 
-
 ![download](https://github.com/guzmanwolfrank/Trading/assets/29739578/7f69d82c-c6c6-4888-98f4-bae893de9b33)
 
 ## Table of Contents 
