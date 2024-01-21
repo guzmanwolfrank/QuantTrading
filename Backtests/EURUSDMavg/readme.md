@@ -12,8 +12,7 @@ also to construct a simple enough algorithm for a beginner to edit and use.
 
 ### To view the project's Tableau Dashboard, click [here](https://public.tableau.com/app/profile/wolfrank.guzman/viz/EURUSD_17057990902740/Dashboard1?publish=yes)
 
-![Dashboard 1](https://github.com/guzmanwolfrank/Data-SQL/assets/29739578/367558d3-89cc-4c35-82e3-db35fcea76b9)
-
+![tableaustats](https://github.com/guzmanwolfrank/QuantTrading/assets/29739578/15bb574a-62ae-4f8c-bb0c-b84d52beb84d)
 
 ## Table of Contents 
 
