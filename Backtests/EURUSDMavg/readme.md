@@ -148,15 +148,18 @@ High-performing strategy outpaces benchmark with manageable risk.
 
 <br/>
 This backtest demonstrates a highly successful trading strategy with impressive returns of 79% and a Sharpe Ratio of 1.74. While drawdowns occurred (maximum of 17,916), risk metrics were considered and the strategy significantly outperformed the benchmark, doubling its final balance. Average daily change and range were minimal, suggesting consistency and control. Overall, this strategy presents a promising option with strong performance and controlled risk.
-
-
 <br/>
+
+<hr/> 
+
 Key takeaways:
 
 High returns: 79% average return, 101.5% rate of return.
 Strong risk management: Drawdowns monitored, average drawdown manageable.
 Outperformance: Strategy significantly beat the benchmark.
 Consistency: Low average daily change and range.
+
+<hr/> 
 
 
 <br/>
