@@ -153,10 +153,13 @@ This backtest demonstrates a highly successful trading strategy with impressive 
 <hr/> 
 
 Key takeaways:
-
+#
 High returns: 79% average return, 101.5% rate of return.
+#
 Strong risk management: Drawdowns monitored, average drawdown manageable.
+#
 Outperformance: Strategy significantly beat the benchmark.
+#
 Consistency: Low average daily change and range.
 
 <hr/> 
