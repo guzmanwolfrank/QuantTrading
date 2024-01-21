@@ -8,6 +8,13 @@ also to construct a simple enough algorithm for a beginner to edit and use.
 
 ![download](https://github.com/guzmanwolfrank/Trading/assets/29739578/7f69d82c-c6c6-4888-98f4-bae893de9b33)
 
+### To view the project's Jupyter notebook, click [here](https://github.com/guzmanwolfrank/QuantTrading/blob/QuantTrading/Backtests/EURUSDMavg/Strat.ipynb)
+
+### To view the project's Tableau Dashboard, click [here](https://public.tableau.com/app/profile/wolfrank.guzman/viz/EURUSD_17057990902740/Dashboard1?publish=yes)
+
+![Dashboard 1](https://github.com/guzmanwolfrank/Data-SQL/assets/29739578/367558d3-89cc-4c35-82e3-db35fcea76b9)
+
+
 ## Table of Contents 
 
 I. [Introduction](https://github.com/guzmanwolfrank/Trading/tree/terra/Backtests/EURUSDMavg#introduction) <br />
