@@ -112,6 +112,8 @@ pivot_data = pd.DataFrame({
 # Exclude the last row for plotting
 df_except_last_row = pivot_data.iloc[:-1]
 
+print(Pivdata)
+
 # Plotting
 plt.figure(figsize=(10, 6))
 sns.lineplot(data=df_except_last_row[['Close', 'R3', 'R2', 'R1', 'Pivot_Point', 'S1', 'S2', 'S3']])
@@ -126,4 +128,3 @@ plt.legend(loc='upper left', bbox_to_anchor=(1, 1))
 plt.show()
 
 
-print(Pivdata)
