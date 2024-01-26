@@ -18,7 +18,7 @@ import pandas as pd
 
 
 # Get user input for the stock ticker
-ticker = input("Enter the stock ticker: ")
+ticker = 'NQ=F'
 
 
 
@@ -115,7 +115,7 @@ df_except_last_row = pivot_data.iloc[:-1]
 # Plotting
 plt.figure(figsize=(10, 6))
 sns.lineplot(data=df_except_last_row[['Close', 'R3', 'R2', 'R1', 'Pivot_Point', 'S1', 'S2', 'S3']])
-plt.title('Price and Pivot Points')
+plt.title('NQ 100 CME Emini Futures Price and Pivot Points')
 plt.xlabel('Date')
 plt.ylabel('Price')
 
