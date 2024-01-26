@@ -5,8 +5,22 @@ import pandas as pd
 
 
 
-# Ticker
-ticker = 'NQ=F'
+# Tickers 
+# NQ 100 Emini Futures = 'NQ=F'
+# SP 500 Emini Futures = 'ES=F'
+# YM Dow Emini Futures = 'YM=F'
+#  EURUSD FOREX = 'EURUSD = X' 
+# GOLD ETF = 'GLD'
+# SP 500 ETF = 'SPY' 
+
+
+
+
+
+# Get user input for the stock ticker
+ticker = input("Enter the stock ticker: ")
+
+
 
 # Download data for the last 30 days with daily intervals
 ndata = yf.download(ticker, period="30d", interval="1d")
@@ -56,14 +70,8 @@ Pivdata= df_except_last_row
 
 dpiv = (Pivdata.iloc[-1])
 
-print(dpiv)
+print(ticker, dpiv)
 
-
-####
-
-
-# Ticker
-ticker = 'NQ=F'
 
 # Download data for the last 30 days with daily intervals
 ndata = yf.download(ticker, period="30d", interval="1d")
@@ -107,7 +115,7 @@ df_except_last_row = pivot_data.iloc[:-1]
 # Plotting
 plt.figure(figsize=(10, 6))
 sns.lineplot(data=df_except_last_row[['Close', 'R3', 'R2', 'R1', 'Pivot_Point', 'S1', 'S2', 'S3']])
-plt.title('NQ Futures Price and Pivot Points')
+plt.title('Price and Pivot Points')
 plt.xlabel('Date')
 plt.ylabel('Price')
 
@@ -116,9 +124,6 @@ plt.xticks(rotation=90)
 
 plt.legend(loc='upper left', bbox_to_anchor=(1, 1))
 plt.show()
-
-
-###
 
 
 print(Pivdata)
