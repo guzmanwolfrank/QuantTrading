@@ -56,7 +56,7 @@ Pivdata= df_except_last_row
 
 dpiv = (Pivdata.iloc[-1])
 
-display(dpiv)
+print(dpiv)
 
 
 ####
@@ -121,4 +121,4 @@ plt.show()
 ###
 
 
-display(Pivdata)
+print(Pivdata)
