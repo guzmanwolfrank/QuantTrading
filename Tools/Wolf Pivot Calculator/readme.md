@@ -64,6 +64,69 @@ Additional customization, such as choosing a different ticker or adjusting the d
 
 ## Tools and Technology
 
+1. **yfinance:**
+   - **Description:** A Python library for accessing financial data from Yahoo Finance.
+   - **Usage:** Used to download historical stock market data for analysis and visualization.
+
+2. **Pandas:**
+   - **Description:** A powerful data manipulation and analysis library in Python.
+   - **Usage:** Utilized to structure and manipulate the downloaded financial data efficiently.
+
+3. **Seaborn and Matplotlib:**
+   - **Description:** Data visualization libraries in Python.
+   - **Usage:** Used for creating line plots and heatmaps to visually represent stock price movements and technical levels.
+
+## Technology Stack
+
+- **Python:**
+  - **Description:** A versatile and widely-used programming language chosen for its readability and ease of use.
+
+- **Jupyter Notebooks (Optional):**
+  - **Description:** Can be used for interactive code execution and experimentation.
+
+## Version Control
+
+- **Git:**
+  - **Description:** A distributed version control system for tracking changes in the codebase.
+
+## Project Structure
+
+- **README:**
+  - **Description:** This document provides an overview of the project, its purpose, and instructions for running and understanding the code.
+
+- **Python Script:**
+  - **Description:** The main script written in Python that fetches financial data, calculates pivot points, and visualizes the historical stock price movements.
+
+## Dependencies
+
+- Ensure that the required Python libraries are installed. You can install them using the following command:
+
+```bash
+pip install yfinance pandas seaborn matplotlib
+
+
+## Getting Started
+Clone the Repository:
+
+bash
+Copy code
+git clone https://github.com/your_username/your_project.git
+Install Dependencies:
+
+bash
+Copy code
+pip install -r requirements.txt
+Run the Script:
+
+bash
+Copy code
+python financial_analysis_script.py
+Contributing
+Contributions and improvements are welcome! Feel free to open issues or submit pull requests.
+License
+This project is licensed under the MIT License. Feel free to use, modify, and distribute the code.
+
+
 # Links
 
 # Project Objectives 
@@ -87,6 +150,3 @@ Additional customization, such as choosing a different ticker or adjusting the d
 # Tech Stack 
 
 # Badges
-
-# License 
-
