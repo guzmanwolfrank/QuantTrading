@@ -131,8 +131,7 @@ python financial_analysis_script.py
 # Project Objectives:
 To make a useful utility for quick printing of daily intraday pivot points for the NQ 100 Emini CME Futures contract. 
 
-# Project Deliverables:  # Project Deliverables
-
+# Project Deliverables:  
 This section outlines the key deliverables and artifacts associated with the project, providing a comprehensive overview of what users can expect from the codebase.
 
 ## 1. Python Script
