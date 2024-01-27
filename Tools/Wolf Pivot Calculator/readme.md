@@ -101,6 +101,7 @@ Additional customization, such as choosing a different ticker or adjusting the d
 
 - Ensure that the required Python libraries are installed. You can install them using the following command:
 
+
 ```bash
 pip install yfinance pandas seaborn matplotlib
 
@@ -125,8 +126,8 @@ Contributions and improvements are welcome! Feel free to open issues or submit p
 License
 This project is licensed under the MIT License. Feel free to use, modify, and distribute the code.
 
-```bash
-#
+```
+
 
 
 # Links: 
