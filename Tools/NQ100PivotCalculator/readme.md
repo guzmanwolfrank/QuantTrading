@@ -1,7 +1,17 @@
-Pivot Point Calculater 
+# Pivot Point Calculator 
+by Wolfrank Guzman 
+
+ # 
+
+ Github: @guzmanwolfrank
 
 
-# Project Overview 
+
+
+## Project Overview 
+ 
+The prime objective of this project is to make a tool useful to NQ 100 Emini Futures traders.  This tool helps calculate pivot points for the NQ 100 Emini contract. 
+A seaborn output chart containing prices and pivot levels is also produced.  
 
 
 
@@ -9,9 +19,13 @@ Pivot Point Calculater
 
 ### To view the project's Tableau Dashboard, click [here](#)
 
-# Data Description
+## Data Description
 
-# Tools and Technology
+
+
+
+
+## Tools and Technology
 
 # Links
 
