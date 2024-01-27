@@ -105,26 +105,24 @@ Additional customization, such as choosing a different ticker or adjusting the d
 ```bash
 pip install yfinance pandas seaborn matplotlib
 
+#
 
 ## Getting Started
+
 Clone the Repository:
-
 $bash
-
 git clone https://github.com/your_username/your_project.git
-Install Dependencies:
 
+Install Dependencies:
 $bash
 pip install -r requirements.txt
+
+
 Run the Script:
-
 $bash
-
 python financial_analysis_script.py
 
 ```
-
-
 
 # Links: 
 
