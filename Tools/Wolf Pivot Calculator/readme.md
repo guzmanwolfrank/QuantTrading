@@ -121,10 +121,6 @@ Run the Script:
 $bash
 
 python financial_analysis_script.py
-Contributing
-Contributions and improvements are welcome! Feel free to open issues or submit pull requests.
-License
-This project is licensed under the MIT License. Feel free to use, modify, and distribute the code.
 
 ```
 
