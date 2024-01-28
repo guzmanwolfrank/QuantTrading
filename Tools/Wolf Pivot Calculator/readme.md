@@ -138,6 +138,13 @@ This section provides insights into the data exploration process, outlining key 
 - It visualizes historical stock prices along with calculated pivot points, support, and resistance levels.
 - The plot provides a clear representation of price movements and key technical levels over the specified date range.
 
+
+![pivoutput](https://github.com/guzmanwolfrank/QuantTrading/assets/29739578/daad56b4-75e0-430c-b9fe-8edece707941)
+
+![nqpivots](https://github.com/guzmanwolfrank/QuantTrading/assets/29739578/cceba7b9-f8d2-4150-b8d7-b6db54b332f5)
+
+![pivdata](https://github.com/guzmanwolfrank/QuantTrading/assets/29739578/1d389fe4-14eb-4cff-ac73-4b5da6d37834)
+
 # Findings 
 Plotting pivots for NQ can help generate many backtest ideas for algorithms.  They also tend to flow and trend with the market.  They resemble Bollinger Bands once plotted
 and can also generate spread and strangle/straddle spreads in futures options. 
