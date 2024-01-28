@@ -1,0 +1,5 @@
+yfinance==0.2.18  
+seaborn==0.12.2 
+pandas==2.0.3 
+matplotlib==3.7.2 
+Tableau==2023.3 
