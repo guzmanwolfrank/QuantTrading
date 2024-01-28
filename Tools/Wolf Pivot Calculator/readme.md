@@ -46,14 +46,15 @@ The y-axis labels are rotated by 90 degrees for better readability.
 The resulting plot is displayed, providing a visual representation of the stock's price movement and key technical levels.
 
 #
+![pivoutput](https://github.com/guzmanwolfrank/QuantTrading/assets/29739578/adf77dda-d62b-4c69-93a8-0f69423cc967)
+
+
 
 Note:
 
 This script is designed to analyze and visualize the historical price movements of the specified stock, focusing on pivot points and support/resistance levels.
 The code can be adapted for other stock tickers by modifying the initial user input.
 Additional customization, such as choosing a different ticker or adjusting the date range, can be easily implemented based on specific requirements.
-
-
 
 
 # Links: 
