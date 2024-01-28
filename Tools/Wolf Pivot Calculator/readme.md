@@ -97,7 +97,7 @@ This section outlines the key deliverables and artifacts associated with the pro
    - **Description:** The project is licensed under the [MIT License](LICENSE), allowing users to freely use, modify, and distribute the code within the specified terms and conditions.
 
 ## 5. Version Control
-   - **Repository:** [GitHub Repository](https://github.com/your_username/your_project)
+   - **Repository:** [GitHub Repository](#)
    - **Description:** The project is version-controlled using Git. The repository provides a centralized location for tracking changes, collaborating with others, and maintaining a versioned history of the codebase.
 
 ## 6. Requirements File
