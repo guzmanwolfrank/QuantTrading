@@ -220,4 +220,25 @@ $bash
 python financial_analysis_script.py
 
 ```
-# Badges
+
+## Tech Stack 
+yfinance==
+seaborn == 
+pandas==2.0.3 <br/>
+matplotlib==3.7.2 <br/>
+Tableau==2023.3 <br/>
+
+
+
+    Software: SQL, GoogleSheets, Python 3.11, VS Code, Jupyter Notebook, Tableau 
+    Languages: SQL, Python
+    Modules: Plotly, Pandas, SQLite3, Matplotlib
+
+
+## Badges 
+
+[![MIT License](https://img.shields.io/badge/License-MIT-green.svg)](https://choosealicense.com/licenses/mit/)
+
+
+## License 
+[MIT](https://choosealicense.com/licenses/mit/)
