@@ -57,17 +57,17 @@ The code can be adapted for other stock tickers by modifying the initial user in
 Additional customization, such as choosing a different ticker or adjusting the date range, can be easily implemented based on specific requirements.
 
 
-# Links: 
+## Links: 
 
 [yfinance](https://pypi.org/project/yfinance/)
 
-# Project Objectives:
+## Project Objectives:
 To make a useful utility for quick printing of daily intraday pivot points for the NQ 100 Emini CME Futures contract. 
 
-# Project Deliverables:  
+## Project Deliverables:  
 This section outlines the key deliverables and artifacts associated with the project, providing a comprehensive overview of what users can expect from the codebase.
 
-## 1. Python Script
+### 1. Python Script
    - **File:** `wolfpivots.py`
    - **Description:** The main Python script that performs the following tasks:
       - Downloads historical stock market data for a specified ticker.
@@ -75,7 +75,7 @@ This section outlines the key deliverables and artifacts associated with the pro
       - Visualizes historical stock price movements, pivot points, and technical levels using Seaborn and Matplotlib.
       - Displays relevant information, including the last calculated pivot points.
 
-## 2. Jupyter Notebook 
+### 2. Jupyter Notebook 
    - **File:** `wolfpivots.ipynb`
    - **Description:** Jupyter notebook that performs the following tasks:
       - Downloads historical stock market data for a specified ticker.
@@ -84,7 +84,7 @@ This section outlines the key deliverables and artifacts associated with the pro
       - Displays relevant information, including the last calculated pivot points.
 
 
-## 3. README
+### 3. README
    - **File:** `README.md`
    - **Description:** This document provides comprehensive information about the project, including:
       - Overview of the project's purpose and functionality.
@@ -93,48 +93,48 @@ This section outlines the key deliverables and artifacts associated with the pro
       - Details on how to run the Python script and contribute to the project.
       - Licensing information and guidelines for contributions.
 
-## 4. License
+### 4. License
    - **File:** `LICENSE`
    - **Description:** The project is licensed under the [MIT License](LICENSE), allowing users to freely use, modify, and distribute the code within the specified terms and conditions.
 
-## 5. Version Control
+### 5. Version Control
    - **Repository:** [GitHub Repository](#)
    - **Description:** The project is version-controlled using Git. The repository provides a centralized location for tracking changes, collaborating with others, and maintaining a versioned history of the codebase.
 
-## 6. Requirements File
+### 6. Requirements File
    - **File:** `requirements.txt` (Optional)
    - **Description:** If applicable, a requirements file lists the Python libraries and their versions required to run the project successfully.
 
 
 
-# Exploring the Data
+## Exploring the Data
 
 
 This section provides insights into the data exploration process, outlining key steps and visualizations generated from the historical stock market data.
 
-## 1. Data Retrieval
+### 1. Data Retrieval
 
-### Ticker: NQ=F (Default)
+#### Ticker: NQ=F (Default)
 - The project retrieves historical stock market data for the E-mini Nasdaq 100 (NQ) futures contract as the default ticker.
 - Users can modify the ticker by providing input during script execution.
 
-### Date Range: Last 30 Days
+#### Date Range: Last 30 Days
 - Data is fetched with daily intervals, covering the last 30 days.
 
-## 2. Pivot Points and Technical Levels
+### 2. Pivot Points and Technical Levels
 
-### Calculation
+#### Calculation
 - Pivot points, support levels (S1, S2, S3), and resistance levels (R1, R2, R3) are calculated based on traditional pivot point analysis.
 
-### Data Organization
+#### Data Organization
 - The calculated pivot points and related prices are structured into a Pandas DataFrame named `pivot_data`.
 
-### Last Calculated Pivot Points
+#### Last Calculated Pivot Points
 - The last row of pivot points (excluding the most recent data) is extracted and printed for informational purposes.
 
-## 3. Data Visualization
+### 3. Data Visualization
 
-### Line Plot
+#### Line Plot
 - A line plot is generated using Seaborn and Matplotlib.
 - It visualizes historical stock prices along with calculated pivot points, support, and resistance levels.
 - The plot provides a clear representation of price movements and key technical levels over the specified date range.
@@ -143,7 +143,7 @@ This section provides insights into the data exploration process, outlining key 
 ![pivoutput](https://github.com/guzmanwolfrank/QuantTrading/assets/29739578/daad56b4-75e0-430c-b9fe-8edece707941)
 
 
-### Pivot Data Print
+#### Pivot Data Print
 - Using .iloc method, a specific date is requested from the dataframe that shows that dates price and pivot levels. 
 - It visualizes  stock prices along with calculated pivot points, support, and resistance levels.
 
@@ -151,18 +151,18 @@ This section provides insights into the data exploration process, outlining key 
 ![nqpivots](https://github.com/guzmanwolfrank/QuantTrading/assets/29739578/cceba7b9-f8d2-4150-b8d7-b6db54b332f5)
 
 
-### Dataframe 
+#### Dataframe 
 - A pandas dataframe is displayed after runing the script. 
 - The dataframe shows a table with Open, High, Low, and Close stock prices along with calculated pivot points, support, and resistance levels.
 
 ![pivdata](https://github.com/guzmanwolfrank/QuantTrading/assets/29739578/1d389fe4-14eb-4cff-ac73-4b5da6d37834)
 
-# Findings 
+## Findings 
 Plotting pivots for NQ can help generate many backtest ideas for algorithms.  They also tend to flow and trend with the market.  They resemble Bollinger Bands once plotted
 and can also generate spread and strangle/straddle spreads in futures options. 
 
 
-# Conclusion
+## Conclusion
 
 Plotting pivots can serve as a tremendous tool in analyzing futures markets and generating automated trade ideas. 
 Another benefit is the ease with which you can plug the dataframe into an algorithmic backtest before deploying into the markets.
@@ -189,7 +189,7 @@ pip install yfinance pandas seaborn matplotlib
 
 #
 
-## Getting Started
+### Getting Started
 
 Clone the Repository:
 $bash
