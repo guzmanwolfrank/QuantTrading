@@ -24,8 +24,7 @@ A seaborn output chart containing prices and pivot levels is also produced.
 This Python script utilizes the yfinance library to fetch historical stock market data for a specified ticker over the last 30 days. The code focuses on the E-mini Nasdaq 100 (NQ) futures contract but can be adapted for other tickers as well.
 
 #### Data Retrieval:
-
-The user is prompted to enter a stock ticker. The default ticker is set to 'NQ=F'.
+The default ticker is set to 'NQ=F'.
 Historical data for the specified ticker is downloaded from Yahoo Finance for the last 30 days with daily intervals.
 
 #
