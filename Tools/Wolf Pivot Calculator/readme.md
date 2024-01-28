@@ -155,37 +155,6 @@ This project demonstrates the power of plotting pivots for uncovering potential 
 With this visualization tool, traders can efficiently generate actionable trade ideas
 and rapidly test them through backtesting, ultimately propelling informed decisions in live markets.
 
-
-
-# Tech Stack 
-
-## Tools and Technology
-
-1. **yfinance:**
-   - **Description:** A Python library for accessing financial data from Yahoo Finance.
-   - **Usage:** Used to download historical stock market data for analysis and visualization.
-
-2. **Pandas:**
-   - **Description:** A powerful data manipulation and analysis library in Python.
-   - **Usage:** Utilized to structure and manipulate the downloaded financial data efficiently.
-
-3. **Seaborn and Matplotlib:**
-   - **Description:** Data visualization libraries in Python.
-   - **Usage:** Used for creating line plots and heatmaps to visually represent stock price movements and technical levels.
-
-## Technology Stack
-
-- **Python:**
-  - **Description:** A versatile and widely-used programming language chosen for its readability and ease of use.
-
-- **Jupyter Notebooks (Optional):**
-  - **Description:** Can be used for interactive code execution and experimentation.
-
-## Version Control
-
-- **Git:**
-  - **Description:** A distributed version control system for tracking changes in the codebase.
-
 ## Project Structure
 
 - **README:**
