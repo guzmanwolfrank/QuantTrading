@@ -1,12 +1,4 @@
-
-
-# EUR USD Pivot Strategy Backtest 
-#
-### by Wolfrank Guzman 
-@guzmanwolfrank : Github 
-
-
-![qimage](https://github.com/guzmanwolfrank/QuantTrading/assets/29739578/136bf05a-9b74-4ee7-8951-b28983e4e3e5)
+QQQ 
 
 
 # Project Overview 
