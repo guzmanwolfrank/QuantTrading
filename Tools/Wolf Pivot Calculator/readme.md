@@ -141,7 +141,18 @@ This section provides insights into the data exploration process, outlining key 
 
 ![pivoutput](https://github.com/guzmanwolfrank/QuantTrading/assets/29739578/daad56b4-75e0-430c-b9fe-8edece707941)
 
+
+### Pivot Data Print
+- Using .iloc method, a specific date is requested from the dataframe that shows that dates price and pivot levels. 
+- It visualizes  stock prices along with calculated pivot points, support, and resistance levels.
+
+
 ![nqpivots](https://github.com/guzmanwolfrank/QuantTrading/assets/29739578/cceba7b9-f8d2-4150-b8d7-b6db54b332f5)
+
+
+### Dataframe 
+- A pandas dataframe is displayed after runing the script. 
+- The dataframe shows a table with Open, High, Low, and Close stock prices along with calculated pivot points, support, and resistance levels.
 
 ![pivdata](https://github.com/guzmanwolfrank/QuantTrading/assets/29739578/1d389fe4-14eb-4cff-ac73-4b5da6d37834)
 
