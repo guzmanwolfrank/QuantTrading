@@ -180,9 +180,9 @@ Tableau==2023.3 <br/>
 
 
 
-    Software: SQL, GoogleSheets, Python 3.11, VS Code, Jupyter Notebook, Tableau 
-    Languages: SQL, Python
-    Modules: Plotly, Pandas, SQLite3, Matplotlib
+    Software: Python 3.11, VS Code, Jupyter Notebook
+    Languages:  Python
+    Modules: Seaborn, Pandas, Yfinance, Matplotlib
 
 ## Project Structure
 
