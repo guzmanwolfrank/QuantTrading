@@ -54,67 +54,7 @@ The code can be adapted for other stock tickers by modifying the initial user in
 Additional customization, such as choosing a different ticker or adjusting the date range, can be easily implemented based on specific requirements.
 
 
-## Tools and Technology
 
-1. **yfinance:**
-   - **Description:** A Python library for accessing financial data from Yahoo Finance.
-   - **Usage:** Used to download historical stock market data for analysis and visualization.
-
-2. **Pandas:**
-   - **Description:** A powerful data manipulation and analysis library in Python.
-   - **Usage:** Utilized to structure and manipulate the downloaded financial data efficiently.
-
-3. **Seaborn and Matplotlib:**
-   - **Description:** Data visualization libraries in Python.
-   - **Usage:** Used for creating line plots and heatmaps to visually represent stock price movements and technical levels.
-
-## Technology Stack
-
-- **Python:**
-  - **Description:** A versatile and widely-used programming language chosen for its readability and ease of use.
-
-- **Jupyter Notebooks (Optional):**
-  - **Description:** Can be used for interactive code execution and experimentation.
-
-## Version Control
-
-- **Git:**
-  - **Description:** A distributed version control system for tracking changes in the codebase.
-
-## Project Structure
-
-- **README:**
-  - **Description:** This document provides an overview of the project, its purpose, and instructions for running and understanding the code.
-
-- **Python Script:**
-  - **Description:** The main script written in Python that fetches financial data, calculates pivot points, and visualizes the historical stock price movements.
-
-## Dependencies
-
-- Ensure that the required Python libraries are installed. You can install them using the following command:
-
-
-```bash
-pip install yfinance pandas seaborn matplotlib
-
-#
-
-## Getting Started
-
-Clone the Repository:
-$bash
-git clone https://github.com/your_username/your_project.git
-
-Install Dependencies:
-$bash
-pip install -r requirements.txt
-
-
-Run the Script:
-$bash
-python financial_analysis_script.py
-
-```
 
 # Links: 
 
@@ -224,4 +164,65 @@ and rapidly test them through backtesting, ultimately propelling informed decisi
 
 # Tech Stack 
 
+## Tools and Technology
+
+1. **yfinance:**
+   - **Description:** A Python library for accessing financial data from Yahoo Finance.
+   - **Usage:** Used to download historical stock market data for analysis and visualization.
+
+2. **Pandas:**
+   - **Description:** A powerful data manipulation and analysis library in Python.
+   - **Usage:** Utilized to structure and manipulate the downloaded financial data efficiently.
+
+3. **Seaborn and Matplotlib:**
+   - **Description:** Data visualization libraries in Python.
+   - **Usage:** Used for creating line plots and heatmaps to visually represent stock price movements and technical levels.
+
+## Technology Stack
+
+- **Python:**
+  - **Description:** A versatile and widely-used programming language chosen for its readability and ease of use.
+
+- **Jupyter Notebooks (Optional):**
+  - **Description:** Can be used for interactive code execution and experimentation.
+
+## Version Control
+
+- **Git:**
+  - **Description:** A distributed version control system for tracking changes in the codebase.
+
+## Project Structure
+
+- **README:**
+  - **Description:** This document provides an overview of the project, its purpose, and instructions for running and understanding the code.
+
+- **Python Script:**
+  - **Description:** The main script written in Python that fetches financial data, calculates pivot points, and visualizes the historical stock price movements.
+
+## Dependencies
+
+- Ensure that the required Python libraries are installed. You can install them using the following command:
+
+
+```bash
+pip install yfinance pandas seaborn matplotlib
+
+#
+
+## Getting Started
+
+Clone the Repository:
+$bash
+git clone https://github.com/your_username/your_project.git
+
+Install Dependencies:
+$bash
+pip install -r requirements.txt
+
+
+Run the Script:
+$bash
+python financial_analysis_script.py
+
+```
 # Badges
