@@ -6,7 +6,7 @@ by Wolfrank Guzman
  Github: @guzmanwolfrank
 
 
-![FXCA Pivot Points Header Mobile](https://github.com/guzmanwolfrank/QuantTrading/assets/29739578/f775a33a-8fe6-4cd9-9e45-bdfe2f8bd0b5)
+![Pivot Points Header](https://github.com/guzmanwolfrank/QuantTrading/assets/29739578/f775a33a-8fe6-4cd9-9e45-bdfe2f8bd0b5)
 
 
 ## Project Overview 
