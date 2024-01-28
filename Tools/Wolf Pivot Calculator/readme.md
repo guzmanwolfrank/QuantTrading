@@ -191,8 +191,8 @@ python financial_analysis_script.py
 ```
 
 ## Tech Stack 
-yfinance==
-seaborn == 
+yfinance==0.2.18  </br>
+seaborn==0.12.2 </br>
 pandas==2.0.3 <br/>
 matplotlib==3.7.2 <br/>
 Tableau==2023.3 <br/>
