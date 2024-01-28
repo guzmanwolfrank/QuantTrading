@@ -145,12 +145,7 @@ This section provides insights into the data exploration process, outlining key 
 # Findings 
 Plotting pivots for NQ can help generate many backtest ideas for algorithms.  They also tend to flow and trend with the market.  They resemble Bollinger Bands once plotted
 and can also generate spread and strangle/straddle spreads in futures options. 
-
-
-# Visualizations 
-
-[image](image link goes here )
-
+-+++++++++++++++++++++++++++++++++-
 # Conclusion
 
 Plotting pivots can serve as a tremendous tool in analyzing futures markets and generating automated trade ideas. 
