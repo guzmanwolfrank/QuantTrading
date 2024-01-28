@@ -17,7 +17,7 @@ A seaborn output chart containing prices and pivot levels is also produced.
 
 ### To view the project's Jupyter notebook, click [here](#)
 
-### To view the project's Tableau Dashboard, click [here](#)
+### To view the project's Python code, click [here](#)
 
 ## Data Description
 
@@ -52,14 +52,6 @@ Note:
 This script is designed to analyze and visualize the historical price movements of the specified stock, focusing on pivot points and support/resistance levels.
 The code can be adapted for other stock tickers by modifying the initial user input.
 Additional customization, such as choosing a different ticker or adjusting the date range, can be easily implemented based on specific requirements.
-
-
-
-
-
-
-
-
 
 
 ## Tools and Technology
@@ -210,14 +202,25 @@ This section provides insights into the data exploration process, outlining key 
 - It visualizes historical stock prices along with calculated pivot points, support, and resistance levels.
 - The plot provides a clear representation of price movements and key technical levels over the specified date range.
 
+# Findings 
+Plotting pivots for NQ can help generate many backtest ideas for algorithms.  They also tend to flow and trend with the market.  They resemble Bollinger Bands once plotted
+and can also generate spread and strangle/straddle spreads in futures options. 
+
 
 # Visualizations 
 
-
-
-# Findings 
+[image](image link goes here )
 
 # Conclusion
+
+Plotting pivots can serve as a tremendous tool in analyzing futures markets and generating automated trade ideas. 
+Another benefit is the ease with which you can plug the dataframe into an algorithmic backtest before deploying into the markets.
+
+This project demonstrates the power of plotting pivots for uncovering potential trading opportunities in futures markets. 
+With this visualization tool, traders can efficiently generate actionable trade ideas
+and rapidly test them through backtesting, ultimately propelling informed decisions in live markets.
+
+
 
 # Tech Stack 
 
