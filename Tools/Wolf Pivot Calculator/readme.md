@@ -16,9 +16,9 @@ A seaborn output chart containing prices and pivot levels is also produced.
 
 
 
-### To view the project's Jupyter notebook, click [here](#).
+### To view the project's Jupyter notebook, click [here](https://github.com/guzmanwolfrank/QuantTrading/blob/main/Tools/Wolf%20Pivot%20Calculator/WolfPivots.ipynb).
 
-### To view the project's Python code, click [here](#).
+### To view the project's Python code, click [here](https://github.com/guzmanwolfrank/QuantTrading/blob/main/Tools/Wolf%20Pivot%20Calculator/WolfPivots.py).
 
 ## Data Description
 
@@ -98,11 +98,11 @@ This section outlines the key deliverables and artifacts associated with the pro
    - **Description:** The project is licensed under the [MIT License](https://choosealicense.com/licenses/mit/), allowing users to freely use, modify, and distribute the code within the specified terms and conditions.
 
 ### 5. Version Control
-   - **Repository:** [GitHub Repository](#)
+   - **Repository:** [GitHub Repository](https://github.com/guzmanwolfrank/QuantTrading/tree/main/Tools/Wolf%20Pivot%20Calculator)
    - **Description:** The project is version-controlled using Git. The repository provides a centralized location for tracking changes, collaborating with others, and maintaining a versioned history of the codebase.
 
 ### 6. Requirements File
-   - **File:** `requirements.txt` (Optional)
+   - **File:** `requirements.txt` 
    - **Description:** If applicable, a requirements file lists the Python libraries and their versions required to run the project successfully.
 
 
@@ -206,7 +206,7 @@ pip install yfinance pandas seaborn matplotlib
 
 Clone the Repository:
 $bash
-git clone https://github.com/your_username/your_project.git
+git clone (git url)
 
 Install Dependencies:
 $bash
