@@ -3,8 +3,8 @@ A collection of backtests, algorithms, and trading tools written in python.
 
 #### [Algorithms ](https://github.com/guzmanwolfrank/QuantTrading/tree/main/Tools/Wolf%20Pivot%20Calculator): This folder contains algorithms based on backtests performed in the backtest folder.    
 
-![nqpivots](https://github.com/guzmanwolfrank/QuantTrading/assets/29739578/29695637-1150-4634-8c11-51fba32f7086)
 
+![pivdata](https://github.com/guzmanwolfrank/QuantTrading/assets/29739578/fa29e4fc-b1bd-451c-8425-12113035d942)
 
     Software: Python 3.11, VS Code, Jupyter Notebook
     Languages:  Python
