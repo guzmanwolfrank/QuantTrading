@@ -16,9 +16,9 @@ A seaborn output chart containing prices and pivot levels is also produced.
 
 
 
-### To view the project's Jupyter notebook, click [here](#)
+### To view the project's Jupyter notebook, click [here](#).
 
-### To view the project's Python code, click [here](#)
+### To view the project's Python code, click [here](#).
 
 ## Data Description
 
@@ -95,7 +95,7 @@ This section outlines the key deliverables and artifacts associated with the pro
 
 ### 4. License
    - **File:** `LICENSE`
-   - **Description:** The project is licensed under the [MIT License](LICENSE), allowing users to freely use, modify, and distribute the code within the specified terms and conditions.
+   - **Description:** The project is licensed under the [MIT License](https://choosealicense.com/licenses/mit/), allowing users to freely use, modify, and distribute the code within the specified terms and conditions.
 
 ### 5. Version Control
    - **Repository:** [GitHub Repository](#)
