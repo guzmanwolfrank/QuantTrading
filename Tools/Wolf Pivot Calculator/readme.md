@@ -171,6 +171,19 @@ This project demonstrates the power of plotting pivots for uncovering potential 
 With this visualization tool, traders can efficiently generate actionable trade ideas
 and rapidly test them through backtesting, ultimately propelling informed decisions in live markets.
 
+## Tech Stack 
+yfinance==0.2.18  </br>
+seaborn==0.12.2 </br>
+pandas==2.0.3 <br/>
+matplotlib==3.7.2 <br/>
+Tableau==2023.3 <br/>
+
+
+
+    Software: SQL, GoogleSheets, Python 3.11, VS Code, Jupyter Notebook, Tableau 
+    Languages: SQL, Python
+    Modules: Plotly, Pandas, SQLite3, Matplotlib
+
 ## Project Structure
 
 - **README:**
@@ -205,19 +218,6 @@ $bash
 python wolfpivots.py
 
 ```
-
-## Tech Stack 
-yfinance==0.2.18  </br>
-seaborn==0.12.2 </br>
-pandas==2.0.3 <br/>
-matplotlib==3.7.2 <br/>
-Tableau==2023.3 <br/>
-
-
-
-    Software: SQL, GoogleSheets, Python 3.11, VS Code, Jupyter Notebook, Tableau 
-    Languages: SQL, Python
-    Modules: Plotly, Pandas, SQLite3, Matplotlib
 
 
 ## Badges 
