@@ -103,8 +103,7 @@ This section outlines the key deliverables and artifacts associated with the pro
 
 ### 6. Requirements File
    - **File:** `requirements.txt` 
-   - **Description:** If applicable, a requirements file lists the Python libraries and their versions required to run the project successfully.
-
+  
 
 
 ## Exploring the Data
