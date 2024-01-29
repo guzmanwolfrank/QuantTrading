@@ -12,12 +12,3 @@ Here are a few backtests
     Languages:  Python
     Modules: Seaborn, Pandas, Yfinance, Matplotlib, numpy, Plotly, QuantStats, datetime
 
-
-#### [QQQ Backtest ](https://github.com/guzmanwolfrank/QuantTrading/tree/main/Backtests/QQQ%20_Backtest): This project is a backtest using QQQ ETF and pandas dataframes.    
-
-![nqpivots](https://github.com/guzmanwolfrank/QuantTrading/assets/29739578/29695637-1150-4634-8c11-51fba32f7086)
-
-
-    Software: Python 3.11, VS Code, Jupyter Notebook
-    Languages:  Python
-    Modules: Seaborn, Pandas, Yfinance, Matplotlib
