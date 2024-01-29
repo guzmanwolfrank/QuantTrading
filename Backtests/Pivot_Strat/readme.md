@@ -51,27 +51,6 @@ pandas
 
 To develop and implement an automated trading algorithm on the OANDA FX brokerage platform, utilizing the EURUSD Pivot Strategy to generate buy and sell signals based on the price of the close relative to the intraday pivot point.
 
-Key Goals:
-
-Successful Algorithm Implementation.
-Seamlessly integrate the algorithm with the OANDA FX brokerage API.
-Ensure accurate execution of trades based on generated signals.
-Implement robust error handling and risk management mechanisms.
-Effective Trading Performance:
-
-Generate consistent and profitable trading results in live market conditions.
-Evaluate and optimize the algorithm's performance through backtesting and forward testing.
-Fine-tune signal generation and trade execution parameters for optimal outcomes.
-Comprehensive Monitoring and Analysis:
-
-Develop a system to track and analyze the algorithm's performance in real-time.
-Generate detailed performance reports, including profit and loss statements, drawdowns, win rates, and other key metrics.
-Identify areas for improvement and make necessary adjustments to the algorithm.
-Continuous Evaluation and Improvement:
-
-Regularly review and assess the algorithm's performance in response to changing market conditions.
-Adapt and refine the algorithm as needed to maintain its effectiveness.
-Explore potential enhancements, such as incorporating additional technical indicators or risk management strategies.
 
 
 ## Project Deliverables:  
@@ -115,6 +94,26 @@ This section outlines the key deliverables and artifacts associated with the pro
    - **File:** `requirements.txt` 
   
 # Goals
+
+Successful Algorithm Implementation.
+Seamlessly integrate the algorithm with the OANDA FX brokerage API.
+Ensure accurate execution of trades based on generated signals.
+Implement robust error handling and risk management mechanisms.
+Effective Trading Performance:
+
+Generate consistent and profitable trading results in live market conditions.
+Evaluate and optimize the algorithm's performance through backtesting and forward testing.
+Fine-tune signal generation and trade execution parameters for optimal outcomes.
+Comprehensive Monitoring and Analysis:
+
+Develop a system to track and analyze the algorithm's performance in real-time.
+Generate detailed performance reports, including profit and loss statements, drawdowns, win rates, and other key metrics.
+Identify areas for improvement and make necessary adjustments to the algorithm.
+Continuous Evaluation and Improvement:
+
+Regularly review and assess the algorithm's performance in response to changing market conditions.
+Adapt and refine the algorithm as needed to maintain its effectiveness.
+Explore potential enhancements, such as incorporating additional technical indicators or risk management strategies.
 
 # Initial Questions 
 
