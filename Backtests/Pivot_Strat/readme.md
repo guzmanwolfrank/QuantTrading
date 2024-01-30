@@ -147,9 +147,7 @@ This section provides insights into the data exploration process, outlining key 
 
 #### Line Plot
 - A line plot is generated using Seaborn and Matplotlib.
-- It visualizes historical stock prices along with calculated pivot points, support, and resistance levels.
-- The plot provides a clear representation of price movements and key technical levels over the specified date range.
-
+- It visualizes hypothetical daily returns for the backtest. 
 
 ![pivoutput](https://github.com/guzmanwolfrank/QuantTrading/assets/29739578/daad56b4-75e0-430c-b9fe-8edece707941)
 
@@ -169,9 +167,6 @@ This section provides insights into the data exploration process, outlining key 
 ![pivdata](https://github.com/guzmanwolfrank/QuantTrading/assets/29739578/1d389fe4-14eb-4cff-ac73-4b5da6d37834)
 
 # Visualizations 
-![hypdailyreturns](https://github.com/guzmanwolfrank/QuantTrading/assets/29739578/4d80ee41-1db5-4fdf-b7a8-907c6d9e1d1f)
-![viz1](https://github.com/guzmanwolfrank/QuantTrading/assets/29739578/b503cf36-e2fa-470f-981c-1cb6614a119b)
-![viz2](https://github.com/guzmanwolfrank/QuantTrading/assets/29739578/70f16c47-070c-4774-985b-ea7f54a5827a)
 
 
 
