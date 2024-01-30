@@ -68,7 +68,6 @@ This section outlines the key deliverables and artifacts associated with the pro
       - Calculates pivot points, support levels (S1, S2, S3), and resistance levels (R1, R2, R3).
       - Visualizes historical stock price movements, pivot points, and technical levels using Seaborn and Matplotlib.
       - Displays relevant information, including the last calculated pivot points.
-<br/>
 ### 2. Jupyter Notebook 
    - **File:** `wolfpivots.ipynb`
    - **Description:** Jupyter notebook that performs the following tasks:
@@ -77,7 +76,7 @@ This section outlines the key deliverables and artifacts associated with the pro
       - Visualizes historical stock price movements, pivot points, and technical levels using Seaborn and Matplotlib.
       - Displays relevant information, including the last calculated pivot points.
 
-<br/>
+
 ### 3. README
    - **File:** `README.md`
    - **Description:** This document provides comprehensive information about the project, including:
@@ -86,18 +85,18 @@ This section outlines the key deliverables and artifacts associated with the pro
       - Explanation of tools and technologies used.
       - Details on how to run the Python script and contribute to the project.
       - Licensing information and guidelines for contributions.
-<br/>
+
 ### 4. License
    - **File:** `LICENSE`
    - **Description:** The project is licensed under the [MIT License](https://choosealicense.com/licenses/mit/), allowing users to freely use, modify, and distribute the code within the specified terms and conditions.
-<br/>
+
 ### 5. Version Control
    - **Repository:** [GitHub Repository](https://github.com/guzmanwolfrank/QuantTrading/tree/main/Tools/Wolf%20Pivot%20Calculator)
    - **Description:** The project is version-controlled using Git. The repository provides a centralized location for tracking changes, collaborating with others, and maintaining a versioned history of the codebase.
-<br/>
+
 ### 6. Requirements File
    - **File:** `requirements.txt` 
-  <br/>
+
 # Goals
 
 Successful Algorithm Implementation.
