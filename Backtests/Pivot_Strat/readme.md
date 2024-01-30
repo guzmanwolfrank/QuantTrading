@@ -146,14 +146,25 @@ This section provides insights into the data exploration process, outlining key 
 ![hypdailyreturns](https://github.com/guzmanwolfrank/QuantTrading/assets/29739578/b0561cac-5d53-49e3-a193-eb6057edc023)
 
 # Findings 
+Findings & Observations
+This section summarizes the key findings and observations from the EURUSD Pivot strategy backtest.
 
+Positive Results:
 
+Profitability: The algorithm achieved a positive overall profit (73.86%) over the backtesting period. This suggests that the Pivot Strategy was able to successfully identify profitable trading opportunities.
+Win Rate: The algorithm maintained a win rate of [77.47%] over the backtesting period, indicating that it captured a significant portion of positive trades.
+Risk Management: The implemented risk management measures effectively limited drawdowns and protected the capital.
+Areas for Improvement:
 
-
-
+Drawdown Optimization: While drawdowns were controlled, further optimization could potentially reduce their extent without significantly impacting profitability.
+Signal Refinement: Analyzing false positives and missed opportunities could lead to refining the signal generation rules for enhanced accuracy.
+Market Adaptability: Evaluating the algorithm's performance across different market conditions (trending, ranging, volatile) can reveal potential weaknesses and suggest adaptation strategies.
 
 # Conclusion
 
+The backtest demonstrates the potential of the EURUSD Pivot Strategy to generate profitable trading signals. However, further optimization and testing are recommended to address the identified areas for improvement and ensure robustness in live market conditions.
+
+Disclaimer: These findings are based solely on the backtesting results and may not necessarily translate to consistent profitability in live trading.
 
 
 
@@ -162,7 +173,9 @@ yfinance==0.2.18  </br>
 seaborn==0.12.2 </br>
 pandas==2.0.3 <br/>
 matplotlib==3.7.2 <br/>
-Tableau==2023.3 <br/>
+QuantStats==0.0.62 <br/>
+numpy== 1.24.3   <br/>
+
 
 
 
