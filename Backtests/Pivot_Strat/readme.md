@@ -34,9 +34,6 @@ Low: The lowest price reached by EURUSD during that period.<br/>
 Close: The price at which EURUSD closed for the period. This price is used by the algorithm to determine the main signal based on its proximity to the pivot point.<br/>
 Adj Close: The adjusted closing price, taking into account dividend distributions and stock splits.<br/>
 
-### Volume: 
-The total number of EURUSD contracts traded during the period. This can be used to gauge market sentiment and volatility.<br/>
-
 ### Pivot Points:
 PP: The pivot point, calculated as the average of the previous day's high, low, and close prices.<br/>
 R1: The first resistance level, typically calculated as 1.5 times the distance between the PP and the S1 level, added to the PP.<br/>
@@ -59,14 +56,8 @@ To develop and implement an automated trading algorithm on the OANDA FX brokerag
 ## Project Deliverables:  
 This section outlines the key deliverables and artifacts associated with the project, providing a comprehensive overview of what users can expect from the codebase.
 
-### 1. Python Script
-   - **File:** `wolfpivots.py`
-   - **Description:** The main Python script that performs the following tasks:
-      - Downloads historical stock market data for a specified ticker.
-      - Calculates pivot points, support levels (S1, S2, S3), and resistance levels (R1, R2, R3).
-      - Visualizes historical stock price movements, pivot points, and technical levels using Seaborn and Matplotlib.
-      - Displays relevant information, including the last calculated pivot points.
-### 2. Jupyter Notebook 
+
+### 1. Jupyter Notebook 
    - **File:** `wolfpivots.ipynb`
    - **Description:** Jupyter notebook that performs the following tasks:
       - Downloads historical stock market data for a specified ticker.
@@ -75,7 +66,7 @@ This section outlines the key deliverables and artifacts associated with the pro
       - Displays relevant information, including the last calculated pivot points.
 
 
-### 3. README
+### 2. README
    - **File:** `README.md`
    - **Description:** This document provides comprehensive information about the project, including:
       - Overview of the project's purpose and functionality.
@@ -84,15 +75,15 @@ This section outlines the key deliverables and artifacts associated with the pro
       - Details on how to run the Python script and contribute to the project.
       - Licensing information and guidelines for contributions.
 
-### 4. License
+### 3. License
    - **File:** `LICENSE`
    - **Description:** The project is licensed under the [MIT License](https://choosealicense.com/licenses/mit/), allowing users to freely use, modify, and distribute the code within the specified terms and conditions.
 
-### 5. Version Control
-   - **Repository:** [GitHub Repository](https://github.com/guzmanwolfrank/QuantTrading/tree/main/Tools/Wolf%20Pivot%20Calculator)
+### 4. Version Control
+   - **Repository:** [GitHub Repository](#)
    - **Description:** The project is version-controlled using Git. The repository provides a centralized location for tracking changes, collaborating with others, and maintaining a versioned history of the codebase.
 
-### 6. Requirements File
+### 5. Requirements File
    - **File:** `requirements.txt` 
 
 # Goals
@@ -166,7 +157,8 @@ This section provides insights into the data exploration process, outlining key 
 
 ![pivdata](https://github.com/guzmanwolfrank/QuantTrading/assets/29739578/1d389fe4-14eb-4cff-ac73-4b5da6d37834)
 
-# Visualizations 
+#### QuantStats HTML Tearsheet 
+- QuantStats module prints results and risk metrics to an external webpage.  You can save it locally or to your online Github repository. 
 
 ![viz1](https://github.com/guzmanwolfrank/QuantTrading/assets/29739578/cce4a7a0-6c19-4428-91c4-ab88369a2000)
 
