@@ -146,7 +146,6 @@ This section provides insights into the data exploration process, outlining key 
 ![hypdailyreturns](https://github.com/guzmanwolfrank/QuantTrading/assets/29739578/b0561cac-5d53-49e3-a193-eb6057edc023)
 
 # Findings 
-Positive Results:
 
 Profitability: The algorithm achieved a positive overall profit (73.86%) over the backtesting period. This suggests that the Pivot Strategy was able to successfully identify profitable trading opportunities.
 Win Rate: The algorithm maintained a win rate of [77.47%] over the backtesting period, indicating that it captured a significant portion of positive trades.
