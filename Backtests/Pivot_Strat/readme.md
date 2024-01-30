@@ -143,14 +143,6 @@ This section provides insights into the data exploration process, outlining key 
 - It visualizes hypothetical daily returns for the backtest.
 ![hypdailyreturns](https://github.com/guzmanwolfrank/QuantTrading/assets/29739578/8f1220aa-c490-40b9-a5fd-c0ce23ce0333)
 
-#### QuantStats HTML Tearsheet 
-- QuantStats module prints results and risk metrics to an external webpage.  You can save it locally or to your online Github repository. 
-
-
-
-![hypdailyreturns](https://github.com/guzmanwolfrank/QuantTrading/assets/29739578/95d1b228-102f-4349-b592-3a128904de85)
-
-
 #### Dataframe 
 - A pandas dataframe is displayed after runing the script. 
 - The dataframe shows a table with Open, High, Low, and Close stock prices along with calculated pivot points, support, and resistance levels.
