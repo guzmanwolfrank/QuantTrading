@@ -34,7 +34,8 @@ Low: The lowest price reached by EURUSD during that period.<br/>
 Close: The price at which EURUSD closed for the period. This price is used by the algorithm to determine the main signal based on its proximity to the pivot point.<br/>
 Adj Close: The adjusted closing price, taking into account dividend distributions and stock splits.<br/>
 
-2. ### Volume: The total number of EURUSD contracts traded during the period. This can be used to gauge market sentiment and volatility.<br/>
+2. ### Volume: 
+The total number of EURUSD contracts traded during the period. This can be used to gauge market sentiment and volatility.<br/>
 
 3. ### Pivot Points:
 PP: The pivot point, calculated as the average of the previous day's high, low, and close prices.<br/>
