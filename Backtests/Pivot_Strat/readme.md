@@ -11,16 +11,9 @@
 
 # Project Overview 
 
-This project creates an algorithm based on the [EURUSD Pivot Strategy backtest](https://github.com/guzmanwolfrank/QuantTrading/tree/main/Backtests/Pivot_Strat). 
-The main signal is generated depending on the price of the close relative to the intraday pivot point.
+This project creates a backtest based on the EURUSD Pivot point prices.  
 
-This bot is designed for use on OANDA FX brokerage API.  
-
-
-
-### To view the project's Jupyter notebook, click [here](#)
-
-### To view the project's Tableau Dashboard, click [here](#)
+### To view the project's Jupyter notebook, click [here](https://github.com/guzmanwolfrank/QuantTrading/blob/main/Backtests/Pivot_Strat/EURUSDPivot.ipynb)
 
 # Data Description
 
@@ -49,7 +42,7 @@ Balance: The total account balance after each trade, reflecting the cumulative p
 ## Project Objectives 
 
 
-To develop and implement an automated trading algorithm on the OANDA FX brokerage platform, utilizing the EURUSD Pivot Strategy to generate buy and sell signals based on the price of the close relative to the intraday pivot point.
+To develop and implement a backtest for an algorithm on the OANDA FX brokerage platform, utilizing the EURUSD Pivot Strategy to generate buy and sell signals based on the price of the close relative to the intraday pivot point.
 
 
 
@@ -58,7 +51,7 @@ This section outlines the key deliverables and artifacts associated with the pro
 
 
 ### 1. Jupyter Notebook 
-   - **File:** `wolfpivots.ipynb`
+   - **File:** `EURUSDPivot.ipynb`
    - **Description:** Jupyter notebook that performs the following tasks:
       - Downloads historical stock market data for a specified ticker.
       - Calculates pivot points, support levels (S1, S2, S3), and resistance levels (R1, R2, R3).
