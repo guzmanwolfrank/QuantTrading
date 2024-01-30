@@ -3,7 +3,7 @@ A collection of backtests, algorithms, and trading tools written in python.
 
 #### [Algorithms ](https://github.com/guzmanwolfrank/QuantTrading/tree/main/Algorithms): This folder contains algorithms based on backtests performed in the backtest folder.    
 
-![nqpivots](https://github.com/guzmanwolfrank/QuantTrading/assets/29739578/29695637-1150-4634-8c11-51fba32f7086)
+![300295858-fa29e4fc-b1bd-451c-8425-12113035d942](https://github.com/guzmanwolfrank/QuantTrading/assets/29739578/9d526c50-b5e8-4afa-840f-325d97ab9a89)
 
 
     Software: Python 3.11, VS Code, Jupyter Notebook
