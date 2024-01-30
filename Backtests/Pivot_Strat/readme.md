@@ -14,7 +14,7 @@
 This project creates an algorithm based on the [EURUSD Pivot Strategy backtest](https://github.com/guzmanwolfrank/QuantTrading/tree/main/Backtests/Pivot_Strat). 
 The main signal is generated depending on the price of the close relative to the intraday pivot point.
 
-his bot is designed for use on OANDA FX brokerage API.  
+This bot is designed for use on OANDA FX brokerage API.  
 
 
 
@@ -116,14 +116,73 @@ Adapt and refine the algorithm as needed to maintain its effectiveness.
 Explore potential enhancements, such as incorporating additional technical indicators or risk management strategies.
 
 # Initial Questions 
+1. Is the strategy profitable in a backtest? Does it beat the benchmark strategy?
+2. What are the return metrics?  Sharpe ratio? Sortino?  Max Drawdown? 
+
 
 # Exploring the Data
+This section provides insights into the data exploration process, outlining key steps and visualizations generated from the historical stock market data.
+
+### 1. Data Retrieval
+
+#### Ticker: NQ=F (Default)
+- The project retrieves historical stock market data for the E-mini Nasdaq 100 (NQ) futures contract as the default ticker.
+- Users can modify the ticker by providing input during script execution.
+
+#### Date Range: Last 30 Days
+- Data is fetched with daily intervals, covering the last 30 days.
+
+### 2. Pivot Points and Technical Levels
+
+#### Calculation
+- Pivot points, support levels (S1, S2, S3), and resistance levels (R1, R2, R3) are calculated based on traditional pivot point analysis.
+
+#### Data Organization
+- The calculated pivot points and related prices are structured into a Pandas DataFrame named `pivot_data`.
+
+#### Last Calculated Pivot Points
+- The last row of pivot points (excluding the most recent data) is extracted and printed for informational purposes.
+
+### 3. Data Visualization
+
+#### Line Plot
+- A line plot is generated using Seaborn and Matplotlib.
+- It visualizes historical stock prices along with calculated pivot points, support, and resistance levels.
+- The plot provides a clear representation of price movements and key technical levels over the specified date range.
+
+
+![pivoutput](https://github.com/guzmanwolfrank/QuantTrading/assets/29739578/daad56b4-75e0-430c-b9fe-8edece707941)
+
+
+#### Pivot Data Print
+- Using .iloc method, a specific date is requested from the dataframe that shows that dates price and pivot levels. 
+- It visualizes  stock prices along with calculated pivot points, support, and resistance levels.
+
+
+![nqpivots](https://github.com/guzmanwolfrank/QuantTrading/assets/29739578/cceba7b9-f8d2-4150-b8d7-b6db54b332f5)
+
+
+#### Dataframe 
+- A pandas dataframe is displayed after runing the script. 
+- The dataframe shows a table with Open, High, Low, and Close stock prices along with calculated pivot points, support, and resistance levels.
+
+![pivdata](https://github.com/guzmanwolfrank/QuantTrading/assets/29739578/1d389fe4-14eb-4cff-ac73-4b5da6d37834)
 
 # Visualizations 
 
+
+
 # Findings 
 
+
+
+
+
+
 # Conclusion
+
+
+
 
 ## Tech Stack 
 yfinance==0.2.18  </br>
