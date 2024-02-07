@@ -134,7 +134,7 @@ This section provides insights into the data exploration process, outlining key 
 #### Line Plot
 - A line plot is generated using Seaborn and Matplotlib.
 - It visualizes hypothetical daily returns for the backtest.
-![hypdailyreturns](https://github.com/guzmanwolfrank/QuantTrading/assets/29739578/8f1220aa-c490-40b9-a5fd-c0ce23ce0333)
+![hypotheticalreturnsimage](https://github.com/guzmanwolfrank/QuantTrading/assets/29739578/d3d7957a-38a2-423c-9e37-a018e1ae8be9)
 
 #### QuantStats HTML Tearsheet 
 - QuantStats module prints results and risk metrics to an external webpage.  You can save it locally or to your online Github repository. 
