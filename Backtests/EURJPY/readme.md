@@ -140,11 +140,7 @@ This section provides insights into the data exploration process, outlining key 
 - QuantStats module prints results and risk metrics to an external webpage.  You can save it locally or to your online Github repository. 
 ![quanstatsEURJPY](https://github.com/guzmanwolfrank/QuantTrading/assets/29739578/da00608d-b1b7-4196-b3d2-70b69874f835)
 
-![viz1](https://github.com/guzmanwolfrank/QuantTrading/assets/29739578/cce4a7a0-6c19-4428-91c4-ab88369a2000)
 
-![viz2](https://github.com/guzmanwolfrank/QuantTrading/assets/29739578/2e4ebd09-335f-4371-b952-19d911a0bd9e)
-
-![hypdailyreturns](https://github.com/guzmanwolfrank/QuantTrading/assets/29739578/b0561cac-5d53-49e3-a193-eb6057edc023)
 
 # Findings 
 
