@@ -147,7 +147,7 @@ Profitability: The algorithm achieved a positive overall profit (14.37%) over th
 Win Rate: The algorithm maintained a win rate of [55.85%] over the backtesting period, indicating that it captured a significant portion of positive trades.
 Risk Management: The implemented risk management measures effectively limited drawdowns and protected the capital.
 <br/>
-Areas for Improvement:
+**Areas for Improvement**
 <br/>
 Drawdown Optimization: While drawdowns were controlled, further optimization could potentially reduce their extent without significantly impacting profitability.
 <br/>
