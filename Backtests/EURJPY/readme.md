@@ -143,7 +143,7 @@ This section provides insights into the data exploration process, outlining key 
 
 # Findings 
 
-Profitability: The algorithm achieved a positive overall profit (14.37%) over the backtesting period. This suggests that the Pivot Strategy was able to successfully identify profitable trading opportunities.
+**Profitability**: The algorithm achieved a positive overall profit (14.37%) over the backtesting period. This suggests that the Pivot Strategy was able to successfully identify profitable trading opportunities.<br/>
 Win Rate: The algorithm maintained a win rate of [55.85%] over the backtesting period, indicating that it captured a significant portion of positive trades.<br/>
 Risk Management: The implemented risk management measures effectively limited drawdowns and protected the capital.
 <br/>
