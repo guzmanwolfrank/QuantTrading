@@ -137,8 +137,9 @@ This section provides insights into the data exploration process, outlining key 
 
 #### QuantStats HTML Tearsheet 
 - QuantStats module prints results and risk metrics to an external webpage.  You can save it locally or to your online Github repository. 
-![quanstatsEURJPY](#)
-
+![qs1](https://github.com/guzmanwolfrank/QuantTrading/assets/29739578/c9fbed7c-04d0-4b89-9fc2-559994c06ab0)
+![qs2](https://github.com/guzmanwolfrank/QuantTrading/assets/29739578/c28e9bce-fde2-47e9-85d6-b2715dcec5c6)
+![qs3](https://github.com/guzmanwolfrank/QuantTrading/assets/29739578/2f86567c-dcbb-4aaf-a482-8a69f887a5a0)
 
 
 # Findings 
