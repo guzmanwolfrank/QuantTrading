@@ -10,8 +10,8 @@ import matplotlib.pyplot as plt
 
 
 # Account information
-OANDA_ACCESS_TOKEN = "987464a00c47a9b186fcc7a93a9404a6-bf2ecb97ae681e4edeb529adef404b09"
-ACCOUNT_ID = "101-001-8028197-001"
+OANDA_ACCESS_TOKEN = "access key"
+ACCOUNT_ID = "account number"
 access_token = OANDA_ACCESS_TOKEN
 accountID = ACCOUNT_ID
 client = oandapyV20.API(access_token=access_token)
@@ -122,4 +122,4 @@ benchmark = qs.utils.download_returns('eurjpy=X') # note ticker format
 qs.reports.full(returns_series , benchmark)
 #qs.reports.full(benchmark)
 # Html Tearsheet
-#qs.reports.html(returns_series , benchmark=benchmark)
+qs.reports.html(returns_series , benchmark=benchmark)
