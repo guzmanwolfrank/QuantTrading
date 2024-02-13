@@ -48,13 +48,13 @@ To develop and implement a backtest for an algorithm on the OANDA FX brokerage p
 This section outlines the key deliverables and artifacts associated with the project, providing a comprehensive overview of what users can expect from the codebase.
 
 
-### 1. Jupyter Notebook 
-   - **File:** `Notebook.ipynb`
-   - **Description:** Jupyter notebook that performs the following tasks:
+### 1. Jupyter Notebook & Python Script
+   - **Files:** `Notebook.ipynb`, 'Notebook.py'
+   - **Description:** Jupyter notebook and python script that perform the following tasks:
       - Downloads historical stock market data for a specified ticker.
       - Calculates pivot points.
-      - Visualizes historical stock price movements, pivot points, and technical levels using Seaborn and Matplotlib.
-      - Displays relevant information, including the last calculated pivot points.
+      - Deploys strategy and records historical stock price movements, pivot points, and technical levels.
+      - Displays relevant information, including the last calculated pivot points and QuantStats module output.
 
 
 ### 2. README
@@ -190,7 +190,7 @@ oandapyV20==0.6.3 <br/>
 
 
 ```bash
-pip install yfinance pandas seaborn matplotlib
+pip install yfinance pandas seaborn matplotlib oandapyV20
 
 #
 
