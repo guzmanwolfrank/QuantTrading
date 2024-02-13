@@ -157,26 +157,23 @@ Market Adaptability: Evaluating the algorithm's performance across different mar
 
 # Conclusion
 
-The backtest demonstrates the potential of the EURUSD Pivot Strategy to generate profitable trading signals. However, further optimization and testing are recommended to address the identified areas for improvement and ensure robustness in live market conditions.
+The backtest demonstrates the potential of the EURJPY Pivot Strategy to generate profitable trading signals. However, further optimization and testing are recommended to address the identified areas for improvement and ensure robustness in live market conditions.
 
 Disclaimer: These findings are based solely on the backtesting results and may not necessarily translate to consistent profitability in live trading.
 
 
 
 ## Tech Stack 
-yfinance==0.2.18  </br>
-seaborn==0.12.2 </br>
+seaborn==0.12.2 <br/>
 pandas==2.0.3 <br/>
 matplotlib==3.7.2 <br/>
 QuantStats==0.0.62 <br/>
-numpy== 1.24.3   <br/>
-
-
+oandapyV20==0.6.3 <br/>
 
 
     Software: Python 3.11, VS Code, Jupyter Notebook
     Languages:  Python
-    Modules: Seaborn, Pandas, Yfinance, Matplotlib
+    Modules: Seaborn, Pandas, oandapyV20, Matplotlib, QuantStats
 
 ## Project Structure
 
