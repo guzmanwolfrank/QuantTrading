@@ -143,13 +143,16 @@ This section provides insights into the data exploration process, outlining key 
 
 # Findings 
 
-Profitability: The algorithm achieved a positive overall profit (73.86%) over the backtesting period. This suggests that the Pivot Strategy was able to successfully identify profitable trading opportunities.
-Win Rate: The algorithm maintained a win rate of [77.47%] over the backtesting period, indicating that it captured a significant portion of positive trades.
+Profitability: The algorithm achieved a positive overall profit (14.37%) over the backtesting period. This suggests that the Pivot Strategy was able to successfully identify profitable trading opportunities.
+Win Rate: The algorithm maintained a win rate of [55.85%] over the backtesting period, indicating that it captured a significant portion of positive trades.
 Risk Management: The implemented risk management measures effectively limited drawdowns and protected the capital.
+<br/>
 Areas for Improvement:
-
+<br/>
 Drawdown Optimization: While drawdowns were controlled, further optimization could potentially reduce their extent without significantly impacting profitability.
+<br/>
 Signal Refinement: Analyzing false positives and missed opportunities could lead to refining the signal generation rules for enhanced accuracy.
+<br/>
 Market Adaptability: Evaluating the algorithm's performance across different market conditions (trending, ranging, volatile) can reveal potential weaknesses and suggest adaptation strategies.
 
 # Conclusion
@@ -206,7 +209,7 @@ pip install -r requirements.txt
 
 Run the Script:
 $bash
-python wolfpivots.py
+python notebook.py
 
 ```
 
