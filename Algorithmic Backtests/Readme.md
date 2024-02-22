@@ -1,6 +1,7 @@
 # Backtests 
 
-Here are a few backtests 
+A collection of Algorithmic Backtests. 
+
 
 
 #### [EURJPY Strat](https://github.com/guzmanwolfrank/QuantTrading/tree/main/Backtests/EURJPY): This project is a backtest on EURJPY based on pivot data.     
