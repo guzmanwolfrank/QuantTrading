@@ -114,8 +114,18 @@ This section provides insights into the data exploration process, outlining key 
 - The project retrieves historical stock market data for the EURJPY as the default ticker.
 - Users can modify the ticker directly into the notebook.
 
-#### Date Range: Last 30 Days
+#### Date Range: 
+<br/>
+granularity = 'D'  # Daily data 
+<br/>
+start_date = '01-01-2022'
+<br/>
+end_date = '01-01-2023'
+<br/>
+
 - Data is fetched with daily intervals, covering the last year.
+
+<br/>
 
 ### 2. Pivot Points and Technical Levels
 
