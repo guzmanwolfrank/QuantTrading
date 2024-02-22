@@ -1,5 +1,5 @@
 #  Quant Trading
-A collection of algo rithmic backtests and trading tools written in python.
+A collection of algorithmic backtests and trading tools written in python.
 
 
 
