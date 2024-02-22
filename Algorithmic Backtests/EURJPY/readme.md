@@ -116,9 +116,12 @@ This section provides insights into the data exploration process, outlining key 
 
 #### Date Range: 
 <br/>
-granularity = 'D'  # Daily data
+granularity = 'D'  # Daily data 
+<br/>
 start_date = '01-01-2022'
+<br/>
 end_date = '01-01-2023'
+<br/>
 
 - Data is fetched with daily intervals, covering the last year.
 
