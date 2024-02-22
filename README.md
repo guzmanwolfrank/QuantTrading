@@ -3,7 +3,7 @@ A collection of algorithmic backtests and trading tools written in python.
 
 
 
-#### [Algorithmic Backtests](https://github.com/guzmanwolfrank/QuantTrading/tree/main/Backtests): This folder contains algorithmic backtest programs and projects.     
+#### [Algorithmic Backtests](https://github.com/guzmanwolfrank/QuantTrading/tree/main/Algorithmic%20Backtests): This folder contains algorithmic backtest programs and projects.     
 
 ![299770993-136bf05a-9b74-4ee7-8951-b28983e4e3e5](https://github.com/guzmanwolfrank/QuantTrading/assets/29739578/1a35e249-dcd5-45ed-8b8e-326ebc8fefd4)
 
