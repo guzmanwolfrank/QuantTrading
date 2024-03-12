@@ -53,7 +53,7 @@ data['Balance'] = initial_balance + data['cumulative_profit']
 data['returns'] = data['Profit'] / data['Balance']
 
 # Display the data
-display(data)
+print(data)
 
 # Display performance metrics using quantstats
 qs.reports.full(data['returns'])
