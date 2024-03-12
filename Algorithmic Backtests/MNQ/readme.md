@@ -8,7 +8,7 @@ Backtest using pivots on MNQ24.
 @guzmanwolfrank : Github 
 
 
-![qimage](https://github.com/guzmanwolfrank/QuantTrading/assets/29739578/136bf05a-9b74-4ee7-8951-b28983e4e3e5)
+![mnqchart](https://github.com/guzmanwolfrank/QuantTrading/assets/29739578/55ad6326-bd1b-4fa5-8c05-af5a98800868)
 
 
 # Project Overview 
