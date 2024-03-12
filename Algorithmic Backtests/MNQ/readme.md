@@ -1,7 +1,3 @@
-Backtest using pivots on MNQ24.
-
-
-
 # MNQ Pivot Strategy Backtest 
 #
 ### by Wolfrank Guzman 
