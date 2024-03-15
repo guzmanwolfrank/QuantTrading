@@ -13,3 +13,15 @@ A collection of Algorithmic Backtests.
     Languages:  Python
     Modules: Seaborn, Pandas, oandapyV20, Matplotlib, numpy, Plotly, QuantStats, datetime
 
+
+
+
+#### [MNQ Strat](#): This project is a backtest on MNQ based on pivot data.     
+
+![mnqchart](https://github.com/guzmanwolfrank/QuantTrading/assets/29739578/55ad6326-bd1b-4fa5-8c05-af5a98800868)
+
+
+
+    Software: Python 3.11, VS Code, Jupyter Notebook
+    Languages:  Python
+    Modules:  Pandas,Yfinance, QuantStats, datetime
