@@ -30,8 +30,7 @@ A collection of Algorithmic Backtests.
 #### [MNQ Range](https://github.com/guzmanwolfrank/QuantTrading/tree/main/Algorithmic%20Backtests/MNQRange): This machine learning project aims to predict future closing prices after measuring MNQ price ranges in the first 45 minutes of the Equities Open along with the Daily Price Change and Day's Range from High to Low. 
 We will be looking for correlations using Seaborn visualizations, Pandas Dataframes, sci-kit module and YFinance downloaded data.
 
-
-![mnqchart](#)
+![MNQRange](https://github.com/guzmanwolfrank/QuantTrading/assets/29739578/ce6de23c-e583-4574-bb3d-a5a71c3b9509)
 
 
 
