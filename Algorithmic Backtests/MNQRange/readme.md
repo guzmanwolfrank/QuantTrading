@@ -1,5 +1,4 @@
-read me goes here
-
+MNQ Range 
 #
 ### by Wolfrank Guzman 
 @guzmanwolfrank : Github 
@@ -10,7 +9,8 @@ read me goes here
 
 # Project Overview 
 
-This project creates a backtest based on the MNQ Pivot point prices.  
+This machine learning project aims to predict future closing prices after measuring MNQ price ranges in the first 45 minutes of the Equities Open along with the Daily Price Change and Day's Range from High to Low.
+We will be looking for correlations using Seaborn visualizations, Pandas Dataframes, sci-kit module and YFinance downloaded data.
 
 ### To view the project's Jupyter notebook, click [here](#)
 
