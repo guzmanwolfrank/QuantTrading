@@ -16,7 +16,7 @@ A collection of Algorithmic Backtests.
 
 
 
-#### [MNQ_Pivot](https://github.com/guzmanwolfrank/QuantTrading/tree/main/Algorithmic%20Backtests/MNQ): This project is a backtest on MNQ based on pivot data.     
+#### [MNQ_Pivot](https://github.com/guzmanwolfrank/QuantTrading/tree/main/Algorithmic%20Backtests/MNQ_Pivot): This project is a backtest on MNQ based on pivot data.     
 
 ![mnqchart](https://github.com/guzmanwolfrank/QuantTrading/assets/29739578/55ad6326-bd1b-4fa5-8c05-af5a98800868)
 
