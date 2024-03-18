@@ -205,7 +205,7 @@ pip install -r requirements.txt
 
 Run the Script:
 $bash
-python XXXXXX.py
+python mnqpivotsbt.py
 
 ```
 
