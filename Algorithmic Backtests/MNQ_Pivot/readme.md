@@ -11,7 +11,7 @@
 
 This project creates a backtest based on the MNQ Pivot point prices.  
 
-### To view the project's Jupyter notebook, click [here](#)
+### To view the project's Jupyter notebook, click [here](https://github.com/guzmanwolfrank/QuantTrading/blob/quanttrading4/Algorithmic%20Backtests/MNQ_Pivot/mnqpivotsbt.ipynb)
 
 # Data Description
 
