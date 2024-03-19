@@ -11,7 +11,7 @@
 
 This project creates a backtest based on the MNQ Pivot point prices.  
 
-### To view the project's Jupyter notebook, click [here](#)
+### To view the project's Jupyter notebook, click [here](https://github.com/guzmanwolfrank/QuantTrading/blob/main/Algorithmic%20Backtests/MNQ_Pivot/mnqpivotsbt.ipynb)
 
 # Data Description
 
@@ -205,7 +205,7 @@ pip install -r requirements.txt
 
 Run the Script:
 $bash
-python XXXXXX.py
+python mnqpivotsbt.py
 
 ```
 
