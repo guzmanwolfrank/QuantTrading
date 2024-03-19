@@ -145,14 +145,14 @@ Further exploration and fine-tuning of the strategy parameters may offer opportu
 -
 -
 
-**Sharpe Ratio**: Strategy// 5.78
-                  Benchmark// 0.13
+**Sharpe Ratio**: <br> Strategy// 5.78
+                  <br> Benchmark// 0.13
 
-**Sortino Ratio**: Strategy//144.43
-                   Benchmark// 0.23
+**Sortino Ratio**: <br>Strategy//144.43
+                   <br>Benchmark// 0.23
 
-**Max Drawdown**:  Strategy//-0.17
-                   Benchmark//-2.64 
+**Max Drawdown**:  <br>Strategy//-0.17
+                   <br>Benchmark//-2.64 
 
 # Conclusion
 The Python script facilitates intraday price data analysis and the implementation of a trading strategy focused on pivot points and moving averages. 
