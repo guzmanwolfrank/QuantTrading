@@ -87,27 +87,26 @@ This section outlines the key deliverables and artifacts associated with the pro
    - **File:** `requirements.txt` 
 
 # Goals
+## Goals
 
-Successful Algorithm Implementation.
-Seamlessly integrate the algorithm with the OANDA FX brokerage API.
-Ensure accurate execution of trades based on generated signals.
-Implement robust error handling and risk management mechanisms.
+The primary goal of this project is to provide a Python script that facilitates the analysis of intraday price data for the "MNQ=F" ticker symbol, focusing on the following objectives:
 
-Effective Trading Performance:
+1. **Data Processing**: Develop a robust data processing pipeline to fetch, clean, and analyze intraday price data using Python libraries such as `yfinance` and `pandas`.
 
-Generate consistent and profitable trading results in live market conditions.
-Evaluate and optimize the algorithm's performance through backtesting and forward testing.
-Fine-tune signal generation and trade execution parameters for optimal outcomes.
-Comprehensive Monitoring and Analysis:
+2. **Technical Analysis**: Implement common technical analysis techniques, including the calculation of pivot points, support/resistance levels, and moving averages, to identify potential trading opportunities and trends in the market.
 
-Develop a system to track and analyze the algorithm's performance in real-time.
-Generate detailed performance reports, including profit and loss statements, drawdowns, win rates, and other key metrics.
-Identify areas for improvement and make necessary adjustments to the algorithm.
-Continuous Evaluation and Improvement:
+3. **Signal Generation**: Generate signals based on predefined criteria, such as pivot point comparisons with opening prices, to assist traders in making informed decisions regarding entry and exit points in the market.
 
-Regularly review and assess the algorithm's performance in response to changing market conditions.
-Adapt and refine the algorithm as needed to maintain its effectiveness.
-Explore potential enhancements, such as incorporating additional technical indicators or risk management strategies.
+4. **Profitability Metrics**: Calculate profitability metrics, including profit per trade, cumulative profit, and returns, to evaluate the performance of the trading strategy over time and assess its effectiveness in generating profits.
+
+5. **Performance Evaluation**: Provide comprehensive performance evaluation tools using the `quantstats` library to analyze the strategy's performance relative to a benchmark, offering insights into its profitability and risk-adjusted returns.
+
+6. **Accessibility and Customization**: Ensure that the script is well-documented, easy to understand, and customizable, allowing users to modify parameters and adapt the analysis to their specific requirements and preferences.
+
+7. **Educational Resource**: Serve as an educational resource for individuals interested in learning about intraday trading strategies, technical analysis techniques, and quantitative finance concepts through practical examples and hands-on experimentation.
+
+By achieving these goals, this project aims to empower traders and analysts with the tools and insights necessary to make informed decisions in the dynamic and fast-paced world of intraday trading.
+
 
 # Initial Questions 
 1. Is the strategy profitable in a backtest? Does it beat the benchmark strategy?
