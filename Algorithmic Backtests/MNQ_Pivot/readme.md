@@ -87,7 +87,6 @@ This section outlines the key deliverables and artifacts associated with the pro
    - **File:** `requirements.txt` 
 
 # Goals
-## Goals
 
 The primary goal of this project is to provide a Python script that facilitates the analysis of intraday price data for the "MNQ=F" ticker symbol, focusing on the following objectives:
 
