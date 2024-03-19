@@ -114,7 +114,6 @@ By achieving these goals, this project aims to empower traders and analysts with
 
 # Findings 
 
-## Findings
 
 ### Backtest Profitability
 
