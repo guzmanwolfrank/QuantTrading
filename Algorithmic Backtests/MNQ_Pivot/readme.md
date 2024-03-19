@@ -119,6 +119,11 @@ By achieving these goals, this project aims to empower traders and analysts with
 
 The conducted backtest analysis reveals that the strategy exhibits profitability over the specified time period. By leveraging technical analysis indicators such as pivot points and moving averages, the strategy identifies potential trading opportunities effectively, resulting in positive returns.
 
+**Benchmark**:  2.0%
+
+**Cumulative Return**:  293.67%
+
+
 ### Benchmark Comparison
 
 In comparison to the benchmark strategy, the developed trading strategy demonstrates promising performance. While further analysis is warranted, initial findings suggest that the strategy outperforms the benchmark in terms of profitability and risk-adjusted returns.
@@ -133,6 +138,21 @@ In comparison to the benchmark strategy, the developed trading strategy demonstr
 
 Further exploration and fine-tuning of the strategy parameters may offer opportunities for enhancing performance metrics and refining risk management strategies.
 
+-
+-
+-
+-
+-
+-
+
+**Sharpe Ratio**: <br> Strategy// 5.78
+                  <br> Benchmark// 0.13
+
+**Sortino Ratio**: <br>Strategy//144.43
+                   <br>Benchmark// 0.23
+
+**Max Drawdown**:  <br>Strategy//-0.17
+                   <br>Benchmark//-2.64 
 
 # Conclusion
 The Python script facilitates intraday price data analysis and the implementation of a trading strategy focused on pivot points and moving averages. 
