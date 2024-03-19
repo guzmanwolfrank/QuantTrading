@@ -114,46 +114,6 @@ Explore potential enhancements, such as incorporating additional technical indic
 2. What are the return metrics?  Sharpe ratio? Sortino?  Max Drawdown? 
 
 
-# Exploring the Data
-This section provides insights into the data exploration process, outlining key steps and visualizations generated from the historical market data.
-
-### 1. Data Retrieval
-
-#### Ticker: MNQ (Default)
-- The project retrieves historical stock market data for the MNQ as the default ticker.
-- Users can modify the ticker directly into the notebook.
-
-#### Date Range: 
-<br/>
-granularity = 'D'  # Daily data 
-<br/>
-start_date = "2024-03-01"
-<br/>
-end_date = "2024-03-11"
-<br/>
-
-- Data is fetched with daily intervals, covering the last year.
-
-<br/>
-
-### 2. Pivot Points and Technical Levels
-
-#### Calculation
-- Pivot points, are calculated based on traditional pivot point analysis.
-
-#### Data Organization
-- The calculated pivot points and related prices are structured into a Pandas DataFrame named `data`.
-
-#### Last Calculated Pivot Points
-- The appropiate entry of pivot points (excluding the most recent data) is extracted and printed for informational purposes.
-
-### 3. Data Visualization
-
-#### QuantStats HTML Tearsheet 
-- QuantStats module prints results and risk metrics to an external webpage.  You can save it locally or to your online Github repository. 
-
-
-
 # Findings 
 
 **Profitability**: The algorithm achieved a positive overall profit (XXXXX%) over the backtesting period. This suggests that the Pivot Strategy was able to successfully identify profitable trading opportunities.<br/>
