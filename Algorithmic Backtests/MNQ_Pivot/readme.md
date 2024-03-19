@@ -145,6 +145,7 @@ Ultimately, this project serves as a practical tool for traders and an education
 ## Tech Stack 
 pandas==2.0.3 <br/>
 QuantStats==0.0.62 <br/>
+yfinance==0.2.18 <br/>
 
 
     Software: Python 3.11, VS Code, Jupyter Notebook
