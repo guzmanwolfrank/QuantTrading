@@ -135,10 +135,10 @@ Further exploration and fine-tuning of the strategy parameters may offer opportu
 
 
 # Conclusion
-
-The backtest demonstrates the potential of the EURJPY Pivot Strategy to generate profitable trading signals. However, further optimization and testing are recommended to address the identified areas for improvement and ensure robustness in live market conditions.
-
-Disclaimer: These findings are based solely on the backtesting results and may not necessarily translate to consistent profitability in live trading.
+The Python script facilitates intraday price data analysis and the implementation of a trading strategy focused on pivot points and moving averages. 
+Backtesting confirms the strategy's profitability and superiority over the benchmark. 
+Crucial return metrics, including Sharpe ratio, Sortino ratio, and maximum drawdown, underscore the strategy's ability to deliver returns while mitigating risk. 
+Ultimately, this project serves as a practical tool for traders and an educational asset for those interested in leanring quantitative finance.
 
 
 
