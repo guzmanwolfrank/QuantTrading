@@ -17,25 +17,25 @@ This project creates a backtest based on the MNQ Pivot point prices.
 
 This Python script utilizes various financial libraries to analyze intraday data of a specific ticker symbol, calculating pivot points, moving averages, and profitability metrics. Below is a breakdown of the data processing steps:
 
-#### Fetching Data: Intraday data for the last 30 days with 15-minute intervals is fetched using the yfinance library for the ticker symbol "MNQ=F" (Micro E-mini Nasdaq 100 Futures).
+**Fetching Data**: Intraday data for the last 30 days with 15-minute intervals is fetched using the yfinance library for the ticker symbol "MNQ=F" (Micro E-mini Nasdaq 100 Futures).
 
-#### Calculation of Pivot Points: Pivot points are calculated for each 15-minute interval using the high, low, and close prices. Support and resistance levels are derived from these pivot points using specific formulas.
+**Calculation of Pivot Points**: Pivot points are calculated for each 15-minute interval using the high, low, and close prices. Support and resistance levels are derived from these pivot points using specific formulas.
 
-#### Moving Average: A 10-period moving average is calculated for the close price to smooth out fluctuations.
+**Moving Average**: A 10-period moving average is calculated for the close price to smooth out fluctuations.
 
-#### Signal Generation: A signal column is created where a value of 1 is assigned whenever the pivot point is greater than the opening price, indicating a potential bullish signal.
+**Signal Generation**: A signal column is created where a value of 1 is assigned whenever the pivot point is greater than the opening price, indicating a potential bullish signal.
 
-#### Profit Calculation: Profit is calculated based on the change in price, with each point of change in the "MNQ" futures contract representing a profit of 2 dollars. Positions are opened at the opening price and closed at the closing price of the same day.
+**Profit Calculation**: Profit is calculated based on the change in price, with each point of change in the "MNQ" futures contract representing a profit of 2 dollars. Positions are opened at the opening price and closed at the closing price of the same day.
 
-#### Performance Metrics: Performance metrics such as cumulative profit, balance, and returns are calculated using the quantstats library.
+** Performance Metrics**: Performance metrics such as cumulative profit, balance, and returns are calculated using the quantstats library.
 
-#### Initial Balance: An initial balance of $10,000 is considered for the trading simulation.
+**Initial Balance**: An initial balance of $10,000 is considered for the trading simulation.
 
-#### Display: The processed data including pivot points, moving averages, signals, and profitability metrics are displayed for analysis.
+**Display**: The processed data including pivot points, moving averages, signals, and profitability metrics are displayed for analysis.
 
-#### Performance Report: Performance metrics are displayed using the quantstats library, offering insights into the trading strategy's effectiveness compared to a benchmark (in this case, the "MNQ=F" ticker).
+**Performance Report**: Performance metrics are displayed using the quantstats library, offering insights into the trading strategy's effectiveness compared to a benchmark (in this case, the "MNQ=F" ticker).
 
-#### HTML Tearsheet (Optional): An HTML tearsheet can be generated to provide a visual summary of the trading strategy's performance compared to the benchmark.
+**HTML Tearsheet (Optional)**: An HTML tearsheet can be generated to provide a visual summary of the trading strategy's performance compared to the benchmark.
 
 Note: The profitability metrics and performance evaluation are based on simulated trading and should not be considered as financial advice.
 
