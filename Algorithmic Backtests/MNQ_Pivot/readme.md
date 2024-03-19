@@ -27,7 +27,7 @@ This Python script utilizes various financial libraries to analyze intraday data
 
 **Profit Calculation**: Profit is calculated based on the change in price, with each point of change in the "MNQ" futures contract representing a profit of 2 dollars. Positions are opened at the opening price and closed at the closing price of the same day.
 
-** Performance Metrics**: Performance metrics such as cumulative profit, balance, and returns are calculated using the quantstats library.
+**Performance Metrics**: Performance metrics such as cumulative profit, balance, and returns are calculated using the quantstats library.
 
 **Initial Balance**: An initial balance of $10,000 is considered for the trading simulation.
 
