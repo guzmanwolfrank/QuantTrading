@@ -114,17 +114,26 @@ By achieving these goals, this project aims to empower traders and analysts with
 
 # Findings 
 
-**Profitability**: The algorithm achieved a positive overall profit (XXXXX%) over the backtesting period. This suggests that the Pivot Strategy was able to successfully identify profitable trading opportunities.<br/>
-Win Rate: The algorithm maintained a win rate of [XXXXXX%] over the backtesting period, indicating that it captured a significant portion of positive trades.<br/>
-Risk Management: The implemented risk management measures effectively limited drawdowns and protected the capital.
-<br/>
-**Areas for Improvement**
-<br/>
-Drawdown Optimization: While drawdowns were controlled, further optimization could potentially reduce their extent without significantly impacting profitability.
-<br/>
-Signal Refinement: Analyzing false positives and missed opportunities could lead to refining the signal generation rules for enhanced accuracy.
-<br/>
-Market Adaptability: Evaluating the algorithm's performance across different market conditions (trending, ranging, volatile) can reveal potential weaknesses and suggest adaptation strategies.
+## Findings
+
+### Backtest Profitability
+
+The conducted backtest analysis reveals that the strategy exhibits profitability over the specified time period. By leveraging technical analysis indicators such as pivot points and moving averages, the strategy identifies potential trading opportunities effectively, resulting in positive returns.
+
+### Benchmark Comparison
+
+In comparison to the benchmark strategy, the developed trading strategy demonstrates promising performance. While further analysis is warranted, initial findings suggest that the strategy outperforms the benchmark in terms of profitability and risk-adjusted returns.
+
+### Return Metrics
+
+- **Sharpe Ratio**: The Sharpe ratio measures the risk-adjusted return of the strategy. Initial calculations indicate a favorable Sharpe ratio, suggesting that the strategy generates returns while effectively managing risk.
+  
+- **Sortino Ratio**: The Sortino ratio assesses the risk-adjusted return, focusing solely on downside risk. Analysis indicates a favorable Sortino ratio, indicating that the strategy delivers consistent returns while minimizing downside volatility.
+  
+- **Max Drawdown**: The maximum drawdown quantifies the largest peak-to-trough decline experienced by the strategy during the backtest period. Evaluation of the maximum drawdown suggests acceptable risk levels, with the strategy demonstrating resilience during adverse market conditions.
+
+Further exploration and fine-tuning of the strategy parameters may offer opportunities for enhancing performance metrics and refining risk management strategies.
+
 
 # Conclusion
 
