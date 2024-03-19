@@ -152,13 +152,6 @@ yfinance==0.2.18 <br/>
     Languages:  Python
     Modules: YFinance, Pandas, QuantStats
 
-## Project Structure
-
-- **README:**
-  - **Description:** This document provides an overview of the project, its purpose, and instructions for running and understanding the code.
-
-- **Python Script:**
-  - **Description:** The main script written in Python that fetches financial data, calculates pivot points, and visualizes the historical stock price movements.
 
 ## Dependencies
 
