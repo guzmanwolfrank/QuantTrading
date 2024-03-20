@@ -11,6 +11,10 @@
 
 This project analyzes Micro E-mini NASDAQ-100 Futures (MNQ) using Python libraries such as `yfinance`, `pandas`, `seaborn`, and `scikit-learn`. It includes data retrieval, preprocessing, visualization, and predictive modeling.
 
+
+### To view the project's Jupyter notebook, click [here](https://github.com/guzmanwolfrank/QuantTrading/blob/main/Algorithmic%20Backtests/MNQRange/MNQrange.ipynb)
+
+
 ## Data Description
 
 The data consists of intraday and historical price information for MNQ fetched using the `yfinance` library. Intraday data covers the last 60 days with 15-minute intervals, while historical data spans one year.
@@ -65,9 +69,6 @@ Ensure you have the following Python libraries installed:
 
 yfinance, pandas, seaborn, matplotlib, numpy, scikit-learn
 
-## Badges
-
-MIT 
 
 ## License
 
