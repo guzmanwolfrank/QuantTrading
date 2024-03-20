@@ -69,6 +69,9 @@ Understanding these findings can aid in structuring a backtest that capitalizes 
 
 ![output](https://github.com/guzmanwolfrank/QuantTrading/assets/29739578/81fa2477-585e-40ba-9ed5-08cf99f1af58)
 
+![output2](https://github.com/guzmanwolfrank/QuantTrading/assets/29739578/5a574666-7f09-4d1c-b6a7-392f58d4168d)
+
+
 ## Conclusion
 
 The analysis provides valuable insights into MNQ price dynamics, enabling better understanding and prediction of future price movements. By leveraging intraday and historical data, along with advanced analytics techniques, this project enhances decision-making in trading and investment strategies.
