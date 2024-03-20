@@ -42,7 +42,7 @@ The project delivers:
 
 1. What are the average opening ranges for different windows of days?
 2. What percentage of the day range is the open-only range?
-3. How do rolling averages compare across different columns and window sizes?
+3. Can we use machine learning to predict futures prices? 
 
 ## Findings
 
