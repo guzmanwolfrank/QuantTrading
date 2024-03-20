@@ -76,6 +76,7 @@ Understanding these findings can aid in structuring a backtest that capitalizes 
 
 The analysis provides valuable insights into MNQ price dynamics, enabling better understanding and prediction of future price movements. By leveraging intraday and historical data, along with advanced analytics techniques, this project enhances decision-making in trading and investment strategies.
 
+In summary, our analysis underscores the significance of the open-only range as a proportion of the day range in understanding intraday volatility for MNQ futures. The observed instances exceeding 35% and 50% highlight substantial fluctuations early in the trading session. Traders may leverage this knowledge to strategically time their trades, particularly within the initial 45 minutes, although caution is warranted for inexperienced traders. Furthermore, the prevalence of 100-point open range values suggests a consistent pattern in intraday volatility. Ultimately, this examination equips traders with valuable insights to optimize trading strategies and navigate market volatility effectively.
 ## Tech Stack
 
 - Python
