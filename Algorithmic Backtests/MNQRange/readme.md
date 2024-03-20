@@ -54,6 +54,20 @@ The project delivers:
 - The percentage of the day range represented by the open-only range varies across instances.
 - Rolling averages highlight trends and fluctuations in absolute day change, open-only range, and day range.
 
+
+The histogram analysis of the open-only range as a percentage of the day range provided valuable insights. Notably, there were **33 instances** where `'OpenOnly_as_PCT_of_DayRange'` exceeded 35%, indicating significant intraday volatility within the MNQ futures contract. Moreover, in **18 instances**, the open-only range surpassed 50% of the day range, highlighting pronounced fluctuations early in the trading session.
+
+The highest frequency count for percentage was **40%**, observed in more than 8 instances, suggesting that the open range typically represents a substantial portion of intraday volatility.
+
+Traders seeking heightened volatility may find it advantageous to trade within the first 45 minutes of the trading session. However, this strategy is not recommended for novices due to its potential complexities.
+
+Additionally, our analysis identified that the most frequent open range value is **100 points**, occurring over 14 times out of the 50-day instances.
+
+Furthermore, our brief examination revealed that negative days tend to exhibit higher volatility in terms of overall intraday range.
+
+Understanding these findings can aid in structuring a backtest that capitalizes on the opening range volatility while assessing abnormal price movements outside of our custom-calculated averages.
+
+
 ## Conclusion
 
 The analysis provides valuable insights into MNQ price dynamics, enabling better understanding and prediction of future price movements. By leveraging intraday and historical data, along with advanced analytics techniques, this project enhances decision-making in trading and investment strategies.
