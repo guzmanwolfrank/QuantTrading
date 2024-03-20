@@ -63,11 +63,11 @@ The analysis provides valuable insights into MNQ price dynamics, enabling better
 
 Ensure you have the following Python libraries installed:
 
-
+yfinance, pandas, seaborn, matplotlib, numpy, scikit-learn
 
 ## Badges
 
-None.
+MIT 
 
 ## License
 
