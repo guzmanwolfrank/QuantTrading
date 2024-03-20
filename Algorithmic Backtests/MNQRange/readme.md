@@ -67,6 +67,7 @@ Furthermore, our brief examination revealed that negative days tend to exhibit h
 
 Understanding these findings can aid in structuring a backtest that capitalizes on the opening range volatility while assessing abnormal price movements outside of our custom-calculated averages.
 
+![output](https://github.com/guzmanwolfrank/QuantTrading/assets/29739578/81fa2477-585e-40ba-9ed5-08cf99f1af58)
 
 ## Conclusion
 
