@@ -18,3 +18,16 @@ A collection of trading tools and snippets.
 #
 
 
+
+
+#### [Wolf RSI Filter](#): This tool helps screen for NQ100 stocks showing a RSI below 30 along with certain volume criteria.     
+
+![WolfRsiFilter](# Image goes here )
+
+
+    Software: Python 3.11, VS Code, Jupyter Notebook
+    Languages:  Python
+    Modules: Pandas,numpy
+
+
+#
