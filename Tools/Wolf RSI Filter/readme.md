@@ -30,4 +30,4 @@ The objective of this program is to build a stock screener that identifies NQ100
     pip install pandas numpy
     ```
 
-3. Run in Jupyter notebook or Python Environment with installed modules. 
+3. Run in Jupyter notebook (.ipynb file) or Python Environment (.py file) with installed modules. 
