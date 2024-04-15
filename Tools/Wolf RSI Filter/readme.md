@@ -22,15 +22,12 @@ The objective of this program is to build a stock screener that identifies NQ100
 - Libraries: pandas, numpy
 
 ## Installation
-1. Clone the repository:
-    ```bash
-    git clone https://github.com/yourusername/NQ100-Stock-Screener.git
+1. Clone the repository.
+ 
     ```
 2. Install the required libraries:
     ```bash
     pip install pandas numpy
     ```
 
-## Usage Example
-```bash
-python stock_screener.py --rsi_threshold 30 --min_days 5 --volume_growth_rate 0.1
+3. Run in Jupyter notebook or Python Environment with installed modules. 
