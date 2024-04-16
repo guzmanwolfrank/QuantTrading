@@ -150,6 +150,5 @@ desktop_path = os.path.join(os.path.expanduser('~'), 'Desktop')
 
 # Save the DataFrame as a CSV file on your desktop
 #df.to_csv(os.path.join(desktop_path, 'bollidf.csv'), index=False)
-import time
-time.sleep(100)
+
 #print("DataFrame 'df' has been saved as 'df.csv' on your desktop.")
