@@ -69,7 +69,7 @@ To run the script:
 
 ## Author
 
-[Wolfrank Guzman/@guzmanwolfrank: github]
+Wolfrank Guzman/@guzmanwolfrank: github
 
 ## License
 
