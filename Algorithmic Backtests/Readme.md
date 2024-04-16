@@ -39,7 +39,7 @@ We will be looking for correlations using Seaborn visualizations, Pandas Datafra
     Modules:  Pandas,Yfinance, QuantStats, datetime, sci-kit 
 
 
-#### [NQRSI](#): This project is a backtest on NQ based on RSI and Bollinger Bands.     
+#### [NQRSI](https://github.com/guzmanwolfrank/QuantTrading/tree/main/Algorithmic%20Backtests/NQRSI): This project is a backtest on NQ based on RSI and Bollinger Bands.     
 
 ![nqrsi](https://github.com/guzmanwolfrank/QuantTrading/assets/29739578/c77421f4-d815-4117-98af-3a4bb6738ed8)
 
