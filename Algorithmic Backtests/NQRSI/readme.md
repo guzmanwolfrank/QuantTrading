@@ -60,7 +60,7 @@ To run the script:
 
 ## Author
 
-[Your Name/Username]
+[Wolfrank Guzman/@guzmanwolfrank: github]
 
 ## License
 
