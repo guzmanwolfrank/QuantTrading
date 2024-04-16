@@ -38,6 +38,9 @@ Sharpe Ratio: 1.8685647200423676
 Sortino Ratio: 3.043519207063549
 Maximum Drawdown: -0.17419477215633627
 
+![image](https://github.com/guzmanwolfrank/QuantTrading/assets/29739578/21c7af35-4a87-4bbf-8704-432e42d27402)
+
+
 ## Conclusion
 
 In conclusion, the Bollinger Bands and RSI trading strategy presented in this Python script demonstrates robust performance metrics and promising returns based on backtesting with NQ Futures data. By leveraging technical indicators such as Bollinger Bands and the Relative Strength Index, the strategy aims to capitalize on market momentum and identify optimal entry and exit points for trades. The comprehensive analysis of performance metrics including Sharpe Ratio, Sortino Ratio, and Maximum Drawdown provides valuable insights into the strategy's risk-adjusted returns and downside protection. Additionally, the visualization generated using QuantStats offers a clear snapshot of the strategy's performance over the backtesting period. Overall, the strategy showcases its potential to generate consistent profits and outperform benchmark indices, making it a compelling option for traders seeking to capitalize on market opportunities. Further refinement and optimization of the strategy parameters could potentially enhance its effectiveness and adaptability across different market conditions.
