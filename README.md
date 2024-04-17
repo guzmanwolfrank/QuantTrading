@@ -2,7 +2,15 @@
 A collection of algorithmic backtests and trading tools written in python.
 
 N.B.:  All backtests are simple and simply looking for return criteria to be fulfilled.  Complex orders, size parlays, and defined stops are calculated in algorithm for deployment. 
-All backtests so far are using Open as the Entry and Close as the exit as long as the signal is triggered or present.  
+All backtests so far are using Open as the entry and Close as the exit as long as the signal is triggered or present.  
+<br>
+Data:  Gathered from Brokerage API using Oanda Forex Brokers, YFinance Python Module 
+<br>
+
+Adjustments:   
+The idea behind these backtests is to look for exponential returns to then refine the system and iterate across various market conditions before adding complexity and retesting.
+After retesting, and adjusting the dataframe with:  Commissions, Slippage (*orders estimated to open price), Order size(Size parlaying can dramatically increase losses and profits, if done correctly, scaling can have exponential returns).
+<br> 
 Add slippage and look at the average open range in order to simulate entering a market order at the open after the signal is present.  By analyzing the range of the first 2 minutes of trading, one can estimate the slippage on entry price off this system. 
 **Work in progress
 
