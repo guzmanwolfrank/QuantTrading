@@ -1,7 +1,10 @@
 #  Quant Trading
 A collection of algorithmic backtests and trading tools written in python.
 
-
+N.B.:  All backtests are simple and simply looking for return criteria to be fulfilled.  Complex orders, size parlays, and defined stops are calculated in algorithm for deployment. 
+All backtests so far are using Open as the Entry and Close as the exit as long as the signal is triggered or present.  
+Add slippage and look at the average open range in order to simulate entering a market order at the open after the signal is present.  By analyzing the range of the first 2 minutes of trading, one can estimate the slippage on entry price off this system. 
+**Work in progress
 
 #### [Algorithmic Backtests](https://github.com/guzmanwolfrank/QuantTrading/tree/main/Algorithmic%20Backtests): This folder contains algorithmic backtest programs and projects.     
 
