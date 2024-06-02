@@ -1,8 +1,11 @@
-# USD/JPY Trading Strategy Backtest
+# SQL Backtest
 
 Wolfrank Guzman: Github @guzmanwolfrank 
 
 This project implements a simple trading strategy that backtests the performance of trading USD/JPY based on a specific strategy using historical data from Yahoo Finance. The strategy sells whenever the open price is under the 50-day moving average.
+
+We then query the data with SQL. 
+
 
 ## Features
 
@@ -21,7 +24,6 @@ This project implements a simple trading strategy that backtests the performance
 
 
 
-## License
 
 ## License
 
