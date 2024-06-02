@@ -44,8 +44,12 @@ cd USD-JPY-Trading-Backtest
 ```bash
 python backtest.py
 
+
 4. The backtest results will be saved to a CSV file named 
 'backtest_results.csv.'
+
+
+#
 
 ## License
 
