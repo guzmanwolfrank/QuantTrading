@@ -54,6 +54,9 @@ The console output will display:
 - Number of trades
 - File paths for the generated output files
 
+![qs](https://github.com/guzmanwolfrank/QuantTrading/assets/29739578/eefc1259-32dd-4437-9323-22b7fc216f29)
+  
+
 ## Customization
 
 You can modify the following parameters in the script:
