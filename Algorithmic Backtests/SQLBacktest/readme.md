@@ -1,8 +1,11 @@
-# USD/JPY Trading Strategy Backtest
+# SQL Backtest
 
 Wolfrank Guzman: Github @guzmanwolfrank 
 
 This project implements a simple trading strategy that backtests the performance of trading USD/JPY based on a specific strategy using historical data from Yahoo Finance. The strategy sells whenever the open price is under the 50-day moving average.
+
+We then query the data with SQL. 
+
 
 ## Features
 
@@ -19,35 +22,8 @@ This project implements a simple trading strategy that backtests the performance
 - yfinance
 - quantstats
 
-## Installation
-
-You can install the required Python packages using pip:
-
-```bash
-pip install yfinance quantstats
 
 
-## Usage
-
-1. Clone the repository:
-
-```bash
-git clone https://github.com/your_username/USD-JPY-Trading-Backtest.git
-
-
-2. Navigate to the project directory: 
-
-```bash
-cd USD-JPY-Trading-Backtest
-
-3. Run the Python script: 
-```bash
-python backtest.py
-
-4. The backtest results will be saved to a CSV file named 
-'backtest_results.csv.'
-
-## License
 
 ## License
 
