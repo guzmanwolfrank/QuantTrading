@@ -1,0 +1,25 @@
+Project
+
+Create a python script that takes a pandas dataframe returns column and displays 
+
+
+sharpe ratio
+sharpe ratio chart 
+returns and returns chart
+trade count histogram
+max drawdown, chart 
+sortino ratio
+standard deviation 
+value at risk 
+drawdown
+average trade profit / loss
+largest profit /loss
+smallest profit/loss
+win pct
+loss pct
+
+
+
+Display it in charts, histograms and line charts using seaborn for python while showing it in html.
+
+create a css file so that the display of returns is two columns with graphs etc. 
