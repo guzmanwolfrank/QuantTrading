@@ -48,15 +48,3 @@ We will be looking for correlations using Seaborn visualizations, Pandas Datafra
     Languages:  Python
     Modules:  Pandas,Yfinance, QuantStats
 
-
-
-
-#### [EURUSD](#): This project is a backtest on MNQ based on pivot data.     
-
-![EURUSD](https://github.com/guzmanwolfrank/QuantTrading/assets/29739578/55ad6326-bd1b-4fa5-8c05-af5a98800868)
-
-
-
-    Software: Python 3.11, VS Code, Jupyter Notebook
-    Languages:  Python
-    Modules:  Pandas,Yfinance, QuantStats, datetime
