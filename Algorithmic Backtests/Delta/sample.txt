@@ -1,0 +1,16 @@
+Nov 15 2024
+
+build an algorithm using python, yfinance, seaborn. 
+
+
+delta open v previous close , higher delta days, and open below close, sell short. 
+
+
+Find the difference between the open at 8:45  and it's previous close, what is the year's average difference?  last 10 days, 20, 50, 200 ? 
+
+Use the MNQ. 
+
+
+On days where the difference, let's call it DELTA, is more than 25%, if the open is lower than the previous close, sell 1 lot mnq and close it at the 3:45pm price. 
+
+
