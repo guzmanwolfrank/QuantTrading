@@ -14,7 +14,8 @@ This tool provides a comprehensive analysis of Average True Range (ATR) metrics 
 - **Volatility Categorization**: Color-coded indicators for low, medium, and high volatility
 - **Dark-themed UI**: Optimized for extended viewing with black background and white text
 - **Automatic Browser Display**: Opens the report in your default web browser
-![Screenshot 2025-03-27 153350](https://github.com/user-attachments/assets/f0c4a2d6-c88c-4cb7-871d-afaa680174d5)
+
+![_C__Users_Wolfrank_Desktop_futures_atr_analysis_20250327_155644 html(iPhone 12 Pro)](https://github.com/user-attachments/assets/502d5d28-524c-4be1-98e0-ee192bbf83ad)
 
 ## Requirements
 The script requires the following Python packages:
