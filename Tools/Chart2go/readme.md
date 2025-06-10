@@ -232,8 +232,8 @@ nq_dashboard.py
 ## 📞 Support
 
 - **Issues**: [GitHub Issues](https://github.com/yourusername/nq-futures-dashboard/issues)
-- **Discussions**: [GitHub Discussions](https://github.com/yourusername/nq-futures-dashboard/discussions)
-- **Email**: your.email@example.com
+- **Discussions**: [GitHub Discussions](https://github.com/guzmanwolfrank/nq-futures-dashboard/discussions)
+- **Email**: wolfrankny@gmail.com
 
 ## 🌟 Acknowledgments
 
