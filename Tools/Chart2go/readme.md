@@ -9,6 +9,9 @@ A professional-grade, real-time dashboard for NASDAQ 100 E-mini Futures (NQ) ana
 
 ## 🚀 Features
 
+![chart2go](https://github.com/user-attachments/assets/c14e8fc7-e41d-40e8-bf9b-d3b72d309e9f)
+
+
 ### Dual Chart System
 - **Weekly Overview Chart** - Last 100 15-minute candles showing recent trend
 - **Intraday Session Chart** - Today's complete trading session (8:30 AM - 4:00 PM)
