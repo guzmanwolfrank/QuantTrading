@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NQ Futures Dashboard</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #0c0c0c 0%, #1a1a1a 100%);
+            color: #e0e0e0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px 0;
+            border-bottom: 2px solid #333;
+        }
+        
+        .header h1 {
+            font-size: 2.5em;
+            color: #00ff88;
+            text-shadow: 0 0 10px rgba(0, 255, 136, 0.3);
+            margin-bottom: 10px;
+        }
+        
+        .subtitle {
+            font-size: 1.1em;
+            color: #888;
+        }
+        
+        .dashboard {
+            display: grid;
+            grid-template-columns: 1fr 350px;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .chart-container {
+            background: rgba(20, 20, 20, 0.8);
+            border-radius: 12px;
+            padding: 20px;
+            border: 1px solid #333;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+        
+        .chart-title {
+            color: #00ff88;
+            font-size: 1.2em;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        
+        .chart-wrapper {
+            position: relative;
+            height: 400px;
+            background: rgba(10, 10, 10, 0.5);
+            border: 1px solid #333;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        
+        .candlestick {
+            position: absolute;
+            width: 3%;
+            height: 100%;
+        }
+        
+        .wick {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 1px;
+            background-color: #888;
+        }
+        
+        .body {
+            position: absolute;
+            left: 20%;
+            width: 60%;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        
+        .candlestick:hover .price-tooltip {
+            display: block;
+        }
+        
+        .price-tooltip {
+            display: none;
+            position: absolute;
+            top: -60px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.9);
+            color: #fff;
+            padding: 8px;
+            border-radius: 4px;
+            font-size: 0.8em;
+            white-space: nowrap;
+            z-index: 100;
+            border: 1px solid #333;
+        }
+        
+        .date-label {
+            position: absolute;
+            bottom: -25px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 0.7em;
+            color: #666;
+            white-space: nowrap;
+        }
+        
+        .stats-panel {
+            background: rgba(20, 20, 20, 0.8);
+            border-radius: 12px;
+            padding: 20px;
+            border: 1px solid #333;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+        
+        .stat-card {
+            background: rgba(30, 30, 30, 0.6);
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-left: 4px solid #00ff88;
+            transition: all 0.3s ease;
+        }
+        
+        .stat-card:hover {
+            background: rgba(40, 40, 40, 0.8);
+            transform: translateX(5px);
+        }
+        
+        .stat-label {
+            font-size: 0.9em;
+            color: #aaa;
+            margin-bottom: 5px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .stat-value {
+            font-size: 1.4em;
+            font-weight: bold;
+            color: #fff;
+        }
+        
+        .price {
+            color: #00ff88;
+            font-size: 1.6em !important;
+        }
+        
+        .volume {
+            color: #4da6ff;
+        }
+        
+        .range {
+            color: #ffaa00;
+        }
+        
+        .footer {
+            text-align: center;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #333;
+            color: #666;
+            font-size: 0.9em;
+        }
+        
+        .legend {
+            margin-top: 10px;
+            text-align: center;
+            font-size: 0.9em;
+        }
+        
+        .legend-item {
+            display: inline-block;
+            margin: 0 15px;
+            color: #888;
+        }
+        
+        .legend-color {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            margin-right: 5px;
+            vertical-align: middle;
+        }
+        
+        .bullish {
+            background-color: #00ff88;
+        }
+        
+        .bearish {
+            background-color: #ff4040;
+        }
+        
+        @media (max-width: 1200px) {
+            .dashboard {
+                grid-template-columns: 1fr;
+            }
+            
+            .stats-panel {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+                gap: 15px;
+            }
+            
+            .stat-card {
+                margin-bottom: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>NQ FUTURES DASHBOARD</h1>
+            <div class="subtitle">NASDAQ 100 E-mini Futures • Candlestick Chart</div>
+        </div>
+        
+        <div class="dashboard">
+            <div class="chart-container">
+                <div class="chart-title">NQ Futures - Last 20 Trading Days</div>
+                <div class="chart-wrapper">
+                    
+            <div class="candlestick" style="left: 2%;">
+                <div class="wick" style="top: 89.83960272285002%; height: 10.160397277149983%;"></div>
+                <div class="body" style="top: 96.94295684018418%; height: 2.9245424363207775%; background-color: #00ff88;"></div>
+                <div class="date-label">05/22</div>
+                <div class="price-tooltip">
+                    O: $17980<br>
+                    H: $18050<br>
+                    L: $17979<br>
+                    C: $18000
+                </div>
+            </div>
+        
+            <div class="candlestick" style="left: 6%;">
+                <div class="wick" style="top: 77.0601210686822%; height: 18.96787434923202%;"></div>
+                <div class="body" style="top: 93.27964769023987%; height: 1.374392922116229%; background-color: #00ff88;"></div>
+                <div class="date-label">05/23</div>
+                <div class="price-tooltip">
+                    O: $18016<br>
+                    H: $18140<br>
+                    L: $18007<br>
+                    C: $18026
+                </div>
+            </div>
+        
+            <div class="candlestick" style="left: 10%;">
+                <div class="wick" style="top: 86.94401588194741%; height: 5.533197301871823%;"></div>
+                <div class="body" style="top: 86.99672924036521%; height: 1.266292342864304%; background-color: #ff4040;"></div>
+                <div class="date-label">05/24</div>
+                <div class="price-tooltip">
+                    O: $18070<br>
+                    H: $18070<br>
+                    L: $18032<br>
+                    C: $18061
+                </div>
+            </div>
+        
+            <div class="candlestick" style="left: 14%;">
+                <div class="wick" style="top: 69.03909785770345%; height: 16.51495796958926%;"></div>
+                <div class="body" style="top: 75.09133928159032%; height: 1%; background-color: #00ff88;"></div>
+                <div class="date-label">05/25</div>
+                <div class="price-tooltip">
+                    O: $18150<br>
+                    H: $18196<br>
+                    L: $18080<br>
+                    C: $18153
+                </div>
+            </div>
+        
+            <div class="candlestick" style="left: 18%;">
+                <div class="wick" style="top: 85.6936994135296%; height: 4.073612934746876%;"></div>
+                <div class="body" style="top: 86.24292822536867%; height: 2.7645799063733847%; background-color: #ff4040;"></div>
+                <div class="date-label">05/26</div>
+                <div class="price-tooltip">
+                    O: $18075<br>
+                    H: $18079<br>
+                    L: $18051<br>
+                    C: $18056
+                </div>
+            </div>
+        
+            <div class="candlestick" style="left: 22%;">
+                <div class="wick" style="top: 82.5593355471292%; height: 14.67186583609903%;"></div>
+                <div class="body" style="top: 86.1554538928737%; height: 1.6098588683656487%; background-color: #ff4040;"></div>
+                <div class="date-label">05/27</div>
+                <div class="price-tooltip">
+                    O: $18076<br>
+                    H: $18101<br>
+                    L: $17998<br>
+                    C: $18065
+                </div>
+            </div>
+        
+            <div class="candlestick" style="left: 26%;">
+                <div class="wick" style="top: 72.14188363512258%; height: 10.965578210778375%;"></div>
+                <div class="body" style="top: 78.67514261537848%; height: 2.9243225618695163%; background-color: #ff4040;"></div>
+                <div class="date-label">05/28</div>
+                <div class="price-tooltip">
+                    O: $18128<br>
+                    H: $18174<br>
+                    L: $18097<br>
+                    C: $18108
+                </div>
+            </div>
+        
+            <div class="candlestick" style="left: 30%;">
+                <div class="wick" style="top: 89.05950428962396%; height: 8.11096918681406%;"></div>
+                <div class="body" style="top: 90.5420093918256%; height: 1%; background-color: #00ff88;"></div>
+                <div class="date-label">05/29</div>
+                <div class="price-tooltip">
+                    O: $18039<br>
+                    H: $18056<br>
+                    L: $17999<br>
+                    C: $18045
+                </div>
+            </div>
+        
+            <div class="candlestick" style="left: 34%;">
+                <div class="wick" style="top: 51.49394849917606%; height: 20.453893706857855%;"></div>
+                <div class="body" style="top: 53.59628646073846%; height: 16.033851052056413%; background-color: #00ff88;"></div>
+                <div class="date-label">05/30</div>
+                <div class="price-tooltip">
+                    O: $18192<br>
+                    H: $18319<br>
+                    L: $18175<br>
+                    C: $18304
+                </div>
+            </div>
+        
+            <div class="candlestick" style="left: 38%;">
+                <div class="wick" style="top: 42.871061187971065%; height: 14.419264679709961%;"></div>
+                <div class="body" style="top: 46.82257878831272%; height: 1.6327197889646925%; background-color: #00ff88;"></div>
+                <div class="date-label">05/31</div>
+                <div class="price-tooltip">
+                    O: $18340<br>
+                    H: $18379<br>
+                    L: $18278<br>
+                    C: $18351
+                </div>
+            </div>
+        
+            <div class="candlestick" style="left: 42%;">
+                <div class="wick" style="top: 27.87792205365877%; height: 10.309316798194203%;"></div>
+                <div class="body" style="top: 36.57095534197744%; height: 1.5214681911505252%; background-color: #ff4040;"></div>
+                <div class="date-label">06/01</div>
+                <div class="price-tooltip">
+                    O: $18423<br>
+                    H: $18484<br>
+                    L: $18412<br>
+                    C: $18412
+                </div>
+            </div>
+        
+            <div class="candlestick" style="left: 46%;">
+                <div class="wick" style="top: 27.37499864787048%; height: 18.428772299846%;"></div>
+                <div class="body" style="top: 32.47731535111327%; height: 1.3116099969088992%; background-color: #ff4040;"></div>
+                <div class="date-label">06/02</div>
+                <div class="price-tooltip">
+                    O: $18452<br>
+                    H: $18487<br>
+                    L: $18358<br>
+                    C: $18442
+                </div>
+            </div>
+        
+            <div class="candlestick" style="left: 50%;">
+                <div class="wick" style="top: 15.050354345655157%; height: 12.182943056997628%;"></div>
+                <div class="body" style="top: 18.138835121561947%; height: 3.7290983595289937%; background-color: #00ff88;"></div>
+                <div class="date-label">06/03</div>
+                <div class="price-tooltip">
+                    O: $18526<br>
+                    H: $18574<br>
+                    L: $18488<br>
+                    C: $18552
+                </div>
+            </div>
+        
+            <div class="candlestick" style="left: 54%;">
+                <div class="wick" style="top: 0.0%; height: 8.819959119148871%;"></div>
+                <div class="body" style="top: 2.948323423374655%; height: 5.045428073034563%; background-color: #ff4040;"></div>
+                <div class="date-label">06/04</div>
+                <div class="price-tooltip">
+                    O: $18658<br>
+                    H: $18679<br>
+                    L: $18617<br>
+                    C: $18623
+                </div>
+            </div>
+        
+            <div class="candlestick" style="left: 58%;">
+                <div class="wick" style="top: 20.621568240776377%; height: 11.788512374314806%;"></div>
+                <div class="body" style="top: 24.969895112614658%; height: 1.1641837916955176%; background-color: #00ff88;"></div>
+                <div class="date-label">06/05</div>
+                <div class="price-tooltip">
+                    O: $18496<br>
+                    H: $18535<br>
+                    L: $18452<br>
+                    C: $18504
+                </div>
+            </div>
+        
+            <div class="candlestick" style="left: 62%;">
+                <div class="wick" style="top: 12.973650875930565%; height: 12.272326981153205%;"></div>
+                <div class="body" style="top: 22.849892070049005%; height: 1%; background-color: #00ff88;"></div>
+                <div class="date-label">06/06</div>
+                <div class="price-tooltip">
+                    O: $18516<br>
+                    H: $18588<br>
+                    L: $18502<br>
+                    C: $18519
+                </div>
+            </div>
+        
+            <div class="candlestick" style="left: 66%;">
+                <div class="wick" style="top: 28.19862681240657%; height: 7.279438793219274%;"></div>
+                <div class="body" style="top: 34.18879925525655%; height: 1%; background-color: #00ff88;"></div>
+                <div class="date-label">06/07</div>
+                <div class="price-tooltip">
+                    O: $18433<br>
+                    H: $18482<br>
+                    L: $18431<br>
+                    C: $18440
+                </div>
+            </div>
+        
+            <div class="candlestick" style="left: 70%;">
+                <div class="wick" style="top: 30.85267627236944%; height: 8.479950806748132%;"></div>
+                <div class="body" style="top: 31.16117707700082%; height: 4.791309394101095%; background-color: #00ff88;"></div>
+                <div class="date-label">06/08</div>
+                <div class="price-tooltip">
+                    O: $18427<br>
+                    H: $18463<br>
+                    L: $18404<br>
+                    C: $18461
+                </div>
+            </div>
+        
+            <div class="candlestick" style="left: 74%;">
+                <div class="wick" style="top: 30.646015676333537%; height: 13.018227653503846%;"></div>
+                <div class="body" style="top: 36.196160951808714%; height: 3.342319566499455%; background-color: #ff4040;"></div>
+                <div class="date-label">06/09</div>
+                <div class="price-tooltip">
+                    O: $18426<br>
+                    H: $18464<br>
+                    L: $18373<br>
+                    C: $18402
+                </div>
+            </div>
+        
+            <div class="candlestick" style="left: 78%;">
+                <div class="wick" style="top: 26.153800301622788%; height: 10.134756544832577%;"></div>
+                <div class="body" style="top: 30.511125671937357%; height: 4.540471453635909%; background-color: #00ff88;"></div>
+                <div class="date-label">06/10</div>
+                <div class="price-tooltip">
+                    O: $18434<br>
+                    H: $18496<br>
+                    L: $18425<br>
+                    C: $18465
+                </div>
+            </div>
+        
+                </div>
+                <div class="legend">
+                    <div class="legend-item">
+                        <span class="legend-color bullish"></span>Bullish (Close ≥ Open)
+                    </div>
+                    <div class="legend-item">
+                        <span class="legend-color bearish"></span>Bearish (Close < Open)
+                    </div>
+                </div>
+            </div>
+            
+            <div class="stats-panel">
+                <div class="stat-card">
+                    <div class="stat-label">Current Price</div>
+                    <div class="stat-value price">$18,465.43</div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-label">Volume</div>
+                    <div class="stat-value volume">80,779</div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-label">Day Range (Avg)</div>
+                    <div class="stat-value range">70.95 pts</div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-label">Week Range (Avg)</div>
+                    <div class="stat-value range">71.8 pts</div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-label">Hour Range (Avg)</div>
+                    <div class="stat-value range">70.95 pts</div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-label">15min Range (Avg)</div>
+                    <div class="stat-value range">70.95 pts</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p>Last Updated: 2025-06-10 15:40:10 EST | Data provided by Yahoo Finance</p>
+            <p>⚠️ This is for educational purposes only. Not financial advice.</p>
+            <p>💡 Hover over candlesticks to see OHLC data</p>
+        </div>
+    </div>
+</body>
+</html>
