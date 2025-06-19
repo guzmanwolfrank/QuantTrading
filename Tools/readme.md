@@ -32,13 +32,4 @@ A collection of trading tools and snippets.
 #
 
 
-#### [Chart2Go](https://github.com/guzmanwolfrank/QuantTrading/tree/main/Tools/Chart2go): This tool helps show data for the NQ futures using html, python and css. 
 
-![chart2go](https://github.com/user-attachments/assets/ee2e891c-142c-4453-8805-bbe68ecb3faf)
-
-    Software: Python 3.11, VS Code, Jupyter Notebook
-    Languages:  Python
-    Modules: Pandas,numpy, yfinance
-
-
-#
