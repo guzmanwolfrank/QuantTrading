@@ -1,5 +1,9 @@
 # HTML Trading Journal
 
+Wolfrank Guzman 
+
+ghostokaamiii // guzmanwolfrank@github 
+
 A Python-based trading journal application with Quantower API integration that generates interactive HTML reports for trade analysis and performance tracking.
 
 ## Features
