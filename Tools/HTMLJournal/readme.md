@@ -6,6 +6,11 @@ ghostokaamiii // guzmanwolfrank@github
 
 A Python-based trading journal application with Quantower API integration that generates interactive HTML reports for trade analysis and performance tracking.
 
+
+![Screenshot 2025-06-25 170604](https://github.com/user-attachments/assets/2b14dbdb-907e-4707-ad6d-ccfadd547f10)
+
+
+
 ## Features
 
 - **Quantower Integration**: Connect directly to Quantower trading platform via API
