@@ -1,8 +1,0 @@
-Nov 15 2024
-
-build an algorithm using python, yfinance, seaborn. 
-
-generate a signal when the current price at 10 am is lower than the open, and previoud day's close.  sell 10,000, 1 lot, of eur/usd. close the position at 3:30pm. 
-
-
-
