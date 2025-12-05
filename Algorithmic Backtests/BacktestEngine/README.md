@@ -9,7 +9,7 @@ A professional-grade forex trading backtester with a modern dark-themed UI, adva
 ## ✨ Features
 ![AlgoHaus Prototype](images/prototype.jpg "AlgoHaus Backtester Interface")
 ```
-
+![AlgoHaus Prototype](images/engineoutput.jpg "AlgoHaus Backtester Interface")
 
 ## Method 2: GitHub Issue/PR Image Upload Trick
 
