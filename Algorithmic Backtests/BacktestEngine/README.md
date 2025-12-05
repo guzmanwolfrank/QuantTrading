@@ -7,7 +7,16 @@ A professional-grade forex trading backtester with a modern dark-themed UI, adva
 ![Platform](https://img.shields.io/badge/platform-Windows%20%7C%20macOS%20%7C%20Linux-lightgrey.svg)
 
 ## ✨ Features
+![AlgoHaus Prototype](images/prototype.jpg "AlgoHaus Backtester Interface")
+```
 
+## Method 2: GitHub Issue/PR Image Upload Trick
+
+1. Go to any GitHub issue or pull request (or create a new one)
+2. Drag and drop your `prototype.jpg` into the comment box
+3. GitHub will upload it and generate a URL like:
+```
+   https://user-images.githubusercontent.com/...
 ### 📊 Trading Strategies
 - **Opening Range Breakout** - Trades based on the first 30-minute price range
 - **VWAP Crossover** - Volume-weighted average price momentum strategy
