@@ -18,7 +18,7 @@ A professional-grade forex trading backtester with a modern dark-themed UI, adva
 2. Drag and drop your `prototype.jpg` into the comment box
 3. GitHub will upload it and generate a URL like:
 ```
-   https://user-images.githubusercontent.com/...
+
 ### 📊 Trading Strategies
 - **Opening Range Breakout** - Trades based on the first 30-minute price range
 - **VWAP Crossover** - Volume-weighted average price momentum strategy
