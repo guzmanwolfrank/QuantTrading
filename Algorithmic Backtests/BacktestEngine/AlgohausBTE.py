@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# ## AlgoHaus 2.0 
+# # AlgoHaus 2.0 
 # Forex Backtest Engine
 # #
 # Wolf Guzman 
@@ -9,7 +9,13 @@
 # Jan 2026
 # 
 
-# In[7]:
+# In[3]:
+
+
+#new sleek ui 
+
+
+# In[4]:
 
 
 #!/usr/bin/env python
@@ -40,6 +46,12 @@ import queue
 import plotly.graph_objects as go
 from plotly.subplots import make_subplots
 import logging
+import matplotlib
+matplotlib.use('Agg')  # Use non-interactive backend
+import matplotlib.pyplot as plt
+from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
+from matplotlib.figure import Figure
+import seaborn as sns
 
 ctk.set_appearance_mode("dark")
 ctk.set_default_color_theme("green")
@@ -3934,29 +3946,29 @@ import webbrowser
 # from your_modules import TradingStrategies, ForexCalculator, EnhancedBacktester, HTMLReportGenerator
 # from your_data_utils import detect_available_pairs, get_data_date_range, load_pair_data
 
+
+# ══════════════════════════════════════════════════════════════════════
+# SLEEK UI - Redesigned Interface
+# ══════════════════════════════════════════════════════════════════════
 class BacktesterUI:
     def __init__(self, master):
         self.master = master
-        master.title(" Wolf Guzman - AlgoHaus Backtester v6.0")
+        master.title("⚡ AlgoHaus Backtester v6.0 - Wolf Guzman")
 
         # Responsive window sizing
         screen_width = master.winfo_screenwidth()
         screen_height = master.winfo_screenheight()
-
-        # Use 90% of screen size
         window_width = int(screen_width * 0.9)
         window_height = int(screen_height * 0.9)
-
-        # Center on screen
         x = (screen_width - window_width) // 2
         y = (screen_height - window_height) // 2
-
         master.geometry(f"{window_width}x{window_height}+{x}+{y}")
-        master.minsize(1200, 800)
+        master.minsize(1400, 900)
 
         default_path = pathlib.Path(r"D:\compressedworld\AlgoHaus\OandaHistoricalData\1MinCharts")
         self.data_folder = default_path if default_path.exists() else pathlib.Path.cwd() / "data"
         self.df = None
+        self.current_section = "config"
 
         # Variables
         self.selected_pair = tk.StringVar(master, value="EUR/USD")
@@ -3967,8 +3979,8 @@ class BacktesterUI:
         self.sl_pips = tk.IntVar(master, value=30)
         self.tp_pips = tk.IntVar(master, value=60)
         self.risk_percent = tk.DoubleVar(master, value=1.0)
-        self.spread_pips = tk.DoubleVar(master, value=1.5)  # New: typical forex spread
-        self.slippage_pips = tk.DoubleVar(master, value=0.5)  # New: slippage on execution
+        self.spread_pips = tk.DoubleVar(master, value=1.5)
+        self.slippage_pips = tk.DoubleVar(master, value=0.5)
 
         today = date.today()
         self.end_date_var = tk.StringVar(master, value=today.strftime("%Y-%m-%d"))
@@ -3983,307 +3995,473 @@ class BacktesterUI:
         self.master.after(500, self.update_pair_info)
 
         if self.data_folder.exists():
-            self.update_status("Data folder ready • " + self.data_folder.name, "#e0e0e0")
+            self.update_status("Data folder ready • " + self.data_folder.name, "#58a6ff")
         else:
-            self.update_status("Data folder not found - please select", "#e0e0e0")
+            self.update_status("Data folder not found - please select", "#f85149")
 
     def setup_ui(self):
-        main_container = ctk.CTkFrame(self.master, corner_radius=0, fg_color="#000000")
+        # ══════════════════════════════════════════════════════════════
+        # MAIN CONTAINER - Deep dark background
+        # ══════════════════════════════════════════════════════════════
+        main_container = ctk.CTkFrame(self.master, corner_radius=0, fg_color="#0d1117")
         main_container.pack(fill='both', expand=True)
 
-        left_panel = ctk.CTkFrame(main_container, corner_radius=0, fg_color="#000000", width=580)      # ← more generous
-        left_panel.pack(side='left', fill='y', padx=(0, 1), pady=0)
-        left_panel.pack_propagate(False)
+        # ══════════════════════════════════════════════════════════════
+        # LEFT SIDEBAR - Sleek navigation
+        # ══════════════════════════════════════════════════════════════
+        sidebar = ctk.CTkFrame(main_container, corner_radius=0, fg_color="#161b22", width=260)
+        sidebar.pack(side='left', fill='y')
+        sidebar.pack_propagate(False)
 
-        right_panel = ctk.CTkFrame(main_container, corner_radius=0, fg_color="#000000")
-        right_panel.pack(side='right', fill='both', expand=True)
+        # ── Logo/Brand ────────────────────────────────────────────────
+        logo_frame = ctk.CTkFrame(sidebar, corner_radius=0, fg_color="transparent")
+        logo_frame.pack(fill='x', padx=20, pady=(25, 35))
 
-        # ── LEFT PANEL TITLE ─────────────────────────────────────────
-        title_frame = ctk.CTkFrame(left_panel, corner_radius=0, fg_color="#000000")
-        title_frame.pack(fill='x', padx=0, pady=0)
+        ctk.CTkLabel(
+            logo_frame,
+            text="⚡ Backtest",
+            font=ctk.CTkFont(family="Helvetica", size=22, weight="bold"),
+            text_color="#58a6ff",
+            anchor="w"
+        ).pack(anchor='w')
 
-        title_label = ctk.CTkLabel(
-            title_frame,
-            text="AlgoHaus Backtest Engine v6.0",
-            font=ctk.CTkFont(family="Helvetica", size=14, weight="normal"),
-            text_color="#ffffff"
+        ctk.CTkLabel(
+            logo_frame,
+            text="by Wolf Guzman",
+            font=ctk.CTkFont(family="Helvetica", size=10),
+            text_color="#6e7681",
+            anchor="w"
+        ).pack(anchor='w', pady=(2, 0))
+
+        # ── Navigation Menu ───────────────────────────────────────────
+        nav_frame = ctk.CTkFrame(sidebar, corner_radius=0, fg_color="transparent")
+        nav_frame.pack(fill='x', padx=14, pady=(0, 25))
+
+        self.nav_buttons = {}
+
+        # Configuration
+        self.nav_buttons['config'] = self.create_nav_button(
+            nav_frame, "⚙  Configuration", "config", selected=True
         )
-        title_label.pack(pady=(20, 4))
 
-        subtitle_label = ctk.CTkLabel(
-            title_frame,
-            text="Wolf Guzman",
-            font=ctk.CTkFont(family="Helvetica", size=11),
-            text_color="#cccccc"
+        # Strategy & Risk
+        self.nav_buttons['strategy'] = self.create_nav_button(
+            nav_frame, "📊 Strategy & Risk", "strategy"
         )
-        subtitle_label.pack(pady=(0, 12))
 
-        # Controls frame (NO SCROLL - fits to window)
-        controls_frame = ctk.CTkFrame(
-            left_panel,
-            corner_radius=0,
-            fg_color="#000000"
+        # Account Settings
+        self.nav_buttons['account'] = self.create_nav_button(
+            nav_frame, "💰 Account", "account"
         )
-        controls_frame.pack(fill='both', expand=True, padx=(24, 24), pady=(8, 12))
 
-        # ── CONFIGURATION SECTION ────────────────────────────────────
-        self._create_section_header(controls_frame, "CONFIGURATION")
-        config_frame = ctk.CTkFrame(controls_frame, fg_color="#000000")
-        config_frame.pack(fill='x', pady=(4, 8))
-
-        # Data folder row
-        folder_frame = ctk.CTkFrame(config_frame, fg_color="#000000")
-        folder_frame.pack(fill='x', pady=8)
-
-        ctk.CTkLabel(folder_frame, text="Data Folder", width=110, anchor="w",
-                     font=ctk.CTkFont(family="Helvetica", size=12),
-                     text_color="#ffffff").pack(side='left')
-
-        folder_display = str(self.data_folder)
-        if len(folder_display) > 38:
-            folder_display = "..." + folder_display[-35:]
-
-        self.folder_label = ctk.CTkLabel(
-            folder_frame,
-            text=folder_display,
-            text_color="#cccccc",
-            anchor="w",
-            font=ctk.CTkFont(family="Helvetica", size=11)
+        # Results
+        self.nav_buttons['results'] = self.create_nav_button(
+            nav_frame, "📈 Results", "results"
         )
-        self.folder_label.pack(side='left', expand=True, fill='x', padx=12)
+
+        # ── Action Buttons ────────────────────────────────────────────
+        # Run Backtest (prominent green button)
+        self.run_btn = ctk.CTkButton(
+            sidebar,
+            text="▶  RUN BACKTEST",
+            font=ctk.CTkFont(family="Helvetica", size=14, weight="bold"),
+            fg_color="#238636",
+            hover_color="#2ea043",
+            text_color="#ffffff",
+            height=48,
+            corner_radius=6,
+            command=self.start_backtest_thread
+        )
+        self.run_btn.pack(fill='x', padx=14, pady=(20, 10))
+
+        # Generate Report button
+        self.report_button = ctk.CTkButton(
+            sidebar,
+            text="📄 Generate Report",
+            font=ctk.CTkFont(family="Helvetica", size=13),
+            fg_color="#1f6feb",
+            hover_color="#388bfd",
+            text_color="#ffffff",
+            height=40,
+            corner_radius=6,
+            command=self.generate_report,
+            state="disabled"
+        )
+        self.report_button.pack(fill='x', padx=14, pady=(0, 10))
+
+        # Utility buttons row
+        utility_container = ctk.CTkFrame(sidebar, fg_color="transparent")
+        utility_container.pack(fill='x', padx=14, pady=(5, 20))
 
         ctk.CTkButton(
-            folder_frame,
+            utility_container,
+            text="🗑️ Cache",
+            font=ctk.CTkFont(family="Helvetica", size=11),
+            fg_color="#21262d",
+            hover_color="#30363d",
+            text_color="#8b949e",
+            height=34,
+            corner_radius=6,
+            command=self.clear_cache
+        ).pack(side='left', expand=True, fill='x', padx=(0, 4))
+
+        ctk.CTkButton(
+            utility_container,
+            text="📊 Export",
+            font=ctk.CTkFont(family="Helvetica", size=11),
+            fg_color="#21262d",
+            hover_color="#30363d",
+            text_color="#8b949e",
+            height=34,
+            corner_radius=6,
+            command=self.export_to_csv
+        ).pack(side='left', expand=True, fill='x', padx=(4, 0))
+
+        # ══════════════════════════════════════════════════════════════
+        # RIGHT CONTENT AREA
+        # ══════════════════════════════════════════════════════════════
+        content_area = ctk.CTkFrame(main_container, corner_radius=0, fg_color="#0d1117")
+        content_area.pack(side='right', fill='both', expand=True)
+
+        # Content sections container
+        self.content_frame = ctk.CTkFrame(content_area, fg_color="transparent")
+        self.content_frame.pack(fill='both', expand=True, padx=35, pady=30)
+
+        # Create all content sections (hidden by default)
+        self.sections = {}
+        self.create_config_section()
+        self.create_strategy_section()
+        self.create_account_section()
+        self.create_results_section()
+
+        # Show config by default
+        self.show_section('config')
+
+        # ── Progress Bar ──────────────────────────────────────────────
+        self.progress_container = ctk.CTkFrame(content_area, fg_color="#161b22", corner_radius=8)
+
+        self.progress_label = ctk.CTkLabel(
+            self.progress_container,
+            text="",
+            font=ctk.CTkFont(family="Helvetica", size=11),
+            text_color="#8b949e",
+            anchor="w"
+        )
+        self.progress_label.pack(fill='x', padx=15, pady=(12, 6))
+
+        self.progress_bar = ctk.CTkProgressBar(
+            self.progress_container,
+            mode="determinate",
+            height=6,
+            corner_radius=3,
+            fg_color="#21262d",
+            progress_color="#58a6ff"
+        )
+        self.progress_bar.pack(fill='x', padx=15, pady=(0, 12))
+        self.progress_bar.set(0)
+
+        # ══════════════════════════════════════════════════════════════
+        # STATUS BAR (bottom)
+        # ══════════════════════════════════════════════════════════════
+        status_bar = ctk.CTkFrame(self.master, corner_radius=0, height=38, fg_color="#161b22")
+        status_bar.pack(side='bottom', fill='x')
+
+        self.status_label = ctk.CTkLabel(
+            status_bar,
+            textvariable=self.status_text,
+            font=ctk.CTkFont(family="Helvetica", size=11),
+            text_color="#8b949e",
+            anchor="w"
+        )
+        self.status_label.pack(side='left', padx=30, pady=11)
+
+    # ══════════════════════════════════════════════════════════════════
+    # NAVIGATION BUTTON CREATOR
+    # ══════════════════════════════════════════════════════════════════
+    def create_nav_button(self, parent, text, section_id, selected=False):
+        btn = ctk.CTkButton(
+            parent,
+            text=text,
+            font=ctk.CTkFont(family="Helvetica", size=13),
+            fg_color="#21262d" if selected else "transparent",
+            hover_color="#30363d" if selected else "#21262d",
+            text_color="#e6edf3" if selected else "#8b949e",
+            anchor="w",
+            height=38,
+            corner_radius=6,
+            command=lambda: self.show_section(section_id)
+        )
+        btn.pack(fill='x', pady=2)
+        return btn
+
+    def update_nav_selection(self, selected_section):
+        """Update navigation button styles"""
+        for section_id, btn in self.nav_buttons.items():
+            if section_id == selected_section:
+                btn.configure(fg_color="#21262d", text_color="#e6edf3")
+            else:
+                btn.configure(fg_color="transparent", text_color="#8b949e")
+
+    # ══════════════════════════════════════════════════════════════════
+    # SECTION MANAGEMENT
+    # ══════════════════════════════════════════════════════════════════
+    def show_section(self, section_id):
+        """Show the selected section and hide others"""
+        self.current_section = section_id
+        self.update_nav_selection(section_id)
+
+        for sec_id, sec_frame in self.sections.items():
+            if sec_id == section_id:
+                sec_frame.pack(fill='both', expand=True)
+            else:
+                sec_frame.pack_forget()
+
+    # ══════════════════════════════════════════════════════════════════
+    # CONFIGURATION SECTION
+    # ══════════════════════════════════════════════════════════════════
+    def create_config_section(self):
+        section = ctk.CTkFrame(self.content_frame, fg_color="transparent")
+        self.sections['config'] = section
+
+        # Section title
+        ctk.CTkLabel(
+            section,
+            text="CONFIGURATION",
+            font=ctk.CTkFont(family="Helvetica", size=24, weight="bold"),
+            text_color="#e6edf3",
+            anchor="w"
+        ).pack(anchor='w', pady=(0, 25))
+
+        # Content container
+        content = ctk.CTkFrame(section, fg_color="#161b22", corner_radius=12)
+        content.pack(fill='both', expand=True)
+
+        # Inner padding
+        inner = ctk.CTkFrame(content, fg_color="transparent")
+        inner.pack(fill='both', expand=True, padx=30, pady=30)
+
+        # Data Folder
+        self.create_section_header(inner, "Data Source")
+        folder_frame = ctk.CTkFrame(inner, fg_color="#21262d", corner_radius=8)
+        folder_frame.pack(fill='x', pady=(0, 25))
+
+        folder_inner = ctk.CTkFrame(folder_frame, fg_color="transparent")
+        folder_inner.pack(fill='x', padx=15, pady=12)
+
+        ctk.CTkLabel(
+            folder_inner,
+            text="Data Folder",
+            font=ctk.CTkFont(family="Helvetica", size=12),
+            text_color="#8b949e",
+            width=100,
+            anchor="w"
+        ).pack(side='left')
+
+        folder_display = str(self.data_folder)
+        if len(folder_display) > 50:
+            folder_display = "..." + folder_display[-47:]
+
+        self.folder_label = ctk.CTkLabel(
+            folder_inner,
+            text=folder_display,
+            font=ctk.CTkFont(family="Consolas", size=11),
+            text_color="#e6edf3",
+            anchor="w"
+        )
+        self.folder_label.pack(side='left', fill='x', expand=True, padx=15)
+
+        ctk.CTkButton(
+            folder_inner,
             text="Browse",
             command=self.select_data_folder,
-            width=90,
+            width=80,
             height=32,
-            corner_radius=6,
-            fg_color="#222222",
-            hover_color="#333333",
-            text_color="#ffffff"
+            font=ctk.CTkFont(family="Helvetica", size=11),
+            fg_color="#30363d",
+            hover_color="#484f58",
+            text_color="#e6edf3",
+            corner_radius=6
         ).pack(side='right')
 
-        self.pair_combo = self.create_input_field(config_frame, "Pair", self.selected_pair,
-                                                 is_combobox=True, values=[])
+        # Trading Pair
+        self.create_section_header(inner, "Trading Pair")
+        self.pair_combo = self.create_sleek_input(inner, "Pair", self.selected_pair, is_combobox=True, values=["EUR/USD"])
 
-        # Pair info
-        ctk.CTkLabel(
-            config_frame,
-            text="Pair Information",
-            font=ctk.CTkFont(family="Helvetica", size=12, weight="bold"),
-            text_color="#ffffff",
-            anchor="w"
-        ).pack(anchor="w", pady=(16, 6))
-
-        self.pair_info_frame = ctk.CTkFrame(config_frame, fg_color="#111111", corner_radius=6)
-        self.pair_info_frame.pack(fill='x', pady=4)
+        # Pair Info Display
+        self.pair_info_frame = ctk.CTkFrame(inner, fg_color="#21262d", corner_radius=8)
+        self.pair_info_frame.pack(fill='x', pady=(10, 25))
 
         self.pair_info_label = ctk.CTkLabel(
             self.pair_info_frame,
             text='Select a pair to view details...',
             font=ctk.CTkFont(family="Consolas", size=11),
-            text_color="#ffffff",
+            text_color="#8b949e",
             anchor="nw",
             justify="left"
         )
-        self.pair_info_label.pack(fill='both', expand=True, padx=14, pady=12)
+        self.pair_info_label.pack(fill='both', padx=15, pady=15)
 
         self.selected_pair.trace('w', self.update_pair_info)
 
-        self.create_input_field(config_frame, "Timeframe", self.selected_timeframe,
-                               is_combobox=True, values=["1min", "5min", "15min", "1hr", "1Day"])
-        self.create_input_field(config_frame, "Start Date", self.start_date_var)
-        self.create_input_field(config_frame, "End Date", self.end_date_var)
+        # Timeframe & Dates
+        self.create_section_header(inner, "Time Period")
+        self.create_sleek_input(inner, "Timeframe", self.selected_timeframe, is_combobox=True, 
+                               values=["1min", "5min", "15min", "1hr", "1Day"])
+        self.create_sleek_input(inner, "Start Date", self.start_date_var)
+        self.create_sleek_input(inner, "End Date", self.end_date_var)
 
-        # ── STRATEGY & RISK ──────────────────────────────────────────
-        self._create_section_header(controls_frame, "STRATEGY & RISK")
-        strategy_frame = ctk.CTkFrame(controls_frame, fg_color="#000000")
-        strategy_frame.pack(fill='x', pady=(4, 8))
+    # ══════════════════════════════════════════════════════════════════
+    # STRATEGY SECTION
+    # ══════════════════════════════════════════════════════════════════
+    def create_strategy_section(self):
+        section = ctk.CTkFrame(self.content_frame, fg_color="transparent")
+        self.sections['strategy'] = section
 
-        strategies = [name for name, obj in inspect.getmembers(TradingStrategies) if inspect.isfunction(obj)]
-        self.create_input_field(strategy_frame, "Strategy", self.selected_strategy,
-                               is_combobox=True, values=strategies)
-        self.create_input_field(strategy_frame, "Stop Loss (pips)", self.sl_pips)
-        self.create_input_field(strategy_frame, "Take Profit (pips)", self.tp_pips)
-        self.create_input_field(strategy_frame, "Spread (pips)", self.spread_pips)
-        self.create_input_field(strategy_frame, "Slippage (pips)", self.slippage_pips)
+        ctk.CTkLabel(
+            section,
+            text="STRATEGY & RISK",
+            font=ctk.CTkFont(family="Helvetica", size=24, weight="bold"),
+            text_color="#e6edf3",
+            anchor="w"
+        ).pack(anchor='w', pady=(0, 25))
 
-        # ── ACCOUNT SETTINGS ─────────────────────────────────────────
-        self._create_section_header(controls_frame, "ACCOUNT")
-        account_frame = ctk.CTkFrame(controls_frame, fg_color="#000000")
-        account_frame.pack(fill='x', pady=(4, 8))
+        content = ctk.CTkFrame(section, fg_color="#161b22", corner_radius=12)
+        content.pack(fill='both', expand=True)
 
-        self.create_input_field(account_frame, "Initial Balance ($)", self.initial_balance)
-        self.create_input_field(account_frame, "Leverage", self.leverage,
-                               is_combobox=True, values=[str(x) for x in ForexCalculator.LEVERAGE_OPTIONS])
-        self.create_input_field(account_frame, "Risk % per Trade", self.risk_percent)
+        inner = ctk.CTkFrame(content, fg_color="transparent")
+        inner.pack(fill='both', expand=True, padx=30, pady=30)
 
-        # ── RUN BUTTON ───────────────────────────────────────────────
-        run_button = ctk.CTkButton(
-            left_panel,
-            text="RUN BACKTEST",
-            command=self.start_backtest_thread,
-            height=44,
-            corner_radius=8,
+        # Strategy Selection
+        self.create_section_header(inner, "Trading Strategy")
+        try:
+            strategies = [name for name, obj in inspect.getmembers(TradingStrategies) if inspect.isfunction(obj)]
+        except:
+            strategies = ["vwap_crossover_strategy", "bollinger_bands_strategy", "macd_strategy"]
+
+        self.create_sleek_input(inner, "Strategy", self.selected_strategy, is_combobox=True, values=strategies)
+
+        # Risk Parameters
+        self.create_section_header(inner, "Risk Management")
+        self.create_sleek_input(inner, "Stop Loss (pips)", self.sl_pips)
+        self.create_sleek_input(inner, "Take Profit (pips)", self.tp_pips)
+
+        # Execution Costs
+        self.create_section_header(inner, "Execution Costs")
+        self.create_sleek_input(inner, "Spread (pips)", self.spread_pips)
+        self.create_sleek_input(inner, "Slippage (pips)", self.slippage_pips)
+
+    # ══════════════════════════════════════════════════════════════════
+    # ACCOUNT SECTION
+    # ══════════════════════════════════════════════════════════════════
+    def create_account_section(self):
+        section = ctk.CTkFrame(self.content_frame, fg_color="transparent")
+        self.sections['account'] = section
+
+        ctk.CTkLabel(
+            section,
+            text="ACCOUNT SETTINGS",
+            font=ctk.CTkFont(family="Helvetica", size=24, weight="bold"),
+            text_color="#e6edf3",
+            anchor="w"
+        ).pack(anchor='w', pady=(0, 25))
+
+        content = ctk.CTkFrame(section, fg_color="#161b22", corner_radius=12)
+        content.pack(fill='both', expand=True)
+
+        inner = ctk.CTkFrame(content, fg_color="transparent")
+        inner.pack(fill='both', expand=True, padx=30, pady=30)
+
+        self.create_section_header(inner, "Capital & Leverage")
+        self.create_sleek_input(inner, "Initial Balance ($)", self.initial_balance)
+        self.create_sleek_input(inner, "Leverage", self.leverage, is_combobox=True, 
+                               values=[str(x) for x in ForexCalculator.LEVERAGE_OPTIONS] if 'ForexCalculator' in globals() else ["1", "10", "50", "100"])
+
+        self.create_section_header(inner, "Position Sizing")
+        self.create_sleek_input(inner, "Risk % per Trade", self.risk_percent)
+
+    # ══════════════════════════════════════════════════════════════════
+    # RESULTS SECTION
+    # ══════════════════════════════════════════════════════════════════
+    def create_results_section(self):
+        section = ctk.CTkFrame(self.content_frame, fg_color="transparent")
+        self.sections['results'] = section
+
+        # Title
+        ctk.CTkLabel(
+            section,
+            text="RESULTS",
+            font=ctk.CTkFont(family="Helvetica", size=24, weight="bold"),
+            text_color="#e6edf3",
+            anchor="w"
+        ).pack(anchor='w', pady=(0, 20))
+
+        # ── SUMMARY BOX ───────────────────────────────────────────────
+        summary_container = ctk.CTkFrame(section, fg_color="#161b22", corner_radius=12)
+        summary_container.pack(fill='x', pady=(0, 20))
+
+        ctk.CTkLabel(
+            summary_container,
+            text="SUMMARY",
             font=ctk.CTkFont(family="Helvetica", size=14, weight="bold"),
-            fg_color="#111111",
-            hover_color="#222222",
-            border_color="#444444",
-            border_width=1,
-            text_color="#ffffff"
-        )
-        run_button.pack(fill='x', padx=24, pady=(12, 8))
-
-        # ── UTILITY BUTTONS ──────────────────────────────────────────
-        utility_frame = ctk.CTkFrame(left_panel, fg_color="#000000")
-        utility_frame.pack(fill='x', padx=24, pady=(0, 12))
-
-        # Clear Cache button
-        clear_cache_button = ctk.CTkButton(
-            utility_frame,
-            text="🗑️ CLEAR CACHE",
-            command=self.clear_cache,
-            height=32,
-            corner_radius=6,
-            font=ctk.CTkFont(family="Helvetica", size=11, weight="bold"),
-            fg_color="#1a1a1a",
-            hover_color="#2a2a2a",
-            border_color="#333333",
-            border_width=1,
-            text_color="#cccccc"
-        )
-        clear_cache_button.pack(side='left', expand=True, fill='x', padx=(0, 6))
-
-        # Export Data button
-        export_button = ctk.CTkButton(
-            utility_frame,
-            text="📊 EXPORT DATA",
-            command=self.export_to_csv,
-            height=32,
-            corner_radius=6,
-            font=ctk.CTkFont(family="Helvetica", size=11, weight="bold"),
-            fg_color="#1a1a1a",
-            hover_color="#2a2a2a",
-            border_color="#333333",
-            border_width=1,
-            text_color="#cccccc"
-        )
-        export_button.pack(side='right', expand=True, fill='x', padx=(6, 0))
-
-        # ── RIGHT PANEL ──────────────────────────────────────────────
-        summary_frame = ctk.CTkFrame(right_panel, corner_radius=0, fg_color="#000000")
-        summary_frame.pack(fill='x', padx=24, pady=(24, 12))
-
-        self._create_section_header(summary_frame, "SUMMARY", bottom_pad=8)
+            text_color="#e6edf3",
+            anchor="w"
+        ).pack(anchor='w', padx=25, pady=(20, 12))
 
         self.summary_textbox = ctk.CTkTextbox(
-            summary_frame,
-            height=200,
-            corner_radius=6,
-            font=ctk.CTkFont(family="Consolas", size=30, weight="bold"),
-            fg_color="#000000",
-            text_color="#ffffff",
+            summary_container,
+            height=180,
+            corner_radius=8,
+            font=ctk.CTkFont(family="Consolas", size=28, weight="bold"),
+            fg_color="#0d1117",
+            text_color="#e6edf3",
             border_width=1,
-            border_color="#222222"
+            border_color="#30363d"
         )
-        self.summary_textbox.pack(fill='both', padx=4, pady=(4, 12))
+        self.summary_textbox.pack(fill='x', padx=25, pady=(0, 20))
 
-        # Metrics section (NO SCROLL)
-        metrics_frame = ctk.CTkFrame(right_panel, corner_radius=0, fg_color="#000000")
-        metrics_frame.pack(fill='both', expand=True, padx=24, pady=(12, 24))
+        # ── METRICS TABLE ─────────────────────────────────────────────
+        metrics_container = ctk.CTkFrame(section, fg_color="#161b22", corner_radius=12)
+        metrics_container.pack(fill='both', expand=True)
 
-        self._create_section_header(metrics_frame, "METRICS")
-
-        self.metrics_container = ctk.CTkFrame(
-            metrics_frame,
-            corner_radius=6,
-            fg_color="#000000"
-        )
-        self.metrics_container.pack(fill='both', expand=True, padx=4, pady=(4, 12))
-
-        # Report button
-        self.report_button = ctk.CTkButton(
-            right_panel,
-            text="GENERATE REPORT",
-            command=self.generate_report,
-            height=44,
-            corner_radius=6,
-            font=ctk.CTkFont(family="Helvetica", size=13, weight="bold"),
-            fg_color="#111111",
-            hover_color="#222222",
-            border_color="#333333",
-            border_width=1,
-            text_color="#ffffff",
-            state="disabled"
-        )
-        self.report_button.pack(fill='x', padx=24, pady=(0, 12))
-
-        # Progress bar frame
-        self.progress_frame = ctk.CTkFrame(right_panel, fg_color="#000000", corner_radius=6)
-        self.progress_frame.pack(fill='x', padx=24, pady=(0, 24))
-
-        # Progress label
-        self.progress_label = ctk.CTkLabel(
-            self.progress_frame,
-            text="",
-            font=ctk.CTkFont(family="Helvetica", size=11),
-            text_color="#888888",
+        ctk.CTkLabel(
+            metrics_container,
+            text="METRICS",
+            font=ctk.CTkFont(family="Helvetica", size=14, weight="bold"),
+            text_color="#e6edf3",
             anchor="w"
-        )
-        self.progress_label.pack(fill='x', pady=(8, 4))
+        ).pack(anchor='w', padx=25, pady=(20, 12))
 
-        # Progress bar
-        self.progress_bar = ctk.CTkProgressBar(
-            self.progress_frame,
-            mode="determinate",
-            height=8,
-            corner_radius=4,
-            fg_color="#111111",
-            progress_color="#00ff88"
-        )
-        self.progress_bar.pack(fill='x', pady=(0, 8))
-        self.progress_bar.set(0)
+        # Metrics display area
+        self.metrics_display = ctk.CTkFrame(metrics_container, fg_color="#0d1117", corner_radius=8)
+        self.metrics_display.pack(fill='both', expand=True, padx=25, pady=(0, 20))
 
-        # Hide progress initially
-        self.progress_frame.pack_forget()
-
-        # ── STATUS BAR ───────────────────────────────────────────────
-        status_frame = ctk.CTkFrame(self.master, corner_radius=0, height=34, fg_color="#000000")
-        status_frame.pack(side='bottom', fill='x')
-
-        self.status_label = ctk.CTkLabel(
-            status_frame,
-            textvariable=self.status_text,
-            font=ctk.CTkFont(family="Helvetica", size=11),
-            text_color="#cccccc",
-            anchor="w"
-        )
-        self.status_label.pack(side='left', padx=24, pady=8)
-
-    def _create_section_header(self, parent, text, bottom_pad=12):
-        label = ctk.CTkLabel(
+    # ══════════════════════════════════════════════════════════════════
+    # HELPER: Create section header
+    # ══════════════════════════════════════════════════════════════════
+    def create_section_header(self, parent, text):
+        ctk.CTkLabel(
             parent,
             text=text,
-            font=ctk.CTkFont(family="Helvetica", size=15, weight="bold"),
-            text_color="#ffffff",
+            font=ctk.CTkFont(family="Helvetica", size=13, weight="bold"),
+            text_color="#8b949e",
             anchor="w"
-        )
-        label.pack(fill='x', pady=(8, bottom_pad))
+        ).pack(anchor='w', pady=(15, 8))
 
-    def create_input_field(self, parent, label_text, variable, is_combobox=False, values=None):
-        frame = ctk.CTkFrame(parent, fg_color="#000000")
-        frame.pack(fill='x', pady=4)
+    # ══════════════════════════════════════════════════════════════════
+    # HELPER: Create sleek input field
+    # ══════════════════════════════════════════════════════════════════
+    def create_sleek_input(self, parent, label_text, variable, is_combobox=False, values=None):
+        frame = ctk.CTkFrame(parent, fg_color="transparent")
+        frame.pack(fill='x', pady=6)
 
-        label = ctk.CTkLabel(
+        ctk.CTkLabel(
             frame,
             text=label_text,
-            width=110,
-            anchor="w",
             font=ctk.CTkFont(family="Helvetica", size=12),
-            text_color="#ffffff"
-        )
-        label.pack(side='left')
+            text_color="#8b949e",
+            width=150,
+            anchor="w"
+        ).pack(side='left')
 
         if is_combobox:
             widget = ctk.CTkComboBox(
@@ -4291,41 +4469,284 @@ class BacktesterUI:
                 variable=variable,
                 values=values or [],
                 font=ctk.CTkFont(family="Helvetica", size=12),
-                fg_color="#111111",
-                border_color="#333333",
-                button_color="#222222",
-                button_hover_color="#333333",
-                text_color="#ffffff"
+                fg_color="#21262d",
+                border_color="#30363d",
+                button_color="#30363d",
+                button_hover_color="#484f58",
+                text_color="#e6edf3",
+                dropdown_fg_color="#21262d",
+                dropdown_hover_color="#30363d",
+                dropdown_text_color="#e6edf3",
+                corner_radius=6,
+                height=36
             )
         else:
             widget = ctk.CTkEntry(
                 frame,
                 textvariable=variable,
-                fg_color="#111111",
-                border_color="#333333",
-                text_color="#ffffff"
+                font=ctk.CTkFont(family="Helvetica", size=12),
+                fg_color="#21262d",
+                border_color="#30363d",
+                text_color="#e6edf3",
+                corner_radius=6,
+                height=36
             )
-        widget.pack(side='left', expand=True, fill='x', padx=(16, 0))
 
+        widget.pack(side='left', expand=True, fill='x', padx=(15, 0))
         return widget
+
+    # ══════════════════════════════════════════════════════════════════
+    # UPDATE METHODS
+    # ══════════════════════════════════════════════════════════════════
+    def update_results_ui(self, summary, metrics, trades_df):
+        """Update the results section with backtest data - includes 4 charts + metrics"""
+        self.trades_df = trades_df
+        self.metrics_data = metrics
+
+        # Update summary
+        self.summary_textbox.delete("0.0", "end")
+        self.summary_textbox.insert("0.0", summary)
+
+        # Clear previous metrics
+        for widget in self.metrics_display.winfo_children():
+            widget.destroy()
+
+        # ══════════════════════════════════════════════════════════════
+        # CHARTS SECTION (4 visualizations in 2x2 grid)
+        # ══════════════════════════════════════════════════════════════
+        charts_container = ctk.CTkFrame(self.metrics_display, fg_color="transparent")
+        charts_container.pack(fill='both', expand=True, padx=0, pady=0)
+
+        # Configure matplotlib style - DARK THEME
+        plt.style.use('dark_background')
+
+        # Create figure with 2x2 subplots
+        fig = Figure(figsize=(14, 8), facecolor='#0d1117', edgecolor='#0d1117')
+        fig.subplots_adjust(left=0.08, right=0.96, top=0.94, bottom=0.08, hspace=0.35, wspace=0.25)
+
+        # ── TOP LEFT: Cumulative Returns ─────────────────────────────
+        ax1 = fig.add_subplot(2, 2, 1, facecolor='#161b22')
+        if not trades_df.empty:
+            trades_df_sorted = trades_df.sort_values('exit_time')
+            cumulative_pnl = trades_df_sorted['monetary_pnl'].cumsum()
+            cumulative_returns = (cumulative_pnl / self.initial_balance.get()) * 100
+
+            ax1.plot(trades_df_sorted['exit_time'], cumulative_returns, 
+                    color='#58a6ff', linewidth=2, label='Strategy Returns')
+            ax1.fill_between(trades_df_sorted['exit_time'], cumulative_returns, 0, 
+                            alpha=0.2, color='#58a6ff')
+            ax1.axhline(y=0, color='#6e7681', linestyle='--', linewidth=1, alpha=0.5)
+            ax1.set_title('Cumulative Returns', fontsize=13, fontweight='bold', 
+                         color='#e6edf3', pad=10, fontfamily='Helvetica')
+            ax1.set_xlabel('Date', fontsize=10, color='#8b949e', fontfamily='Helvetica')
+            ax1.set_ylabel('Return (%)', fontsize=10, color='#8b949e', fontfamily='Helvetica')
+            ax1.tick_params(colors='#8b949e', labelsize=9)
+            ax1.grid(True, alpha=0.15, color='#30363d', linestyle='-', linewidth=0.5)
+            ax1.spines['top'].set_color('#30363d')
+            ax1.spines['right'].set_color('#30363d')
+            ax1.spines['bottom'].set_color('#30363d')
+            ax1.spines['left'].set_color('#30363d')
+
+        # ── TOP RIGHT: Trade PnL Distribution ────────────────────────
+        ax2 = fig.add_subplot(2, 2, 2, facecolor='#161b22')
+        if not trades_df.empty:
+            returns = trades_df['monetary_pnl']
+
+            # Histogram
+            n, bins, patches = ax2.hist(returns, bins=30, color='#58a6ff', 
+                                       alpha=0.7, edgecolor='#30363d')
+
+            # Color bars based on positive/negative
+            for i, patch in enumerate(patches):
+                if bins[i] < 0:
+                    patch.set_facecolor('#f85149')
+                else:
+                    patch.set_facecolor('#3fb950')
+
+            # Add mean line
+            mean_return = returns.mean()
+            ax2.axvline(x=mean_return, color='#58a6ff', linestyle='--', 
+                       linewidth=2, label=f'Mean: ${mean_return:.2f}')
+            ax2.axvline(x=0, color='#6e7681', linestyle='-', linewidth=1, alpha=0.5)
+
+            ax2.set_title('Trade P&L Distribution', fontsize=13, fontweight='bold',
+                         color='#e6edf3', pad=10, fontfamily='Helvetica')
+            ax2.set_xlabel('P&L ($)', fontsize=10, color='#8b949e', fontfamily='Helvetica')
+            ax2.set_ylabel('Frequency', fontsize=10, color='#8b949e', fontfamily='Helvetica')
+            ax2.tick_params(colors='#8b949e', labelsize=9)
+            ax2.legend(loc='upper right', fontsize=9, facecolor='#161b22', 
+                      edgecolor='#30363d', labelcolor='#e6edf3')
+            ax2.grid(True, alpha=0.15, color='#30363d', linestyle='-', linewidth=0.5)
+            ax2.spines['top'].set_color('#30363d')
+            ax2.spines['right'].set_color('#30363d')
+            ax2.spines['bottom'].set_color('#30363d')
+            ax2.spines['left'].set_color('#30363d')
+
+        # ── BOTTOM LEFT: Drawdown Chart ──────────────────────────────
+        ax3 = fig.add_subplot(2, 2, 3, facecolor='#161b22')
+        if not trades_df.empty:
+            trades_df_sorted = trades_df.sort_values('exit_time')
+            cumulative_pnl = trades_df_sorted['monetary_pnl'].cumsum()
+            equity_curve = self.initial_balance.get() + cumulative_pnl
+            running_max = equity_curve.expanding().max()
+            drawdown = ((equity_curve - running_max) / running_max) * 100
+
+            ax3.fill_between(trades_df_sorted['exit_time'], drawdown, 0,
+                            color='#f85149', alpha=0.5)
+            ax3.plot(trades_df_sorted['exit_time'], drawdown,
+                    color='#f85149', linewidth=2)
+            ax3.set_title('Drawdown', fontsize=13, fontweight='bold',
+                         color='#e6edf3', pad=10, fontfamily='Helvetica')
+            ax3.set_xlabel('Date', fontsize=10, color='#8b949e', fontfamily='Helvetica')
+            ax3.set_ylabel('Drawdown (%)', fontsize=10, color='#8b949e', fontfamily='Helvetica')
+            ax3.tick_params(colors='#8b949e', labelsize=9)
+            ax3.grid(True, alpha=0.15, color='#30363d', linestyle='-', linewidth=0.5)
+            ax3.spines['top'].set_color('#30363d')
+            ax3.spines['right'].set_color('#30363d')
+            ax3.spines['bottom'].set_color('#30363d')
+            ax3.spines['left'].set_color('#30363d')
+
+        # ── BOTTOM RIGHT: Win/Loss Ratio Pie Chart ───────────────────
+        ax4 = fig.add_subplot(2, 2, 4, facecolor='#161b22')
+        if not trades_df.empty:
+            wins = (trades_df['monetary_pnl'] > 0).sum()
+            losses = (trades_df['monetary_pnl'] <= 0).sum()
+
+            colors = ['#3fb950', '#f85149']
+            explode = (0.05, 0.05)
+
+            wedges, texts, autotexts = ax4.pie([wins, losses], 
+                                               labels=['Wins', 'Losses'],
+                                               autopct='%1.1f%%',
+                                               colors=colors,
+                                               explode=explode,
+                                               startangle=90,
+                                               textprops={'color': '#e6edf3', 
+                                                         'fontsize': 11,
+                                                         'fontfamily': 'Helvetica'})
+
+            for autotext in autotexts:
+                autotext.set_color('#0d1117')
+                autotext.set_fontweight('bold')
+                autotext.set_fontsize(12)
+
+            ax4.set_title('Win/Loss Ratio', fontsize=13, fontweight='bold',
+                         color='#e6edf3', pad=10, fontfamily='Helvetica')
+
+        # Embed the figure in tkinter
+        canvas = FigureCanvasTkAgg(fig, master=charts_container)
+        canvas.draw()
+        canvas.get_tk_widget().pack(fill='both', expand=True, padx=10, pady=10)
+
+        # ══════════════════════════════════════════════════════════════
+        # METRICS TABLE (below charts)
+        # ══════════════════════════════════════════════════════════════
+        metrics_table_container = ctk.CTkFrame(self.metrics_display, fg_color="#161b22", corner_radius=8)
+        metrics_table_container.pack(fill='x', padx=10, pady=(0, 10))
+
+        # Title
+        ctk.CTkLabel(
+            metrics_table_container,
+            text="PERFORMANCE METRICS",
+            font=ctk.CTkFont(family="Helvetica", size=13, weight="bold"),
+            text_color="#e6edf3",
+            anchor="w"
+        ).pack(anchor='w', padx=20, pady=(15, 10))
+
+        # Create metrics grid (2 columns)
+        metrics_grid = ctk.CTkFrame(metrics_table_container, fg_color="transparent")
+        metrics_grid.pack(fill='x', padx=20, pady=(0, 15))
+
+        # Split metrics into two columns
+        metrics_list = list(metrics.items())
+        mid = (len(metrics_list) + 1) // 2
+
+        # Left column
+        left_col = ctk.CTkFrame(metrics_grid, fg_color="transparent")
+        left_col.pack(side='left', fill='both', expand=True, padx=(0, 10))
+
+        # Right column  
+        right_col = ctk.CTkFrame(metrics_grid, fg_color="transparent")
+        right_col.pack(side='right', fill='both', expand=True, padx=(10, 0))
+
+        def add_metric_row(parent, key, value):
+            """Add a single metric row"""
+            row = ctk.CTkFrame(parent, fg_color="transparent")
+            row.pack(fill='x', pady=3)
+
+            # Metric name
+            name = key.replace('_', ' ').title()
+            ctk.CTkLabel(
+                row,
+                text=name,
+                font=ctk.CTkFont(family="Helvetica", size=11),
+                text_color="#8b949e",
+                anchor="w"
+            ).pack(side='left', fill='x', expand=True)
+
+            # Metric value
+            if isinstance(value, float):
+                if '$' in key or 'balance' in key.lower() or 'pnl' in key.lower():
+                    value_str = f"${value:,.2f}"
+                    color = "#3fb950" if value > 0 else "#f85149"
+                elif '%' in key or 'rate' in key.lower() or 'return' in key.lower():
+                    value_str = f"{value:.2f}%"
+                    color = "#3fb950" if value > 0 else "#f85149"
+                else:
+                    value_str = f"{value:.2f}"
+                    color = "#e6edf3"
+            elif isinstance(value, int):
+                value_str = f"{value:,}"
+                color = "#e6edf3"
+            else:
+                value_str = str(value)
+                color = "#e6edf3"
+
+            ctk.CTkLabel(
+                row,
+                text=value_str,
+                font=ctk.CTkFont(family="Helvetica", size=11, weight="bold"),
+                text_color=color,
+                anchor="e"
+            ).pack(side='right')
+
+        # Populate left column
+        for i in range(mid):
+            if i < len(metrics_list):
+                key, val = metrics_list[i]
+                add_metric_row(left_col, key, val)
+
+        # Populate right column
+        for i in range(mid, len(metrics_list)):
+            key, val = metrics_list[i]
+            add_metric_row(right_col, key, val)
+
+        self.report_button.configure(state="normal")
+
+        # Auto-switch to results view
+        self.show_section('results')
+
+    def update_status(self, text, color="#8b949e"):
+        self.status_text.set(text)
+        self.status_label.configure(text_color=color)
 
     def select_data_folder(self):
         new_folder = filedialog.askdirectory(
-            title="Select Main Data Folder (containing pair subfolders)",
+            title="Select Main Data Folder",
             initialdir=str(self.data_folder)
         )
         if new_folder:
             self.data_folder = pathlib.Path(new_folder)
             folder_text = str(self.data_folder)
-            if len(folder_text) > 45:
-                folder_text = "..." + folder_text[-42:]
+            if len(folder_text) > 50:
+                folder_text = "..." + folder_text[-47:]
             self.folder_label.configure(text=folder_text)
             self.refresh_available_pairs()
-            self.update_status(f"Data folder updated → {folder_text}", "#cccccc")
+            self.update_status(f"Data folder updated", "#58a6ff")
 
     def refresh_available_pairs(self):
         try:
-            self.update_status("Scanning for pairs...", "#cccccc")
+            self.update_status("Scanning for pairs...", "#8b949e")
             pairs = detect_available_pairs(self.data_folder)
 
             if pairs:
@@ -4333,12 +4754,12 @@ class BacktesterUI:
                     self.pair_combo.configure(values=pairs)
                     if self.selected_pair.get() not in pairs:
                         self.selected_pair.set(pairs[0])
-                self.update_status(f"Found {len(pairs)} pairs", "#cccccc")
+                self.update_status(f"Found {len(pairs)} pairs", "#3fb950")
             else:
-                self.update_status("No pairs found in selected folder", "#cccccc")
+                self.update_status("No pairs found", "#f85149")
         except Exception as e:
             logging.error(f"Error refreshing pairs: {e}")
-            self.update_status(f"Error scanning folder: {str(e)}", "#cccccc")
+            self.update_status(f"Error: {str(e)}", "#f85149")
 
     def update_pair_info(self, *args):
         pair = self.selected_pair.get()
@@ -4346,198 +4767,41 @@ class BacktesterUI:
             return
 
         start, end = get_data_date_range(pair, self.data_folder)
-        pip_value = ForexCalculator.PIP_VALUES.get(pair, 0.0001)
-
-        example_price = 1.10 if pair.startswith('EUR') else 1.30
-        leverage = self.leverage.get()
-        margin = ForexCalculator.calculate_margin_required(pair, 10000, example_price, leverage)
-        pip_val_usd = ForexCalculator.calculate_pip_value_in_usd(pair, 10000, example_price)
-
-        pair_folder = pair.replace('/', '_')
-        folder_path = self.data_folder / pair_folder
+        pip_value = ForexCalculator.PIP_VALUES.get(pair, 0.0001) if 'ForexCalculator' in globals() else 0.0001
 
         if start and end:
             total_days = (end - start).days
-            info_text = f"""PAIR: {pair}  |  FOLDER: {pair_folder}
+            info_text = f"""PAIR: {pair}
 
 Data Available: {start} to {end}
 Total Days: {total_days:,}
 
-Pip Value: {pip_value}
-Per 10k Units: ${pip_val_usd:.2f} per pip
-Margin (10k @ {leverage}:1): ${margin:.2f}"""
+Pip Value: {pip_value}"""
 
             self.start_date_var.set(str(start))
             self.end_date_var.set(str(end))
-
-            self.update_status(f"{pair}: {total_days:,} days of data", "#cccccc")
+            self.update_status(f"{pair}: {total_days:,} days of data", "#58a6ff")
         else:
-            info_text = f"""PAIR: {pair}  |  FOLDER: {pair_folder}
-
-No data found
-Path: {folder_path}"""
-            self.update_status(f"No data found for {pair}", "#cccccc")
+            info_text = f"PAIR: {pair}\n\nNo data found"
+            self.update_status(f"No data found for {pair}", "#f85149")
 
         self.pair_info_label.configure(text=info_text)
 
-    def update_status(self, text, color="#cccccc"):
-        self.status_text.set(text)
-        self.status_label.configure(text_color=color)
-
-    def clear_cache(self):
-        """Clear cached data and temp files"""
-        try:
-            import shutil
-            import tempfile
-
-            response = messagebox.askyesno(
-                "Clear Cache",
-                "This will clear temporary files and cached data.\n\nContinue?"
-            )
-
-            if not response:
-                return
-
-            # Clear Python cache
-            cache_cleared = 0
-
-            # Clear __pycache__ directories
-            for root, dirs, files in os.walk(os.getcwd()):
-                if '__pycache__' in dirs:
-                    cache_dir = os.path.join(root, '__pycache__')
-                    try:
-                        shutil.rmtree(cache_dir)
-                        cache_cleared += 1
-                    except Exception as e:
-                        logging.warning(f"Could not remove {cache_dir}: {e}")
-
-            # Clear temp files
-            temp_dir = tempfile.gettempdir()
-            temp_cleared = 0
-            for item in os.listdir(temp_dir):
-                if item.startswith('backtest_') or item.startswith('algohaus_'):
-                    try:
-                        item_path = os.path.join(temp_dir, item)
-                        if os.path.isfile(item_path):
-                            os.remove(item_path)
-                            temp_cleared += 1
-                        elif os.path.isdir(item_path):
-                            shutil.rmtree(item_path)
-                            temp_cleared += 1
-                    except Exception as e:
-                        logging.warning(f"Could not remove {item}: {e}")
-
-            messagebox.showinfo(
-                "Cache Cleared",
-                f"Successfully cleared:\n• {cache_cleared} cache directories\n• {temp_cleared} temporary files"
-            )
-            self.update_status("Cache cleared successfully", "#00ff88")
-
-        except Exception as e:
-            messagebox.showerror("Error", f"Failed to clear cache:\n{str(e)}")
-            self.update_status("Error clearing cache", "#ff3366")
-
-    def export_to_csv(self):
-        """Export trade log and backtest parameters to CSV on desktop"""
-        if self.trades_df.empty:
-            messagebox.showwarning("No Data", "No trades to export. Run a backtest first.")
-            return
-
-        try:
-            import csv
-            from datetime import datetime
-
-            # Get desktop path
-            desktop = os.path.join(os.path.expanduser("~"), "Desktop")
-            if not os.path.exists(desktop):
-                desktop = os.path.expanduser("~")
-
-            # Create filename with timestamp
-            timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-            filename = f"AlgoHaus_Backtest_{self.selected_pair.get().replace('/', '-')}_{timestamp}.csv"
-            filepath = os.path.join(desktop, filename)
-
-            # Export trades to CSV
-            with open(filepath, 'w', newline='') as f:
-                writer = csv.writer(f)
-
-                # Write header section with metadata
-                writer.writerow(["=== ALGOHAUS BACKTEST REPORT ==="])
-                writer.writerow(["Wolf Guzman - Professional Forex Backtesting System v6.0"])
-                writer.writerow([])
-                writer.writerow(["BACKTEST PARAMETERS"])
-                writer.writerow(["Parameter", "Value"])
-                writer.writerow(["Pair", self.selected_pair.get()])
-                writer.writerow(["Strategy", self.selected_strategy.get()])
-                writer.writerow(["Timeframe", self.selected_timeframe.get()])
-                writer.writerow(["Start Date", self.start_date_var.get()])
-                writer.writerow(["End Date", self.end_date_var.get()])
-                writer.writerow(["Initial Balance", f"${self.initial_balance.get():,.2f}"])
-                writer.writerow(["Leverage", f"{self.leverage.get()}:1"])
-                writer.writerow(["Risk Per Trade", f"{self.risk_percent.get()}%"])
-                writer.writerow(["Stop Loss", f"{self.sl_pips.get()} pips"])
-                writer.writerow(["Take Profit", f"{self.tp_pips.get()} pips"])
-                writer.writerow(["Spread", f"{self.spread_pips.get()} pips"])
-                writer.writerow(["Slippage", f"{self.slippage_pips.get()} pips"])
-                writer.writerow(["Export Time", datetime.now().strftime("%Y-%m-%d %H:%M:%S")])
-                writer.writerow([])
-
-                # Write performance metrics
-                if self.metrics_data:
-                    writer.writerow(["PERFORMANCE METRICS"])
-                    writer.writerow(["Metric", "Value"])
-                    for key, value in self.metrics_data.items():
-                        metric_name = key.replace('_', ' ').title()
-                        if isinstance(value, float):
-                            if '$' in key or 'balance' in key.lower() or 'pnl' in key.lower():
-                                value_str = f"${value:,.2f}"
-                            elif '%' in key or 'rate' in key.lower() or 'return' in key.lower():
-                                value_str = f"{value:.2f}%"
-                            else:
-                                value_str = f"{value:.2f}"
-                        else:
-                            value_str = str(value)
-                        writer.writerow([metric_name, value_str])
-                    writer.writerow([])
-
-                # Write trade log header
-                writer.writerow(["TRADE LOG"])
-                writer.writerow(self.trades_df.columns.tolist())
-
-                # Write trade data
-                for _, row in self.trades_df.iterrows():
-                    writer.writerow(row.tolist())
-
-            messagebox.showinfo(
-                "Export Successful",
-                f"Backtest data exported to:\n{filepath}"
-            )
-            self.update_status(f"Exported to {filename}", "#00ff88")
-
-            # Open the file location
-            if messagebox.askyesno("Open File", "Would you like to open the file location?"):
-                if os.name == 'nt':  # Windows
-                    os.startfile(desktop)
-                elif os.name == 'posix':  # macOS/Linux
-                    import subprocess
-                    subprocess.call(['open' if sys.platform == 'darwin' else 'xdg-open', desktop])
-
-        except Exception as e:
-            messagebox.showerror("Export Error", f"Failed to export data:\n{str(e)}")
-            self.update_status("Export failed", "#ff3366")
-
+    # ══════════════════════════════════════════════════════════════════
+    # BACKTEST EXECUTION
+    # ══════════════════════════════════════════════════════════════════
     def start_backtest_thread(self):
-        self.update_status("Running backtest...", "#cccccc")
+        self.update_status("Running backtest...", "#58a6ff")
         self.summary_textbox.delete("0.0", "end")
         self.trades_df = pd.DataFrame()
 
-        for widget in self.metrics_container.winfo_children():
+        for widget in self.metrics_display.winfo_children():
             widget.destroy()
 
         self.report_button.configure(state="disabled")
 
-        # Show and reset progress bar
-        self.progress_frame.pack(fill='x', padx=24, pady=(0, 24))
+        # Show progress bar
+        self.progress_container.pack(fill='x', padx=35, pady=(0, 20), before=self.content_frame)
         self.progress_bar.set(0)
         self.progress_label.configure(text="Initializing backtest...")
 
@@ -4548,8 +4812,8 @@ Path: {folder_path}"""
                 raise ValueError("Start date must be before End date.")
         except ValueError as e:
             messagebox.showerror("Input Error", f"Invalid date input: {e}")
-            self.update_status("Invalid date input", "#cccccc")
-            self.progress_frame.pack_forget()
+            self.update_status("Invalid date input", "#f85149")
+            self.progress_container.pack_forget()
             return
 
         self.q = queue.Queue()
@@ -4564,7 +4828,6 @@ Path: {folder_path}"""
             timeframe = self.selected_timeframe.get()
             strategy_name = self.selected_strategy.get()
 
-            # Progress callback function
             def progress_callback(percent, message):
                 self.q.put(('progress', percent, message))
 
@@ -4613,77 +4876,159 @@ Path: {folder_path}"""
             elif result_type == 'success':
                 summary, metrics, trades_df = data
                 self.update_results_ui(summary, metrics, trades_df)
-                self.update_status("Backtest completed", "#cccccc")
-                # Hide progress bar after completion
+                self.update_status("Backtest completed", "#3fb950")
                 self.progress_bar.set(1.0)
                 self.progress_label.configure(text="Backtest complete!")
-                self.master.after(2000, self.progress_frame.pack_forget)
+                self.master.after(2000, self.progress_container.pack_forget)
             elif result_type == 'error':
                 error_msg = data[0]
                 messagebox.showerror("Backtest Error", error_msg)
-                self.update_status("Backtest failed", "#cccccc")
-                self.progress_frame.pack_forget()
+                self.update_status("Backtest failed", "#f85149")
+                self.progress_container.pack_forget()
 
         except queue.Empty:
             self.master.after(100, self.check_queue)
 
-    def update_results_ui(self, summary, metrics, trades_df):
-        self.trades_df = trades_df
-        self.metrics_data = metrics
+    # ══════════════════════════════════════════════════════════════════
+    # UTILITY METHODS (Export, Clear Cache, Generate Report)
+    # ══════════════════════════════════════════════════════════════════
+    def clear_cache(self):
+        """Clear cached data"""
+        try:
+            import shutil
 
-        self.summary_textbox.delete("0.0", "end")
-        self.summary_textbox.insert("0.0", summary)
+            response = messagebox.askyesno(
+                "Clear Cache",
+                "Clear temporary files and cached data?"
+            )
 
-        for widget in self.metrics_container.winfo_children():
-            widget.destroy()
+            if not response:
+                return
 
-        # Metrics text - no scroll, wider display
-        metrics_text = ctk.CTkTextbox(
-            self.metrics_container,
-            corner_radius=8,
-            font=ctk.CTkFont(family="Consolas", size=28, weight="bold"),
-            fg_color="#000000",
-            text_color="#ffffff",
-            wrap="none"
-        )
-        metrics_text.pack(expand=True, fill='both', padx=20, pady=10)
+            cache_cleared = 0
 
-        table_lines = []
-        table_lines.append("=" * 90)
-        table_lines.append("METRIC".ljust(50) + "VALUE".rjust(40))
-        table_lines.append("=" * 90)
+            for root, dirs, files in os.walk(os.getcwd()):
+                if '__pycache__' in dirs:
+                    cache_dir = os.path.join(root, '__pycache__')
+                    try:
+                        shutil.rmtree(cache_dir)
+                        cache_cleared += 1
+                    except Exception as e:
+                        logging.warning(f"Could not remove {cache_dir}: {e}")
 
-        for key, value in metrics.items():
-            metric_name = key.replace('_', ' ').title()
-            if isinstance(value, float):
-                if '$' in key or 'balance' in key.lower() or 'pnl' in key.lower():
-                    value_str = f"${value:,.2f}"
-                elif '%' in key or 'rate' in key.lower() or 'return' in key.lower():
-                    value_str = f"{value:.2f}%"
-                else:
-                    value_str = f"{value:.2f}"
-            elif isinstance(value, int):
-                value_str = f"{value:,}"
-            else:
-                value_str = str(value)
+            temp_dir = tempfile.gettempdir()
+            temp_cleared = 0
+            for item in os.listdir(temp_dir):
+                if item.startswith('backtest_') or item.startswith('algohaus_'):
+                    try:
+                        item_path = os.path.join(temp_dir, item)
+                        if os.path.isfile(item_path):
+                            os.remove(item_path)
+                            temp_cleared += 1
+                        elif os.path.isdir(item_path):
+                            shutil.rmtree(item_path)
+                            temp_cleared += 1
+                    except Exception as e:
+                        logging.warning(f"Could not remove {item}: {e}")
 
-            line = metric_name.ljust(50) + value_str.rjust(40)
-            table_lines.append(line)
+            messagebox.showinfo(
+                "Cache Cleared",
+                f"Cleared {cache_cleared} cache dirs, {temp_cleared} temp files"
+            )
+            self.update_status("Cache cleared", "#3fb950")
 
-        table_lines.append("=" * 90)
-        table_text = "\n".join(table_lines)
-        metrics_text.insert("0.0", table_text)
-        metrics_text.configure(state="disabled")
+        except Exception as e:
+            messagebox.showerror("Error", f"Failed to clear cache:\n{str(e)}")
+            self.update_status("Error clearing cache", "#f85149")
 
-        self.report_button.configure(state="normal")
-
-    def generate_report(self):
+    def export_to_csv(self):
+        """Export trade log to CSV"""
         if self.trades_df.empty:
-            messagebox.showwarning("No Data", "No trades available to generate report.")
+            messagebox.showwarning("No Data", "No trades to export. Run a backtest first.")
             return
 
         try:
-            self.update_status("Generating report...", "#cccccc")
+            import csv
+
+            desktop = os.path.join(os.path.expanduser("~"), "Desktop")
+            if not os.path.exists(desktop):
+                desktop = os.path.expanduser("~")
+
+            timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+            filename = f"AlgoHaus_Backtest_{self.selected_pair.get().replace('/', '-')}_{timestamp}.csv"
+            filepath = os.path.join(desktop, filename)
+
+            with open(filepath, 'w', newline='') as f:
+                writer = csv.writer(f)
+
+                writer.writerow(["=== ALGOHAUS BACKTEST REPORT ==="])
+                writer.writerow(["Wolf Guzman - Professional Forex Backtesting System v6.0"])
+                writer.writerow([])
+                writer.writerow(["BACKTEST PARAMETERS"])
+                writer.writerow(["Parameter", "Value"])
+                writer.writerow(["Pair", self.selected_pair.get()])
+                writer.writerow(["Strategy", self.selected_strategy.get()])
+                writer.writerow(["Timeframe", self.selected_timeframe.get()])
+                writer.writerow(["Start Date", self.start_date_var.get()])
+                writer.writerow(["End Date", self.end_date_var.get()])
+                writer.writerow(["Initial Balance", f"${self.initial_balance.get():,.2f}"])
+                writer.writerow(["Leverage", f"{self.leverage.get()}:1"])
+                writer.writerow(["Risk Per Trade", f"{self.risk_percent.get()}%"])
+                writer.writerow(["Stop Loss", f"{self.sl_pips.get()} pips"])
+                writer.writerow(["Take Profit", f"{self.tp_pips.get()} pips"])
+                writer.writerow(["Spread", f"{self.spread_pips.get()} pips"])
+                writer.writerow(["Slippage", f"{self.slippage_pips.get()} pips"])
+                writer.writerow(["Export Time", datetime.now().strftime("%Y-%m-%d %H:%M:%S")])
+                writer.writerow([])
+
+                if self.metrics_data:
+                    writer.writerow(["PERFORMANCE METRICS"])
+                    writer.writerow(["Metric", "Value"])
+                    for key, value in self.metrics_data.items():
+                        metric_name = key.replace('_', ' ').title()
+                        if isinstance(value, float):
+                            if '$' in key or 'balance' in key.lower() or 'pnl' in key.lower():
+                                value_str = f"${value:,.2f}"
+                            elif '%' in key or 'rate' in key.lower() or 'return' in key.lower():
+                                value_str = f"{value:.2f}%"
+                            else:
+                                value_str = f"{value:.2f}"
+                        else:
+                            value_str = str(value)
+                        writer.writerow([metric_name, value_str])
+                    writer.writerow([])
+
+                writer.writerow(["TRADE LOG"])
+                writer.writerow(self.trades_df.columns.tolist())
+
+                for _, row in self.trades_df.iterrows():
+                    writer.writerow(row.tolist())
+
+            messagebox.showinfo(
+                "Export Successful",
+                f"Data exported to:\n{filepath}"
+            )
+            self.update_status(f"Exported: {filename}", "#3fb950")
+
+            if messagebox.askyesno("Open File", "Open file location?"):
+                if os.name == 'nt':
+                    os.startfile(desktop)
+                elif os.name == 'posix':
+                    import subprocess
+                    subprocess.call(['open' if sys.platform == 'darwin' else 'xdg-open', desktop])
+
+        except Exception as e:
+            messagebox.showerror("Export Error", f"Failed to export:\n{str(e)}")
+            self.update_status("Export failed", "#f85149")
+
+    def generate_report(self):
+        """Generate HTML report"""
+        if self.trades_df.empty:
+            messagebox.showwarning("No Data", "No trades available.")
+            return
+
+        try:
+            self.update_status("Generating report...", "#58a6ff")
 
             report_path = HTMLReportGenerator.generate_report(
                 self.metrics_data,
@@ -4701,36 +5046,25 @@ Path: {folder_path}"""
                 df=self.df
             )
 
-            messagebox.showinfo("Success", "Professional report generated!")
+            messagebox.showinfo("Success", "Report generated!")
             webbrowser.open_new_tab('file://' + os.path.realpath(report_path))
-            self.update_status("Report generated successfully", "#cccccc")
+            self.update_status("Report generated", "#3fb950")
 
         except Exception as e:
-            messagebox.showerror("Report Error", f"Failed to generate report:\n{str(e)}")
-            self.update_status("Error generating report", "#cccccc")
+            messagebox.showerror("Report Error", f"Failed:\n{str(e)}")
+            self.update_status("Report error", "#f85149")
 
 
-# In[9]:
-
-
-# In[63]:
-
-
-# ======================================================================
+# ══════════════════════════════════════════════════════════════════════
 # MAIN
-# ======================================================================
+# ══════════════════════════════════════════════════════════════════════
+
+
+# ══════════════════════════════════════════════════════════════════════
+# MAIN
+# ══════════════════════════════════════════════════════════════════════
 if __name__ == '__main__':
     app = ctk.CTk()
-
-    width = 1400
-    height = 900
-    x = (app.winfo_screenwidth() // 2) - (width // 2)
-    y = (app.winfo_screenheight() // 2) - (height // 2)
-    app.geometry(f'{width}x{height}+{x}+{y}')
-
     backtester = BacktesterUI(app)
     app.mainloop()
-
-
-# In[ ]:
 
