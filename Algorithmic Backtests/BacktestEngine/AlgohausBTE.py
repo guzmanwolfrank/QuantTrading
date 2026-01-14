@@ -1,17 +1,25 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# #Parquet Version of BacktestEngine 
+# ## AlgoHaus 2.0 
+# Forex Backtest Engine
+# #
+# Wolf Guzman 
+# #
+# Jan 2026
 # 
 
-# claude version with multiple corrections and fixes
-# 
+# In[7]:
 
-# In[55]:
+
+#!/usr/bin/env python
+# coding: utf-8
+
+# In[1]:
 
 
 # Wolf's AlgoHaus Backtester v6.0 - Professional Edition
-# Created for: Wolf Guzman
+# Wolf Guzman
 # Features: Real Data Validation, Risk Management, QuantStats Analysis, Retro DOS Metrics
 # Professional Forex Backtesting with Parquet Data
 
@@ -23,6 +31,7 @@ import numpy as np
 from datetime import datetime, timedelta, date
 import webbrowser
 import os
+import sys
 import tempfile
 import inspect
 import pathlib
@@ -37,7 +46,7 @@ ctk.set_default_color_theme("green")
 logging.basicConfig(level=logging.INFO, format='%(levelname)s: %(message)s')
 
 
-# In[56]:
+# In[2]:
 
 
 # ======================================================================
@@ -145,7 +154,7 @@ class ForexCalculator:
         return max(1000, int(round(size / 1000)) * 1000)
 
 
-# In[57]:
+# In[3]:
 
 
 # ======================================================================
@@ -368,7 +377,7 @@ def load_pair_data(pair_name: str, base_folder: pathlib.Path, start_date: dateti
     return df, actual_start, actual_end
 
 
-# In[58]:
+# In[4]:
 
 
 # ======================================================================
@@ -514,24 +523,31 @@ class TradingStrategies:
         return trades
 
 
-# In[59]:
+
+# In[5]:
 
 
 # ======================================================================
 # 4. ENHANCED BACKTESTER
 # ======================================================================
 class EnhancedBacktester:
-    def __init__(self, df, initial_balance=10000, pip_value=0.0001, leverage=50, risk_percent=1.0):
+    def __init__(self, df, initial_balance=10000, pip_value=0.0001, leverage=50, risk_percent=1.0, spread_pips=1.5, slippage_pips=0.5):
         self.df = df
         self.initial_balance = initial_balance
         self.pip_value = pip_value
         self.leverage = leverage
         self.risk_percent = risk_percent
+        self.spread_pips = spread_pips
+        self.slippage_pips = slippage_pips
         self.results = None
 
-    def run_backtest(self, strategy_func, sl_pips, tp_pips, pair_name):
+    def run_backtest(self, strategy_func, sl_pips, tp_pips, pair_name, progress_callback=None):
         """Run backtest with proper PnL calculation and progress updates"""
         logging.info(f"Generating trades using {strategy_func.__name__}...")
+
+        if progress_callback:
+            progress_callback(0, "Generating trade signals...")
+
         trades = strategy_func(self.df, sl_pips, tp_pips, self.pip_value)
 
         if not trades:
@@ -546,11 +562,13 @@ class EnhancedBacktester:
         is_usd_major = ForexCalculator.is_usd_major(pair_name)
 
         # Process trades in batches for progress reporting
-        batch_size = max(1, len(trades) // 10)  # 10 progress updates
+        total_trades = len(trades)
 
         for idx, t in enumerate(trades):
-            if idx % batch_size == 0:
-                logging.info(f"Processing trade {idx}/{len(trades)} ({idx*100//len(trades)}%)")
+            # Update progress every trade (or every few trades for performance)
+            if progress_callback and (idx % max(1, total_trades // 100) == 0 or idx == total_trades - 1):
+                progress = int((idx / total_trades) * 100)
+                progress_callback(progress, f"Processing trade {idx+1}/{total_trades} ({progress}%)")
 
             entry_price = t['entry_price']
             signal = t['signal']
@@ -580,13 +598,24 @@ class EnhancedBacktester:
                 pair_name, unit_size, entry_price, 1.0
             )
 
-            # Set stop and target levels
+            # Apply spread and slippage to entry price
+            spread_cost = self.spread_pips * self.pip_value
+            slippage_cost = self.slippage_pips * self.pip_value
+
             if signal == 'BUY':
-                stop_level = entry_price - (sl_pips * self.pip_value)
-                take_level = entry_price + (tp_pips * self.pip_value)
+                # For BUY: pay spread (buy at ask) and slippage
+                actual_entry_price = entry_price + spread_cost + slippage_cost
             else:
-                stop_level = entry_price + (sl_pips * self.pip_value)
-                take_level = entry_price - (tp_pips * self.pip_value)
+                # For SELL: pay spread (sell at bid) and slippage
+                actual_entry_price = entry_price - spread_cost - slippage_cost
+
+            # Set stop and target levels (based on actual entry)
+            if signal == 'BUY':
+                stop_level = actual_entry_price - (sl_pips * self.pip_value)
+                take_level = actual_entry_price + (tp_pips * self.pip_value)
+            else:
+                stop_level = actual_entry_price + (sl_pips * self.pip_value)
+                take_level = actual_entry_price - (tp_pips * self.pip_value)
 
             # Find exit - optimized with early break
             exit_idx = None
@@ -622,13 +651,23 @@ class EnhancedBacktester:
                 exit_price = bars.iloc[-1]['close']
                 exit_reason = 'Timeout'
 
-            # Calculate PnL correctly
+            # Apply slippage to exit
             if signal == 'BUY':
-                pips_pnl = (exit_price - entry_price) / self.pip_value
+                actual_exit_price = exit_price - slippage_cost  # Slippage hurts on exit
             else:
-                pips_pnl = (entry_price - exit_price) / self.pip_value
+                actual_exit_price = exit_price + slippage_cost
+
+            # Calculate PnL correctly (using actual prices)
+            if signal == 'BUY':
+                pips_pnl = (actual_exit_price - actual_entry_price) / self.pip_value
+            else:
+                pips_pnl = (actual_entry_price - actual_exit_price) / self.pip_value
 
             monetary_pnl = pips_pnl * pip_value_usd
+
+            # Calculate costs
+            spread_cost_usd = self.spread_pips * pip_value_usd
+            slippage_cost_usd = self.slippage_pips * pip_value_usd * 2  # Entry + exit
 
             entry_time = t['datetime']
             exit_time = bars.iloc[exit_idx]['datetime'] if exit_idx is not None else bars.iloc[-1]['datetime']
@@ -643,11 +682,13 @@ class EnhancedBacktester:
                 'exit_time': exit_time,
                 'time_in_trade_hours': round(hours_in_trade, 2),
                 'signal': signal,
-                'entry_price': entry_price,
-                'exit_price': exit_price,
+                'entry_price': round(actual_entry_price, 5),
+                'exit_price': round(actual_exit_price, 5),
                 'exit_reason': exit_reason,
                 'pips_pnl': round(pips_pnl, 2),
                 'monetary_pnl': round(monetary_pnl, 2),
+                'spread_cost_usd': round(spread_cost_usd, 2),
+                'slippage_cost_usd': round(slippage_cost_usd, 2),
                 'unit_size': unit_size,
                 'margin_used': round(margin_required, 2),
                 'balance': round(current_balance, 2),
@@ -655,6 +696,9 @@ class EnhancedBacktester:
             })
 
             trade_number += 1
+
+        if progress_callback:
+            progress_callback(100, "Calculating metrics...")
 
         logging.info(f"Backtest complete: {len(results)} trades executed")
         self.results = pd.DataFrame(results)
@@ -769,7 +813,7 @@ class EnhancedBacktester:
         }
 
 
-# In[61]:
+# In[6]:
 
 
 # ======================================================================
@@ -3843,22 +3887,75 @@ class HTMLReportGenerator:
         return html
 
 
-# In[62]:
+
+# In[7]:
 
 
+# 6 BACKTESTER UI 
+# Ultra-Dark Black Theme - Almost Void Edition
 # ======================================================================
-# 6. UI
-# ======================================================================
+
+import customtkinter as ctk
+import tkinter as tk
+from tkinter import filedialog, messagebox
+import pathlib
+import pandas as pd
+import logging
+import threading
+import queue
+from datetime import date, datetime, timedelta
+import inspect
+import os
+import webbrowser
+
+
+# Assuming these classes/functions exist in your project:
+# from your_module import TradingStrategies, ForexCalculator, EnhancedBacktester, HTMLReportGenerator
+# fro
+
+
+# In[8]:
+
+
+import customtkinter as ctk
+import tkinter as tk
+from tkinter import filedialog, messagebox
+import pathlib
+import pandas as pd
+import logging
+import threading
+import queue
+from datetime import date, datetime, timedelta
+import inspect
+import os
+import webbrowser
+
+# Assuming these exist in your project:
+# from your_modules import TradingStrategies, ForexCalculator, EnhancedBacktester, HTMLReportGenerator
+# from your_data_utils import detect_available_pairs, get_data_date_range, load_pair_data
+
 class BacktesterUI:
     def __init__(self, master):
         self.master = master
         master.title(" Wolf Guzman - AlgoHaus Backtester v6.0")
-        master.geometry("1400x900")
-        master.minsize(1200, 700)
 
-        # Default to Wolf's data folder
+        # Responsive window sizing
+        screen_width = master.winfo_screenwidth()
+        screen_height = master.winfo_screenheight()
+
+        # Use 90% of screen size
+        window_width = int(screen_width * 0.9)
+        window_height = int(screen_height * 0.9)
+
+        # Center on screen
+        x = (screen_width - window_width) // 2
+        y = (screen_height - window_height) // 2
+
+        master.geometry(f"{window_width}x{window_height}+{x}+{y}")
+        master.minsize(1200, 800)
+
         default_path = pathlib.Path(r"D:\compressedworld\AlgoHaus\OandaHistoricalData\1MinCharts")
-        self.data_folder = default_path if default_path.exists() else pathlib.Path.cwd() / "data" 
+        self.data_folder = default_path if default_path.exists() else pathlib.Path.cwd() / "data"
         self.df = None
 
         # Variables
@@ -3870,6 +3967,8 @@ class BacktesterUI:
         self.sl_pips = tk.IntVar(master, value=30)
         self.tp_pips = tk.IntVar(master, value=60)
         self.risk_percent = tk.DoubleVar(master, value=1.0)
+        self.spread_pips = tk.DoubleVar(master, value=1.5)  # New: typical forex spread
+        self.slippage_pips = tk.DoubleVar(master, value=0.5)  # New: slippage on execution
 
         today = date.today()
         self.end_date_var = tk.StringVar(master, value=today.strftime("%Y-%m-%d"))
@@ -3881,330 +3980,334 @@ class BacktesterUI:
 
         self.setup_ui()
         self.refresh_available_pairs()
-
-        # Trigger initial pair info update to set dates
         self.master.after(500, self.update_pair_info)
 
-        # Show initial status
         if self.data_folder.exists():
-            self.update_status(f"✅ Ready - Wolf's Trading System | Data folder: {self.data_folder.name}", '#00ff41')
+            self.update_status("Data folder ready • " + self.data_folder.name, "#e0e0e0")
         else:
-            self.update_status(f"⚠️ Data folder not found - Please select folder", '#ff9f43')
+            self.update_status("Data folder not found - please select", "#e0e0e0")
 
     def setup_ui(self):
-        main_container = ctk.CTkFrame(self.master, corner_radius=0)
+        main_container = ctk.CTkFrame(self.master, corner_radius=0, fg_color="#000000")
         main_container.pack(fill='both', expand=True)
 
-        left_panel = ctk.CTkFrame(main_container, corner_radius=15, width=450)
-        left_panel.pack(side='left', fill='both', padx=(20, 10), pady=20)
+        left_panel = ctk.CTkFrame(main_container, corner_radius=0, fg_color="#000000", width=580)      # ← more generous
+        left_panel.pack(side='left', fill='y', padx=(0, 1), pady=0)
         left_panel.pack_propagate(False)
 
-        right_panel = ctk.CTkFrame(main_container, corner_radius=15)
-        right_panel.pack(side='right', fill='both', expand=True, padx=(10, 20), pady=20)
+        right_panel = ctk.CTkFrame(main_container, corner_radius=0, fg_color="#000000")
+        right_panel.pack(side='right', fill='both', expand=True)
 
-        # Left Panel - Title
-        title_frame = ctk.CTkFrame(left_panel, corner_radius=10, fg_color="#1a1a1a")
-        title_frame.pack(fill='x', padx=20, pady=(20, 15))
+        # ── LEFT PANEL TITLE ─────────────────────────────────────────
+        title_frame = ctk.CTkFrame(left_panel, corner_radius=0, fg_color="#000000")
+        title_frame.pack(fill='x', padx=0, pady=0)
 
         title_label = ctk.CTkLabel(
             title_frame,
-            text=" AlgoHaus Backtester v6.0",
-            font=ctk.CTkFont(family="Helvetica", size=20, weight="bold"),
-            text_color="#00ff41"
+            text="AlgoHaus Backtest Engine v6.0",
+            font=ctk.CTkFont(family="Helvetica", size=14, weight="normal"),
+            text_color="#ffffff"
         )
-        title_label.pack(pady=5)
+        title_label.pack(pady=(20, 4))
 
         subtitle_label = ctk.CTkLabel(
             title_frame,
-            text="Wolfrank Guzman",
-            font=ctk.CTkFont(family="Helvetica", size=12),
-            text_color="#888888"
+            text="Wolf Guzman",
+            font=ctk.CTkFont(family="Helvetica", size=11),
+            text_color="#cccccc"
         )
-        subtitle_label.pack(pady=5)
+        subtitle_label.pack(pady=(0, 12))
 
-        controls_scroll = ctk.CTkScrollableFrame(left_panel, corner_radius=10, fg_color="transparent")
-        controls_scroll.pack(fill='both', expand=True, padx=10, pady=(0, 10))
+        # Controls frame (NO SCROLL - fits to window)
+        controls_frame = ctk.CTkFrame(
+            left_panel,
+            corner_radius=0,
+            fg_color="#000000"
+        )
+        controls_frame.pack(fill='both', expand=True, padx=(24, 24), pady=(8, 12))
 
-        # Configuration Section
-        config_frame = ctk.CTkFrame(controls_scroll, corner_radius=10)
-        config_frame.pack(fill='x', pady=(0, 15))
+        # ── CONFIGURATION SECTION ────────────────────────────────────
+        self._create_section_header(controls_frame, "CONFIGURATION")
+        config_frame = ctk.CTkFrame(controls_frame, fg_color="#000000")
+        config_frame.pack(fill='x', pady=(4, 8))
 
-        ctk.CTkLabel(
-            config_frame,
-            text="⚙️ Configuration",
-            font=ctk.CTkFont(family="Helvetica", size=14, weight="bold"),
-            text_color="#00ff41",
-            anchor="w"
-        ).pack(fill='x', padx=15, pady=(10, 5))
+        # Data folder row
+        folder_frame = ctk.CTkFrame(config_frame, fg_color="#000000")
+        folder_frame.pack(fill='x', pady=8)
 
-        # Data folder
-        folder_frame = ctk.CTkFrame(config_frame, fg_color="transparent")
-        folder_frame.pack(fill='x', padx=15, pady=5)
+        ctk.CTkLabel(folder_frame, text="Data Folder", width=110, anchor="w",
+                     font=ctk.CTkFont(family="Helvetica", size=12),
+                     text_color="#ffffff").pack(side='left')
 
-        ctk.CTkLabel(folder_frame, text="Data Folder:", width=100).pack(side='left')
-
-        # Display folder path
         folder_display = str(self.data_folder)
-        if len(folder_display) > 35:
-            folder_display = "..." + folder_display[-32:]
+        if len(folder_display) > 38:
+            folder_display = "..." + folder_display[-35:]
 
         self.folder_label = ctk.CTkLabel(
             folder_frame,
             text=folder_display,
-            text_color="#888888",
-            anchor="w"
+            text_color="#cccccc",
+            anchor="w",
+            font=ctk.CTkFont(family="Helvetica", size=11)
         )
-        self.folder_label.pack(side='left', expand=True, fill='x', padx=10)
+        self.folder_label.pack(side='left', expand=True, fill='x', padx=12)
+
         ctk.CTkButton(
             folder_frame,
             text="Browse",
             command=self.select_data_folder,
-            width=70,
-            height=28
+            width=90,
+            height=32,
+            corner_radius=6,
+            fg_color="#222222",
+            hover_color="#333333",
+            text_color="#ffffff"
         ).pack(side='right')
 
-        # Input fields
-        self.pair_combo = self.create_input_field(config_frame, "Trading Pair:", self.selected_pair, 
-                               is_combobox=True, values=[])
+        self.pair_combo = self.create_input_field(config_frame, "Pair", self.selected_pair,
+                                                 is_combobox=True, values=[])
 
-        # Pair info display - no scrollbar, white text, auto-sized
-        info_section = ctk.CTkLabel(
+        # Pair info
+        ctk.CTkLabel(
             config_frame,
-            text="Pair Information:",
-            font=ctk.CTkFont(family="Helvetica", size=11, weight="bold"),
-            text_color="#888888",
+            text="Pair Information",
+            font=ctk.CTkFont(family="Helvetica", size=12, weight="bold"),
+            text_color="#ffffff",
             anchor="w"
-        )
-        info_section.pack(fill='x', padx=15, pady=(10, 2))
+        ).pack(anchor="w", pady=(16, 6))
 
-        self.pair_info_frame = ctk.CTkFrame(config_frame, fg_color="#252525", corner_radius=5)
-        self.pair_info_frame.pack(fill='x', padx=15, pady=5)
+        self.pair_info_frame = ctk.CTkFrame(config_frame, fg_color="#111111", corner_radius=6)
+        self.pair_info_frame.pack(fill='x', pady=4)
 
         self.pair_info_label = ctk.CTkLabel(
             self.pair_info_frame,
             text='Select a pair to view details...',
-            font=ctk.CTkFont(family="Courier New", size=10),
+            font=ctk.CTkFont(family="Consolas", size=11),
             text_color="#ffffff",
             anchor="nw",
             justify="left"
         )
-        self.pair_info_label.pack(fill='both', expand=True, padx=10, pady=10)
+        self.pair_info_label.pack(fill='both', expand=True, padx=14, pady=12)
 
-        # Add trace to update pair info
         self.selected_pair.trace('w', self.update_pair_info)
 
-        self.create_input_field(config_frame, "Timeframe:", self.selected_timeframe,
+        self.create_input_field(config_frame, "Timeframe", self.selected_timeframe,
                                is_combobox=True, values=["1min", "5min", "15min", "1hr", "1Day"])
-        self.create_input_field(config_frame, "Start Date:", self.start_date_var)
-        self.create_input_field(config_frame, "End Date:", self.end_date_var)
+        self.create_input_field(config_frame, "Start Date", self.start_date_var)
+        self.create_input_field(config_frame, "End Date", self.end_date_var)
 
-        # Strategy Section
-        strategy_frame = ctk.CTkFrame(controls_scroll, corner_radius=10)
-        strategy_frame.pack(fill='x', pady=(0, 15))
-
-        ctk.CTkLabel(
-            strategy_frame,
-            text="💡 Strategy & Risk",
-            font=ctk.CTkFont(family="Helvetica", size=14, weight="bold"),
-            text_color="#00ff41",
-            anchor="w"
-        ).pack(fill='x', padx=15, pady=(10, 5))
+        # ── STRATEGY & RISK ──────────────────────────────────────────
+        self._create_section_header(controls_frame, "STRATEGY & RISK")
+        strategy_frame = ctk.CTkFrame(controls_frame, fg_color="#000000")
+        strategy_frame.pack(fill='x', pady=(4, 8))
 
         strategies = [name for name, obj in inspect.getmembers(TradingStrategies) if inspect.isfunction(obj)]
-        self.create_input_field(strategy_frame, "Strategy:", self.selected_strategy,
+        self.create_input_field(strategy_frame, "Strategy", self.selected_strategy,
                                is_combobox=True, values=strategies)
-        self.create_input_field(strategy_frame, "Stop Loss (Pips):", self.sl_pips)
-        self.create_input_field(strategy_frame, "Take Profit (Pips):", self.tp_pips)
+        self.create_input_field(strategy_frame, "Stop Loss (pips)", self.sl_pips)
+        self.create_input_field(strategy_frame, "Take Profit (pips)", self.tp_pips)
+        self.create_input_field(strategy_frame, "Spread (pips)", self.spread_pips)
+        self.create_input_field(strategy_frame, "Slippage (pips)", self.slippage_pips)
 
-        # Account Section
-        account_frame = ctk.CTkFrame(controls_scroll, corner_radius=10)
-        account_frame.pack(fill='x', pady=(0, 15))
+        # ── ACCOUNT SETTINGS ─────────────────────────────────────────
+        self._create_section_header(controls_frame, "ACCOUNT")
+        account_frame = ctk.CTkFrame(controls_frame, fg_color="#000000")
+        account_frame.pack(fill='x', pady=(4, 8))
 
-        ctk.CTkLabel(
-            account_frame,
-            text="💰 Account Settings",
-            font=ctk.CTkFont(family="Helvetica", size=14, weight="bold"),
-            text_color="#00ff41",
-            anchor="w"
-        ).pack(fill='x', padx=15, pady=(10, 5))
-
-        self.create_input_field(account_frame, "Initial Balance ($):", self.initial_balance)
-        self.create_input_field(account_frame, "Leverage:", self.leverage,
+        self.create_input_field(account_frame, "Initial Balance ($)", self.initial_balance)
+        self.create_input_field(account_frame, "Leverage", self.leverage,
                                is_combobox=True, values=[str(x) for x in ForexCalculator.LEVERAGE_OPTIONS])
-        self.create_input_field(account_frame, "Risk % per Trade:", self.risk_percent)
+        self.create_input_field(account_frame, "Risk % per Trade", self.risk_percent)
 
-        # Run Button
+        # ── RUN BUTTON ───────────────────────────────────────────────
         run_button = ctk.CTkButton(
             left_panel,
-            text="🚀 RUN BACKTEST",
+            text="RUN BACKTEST",
             command=self.start_backtest_thread,
-            height=45,
+            height=44,
             corner_radius=8,
             font=ctk.CTkFont(family="Helvetica", size=14, weight="bold"),
-            fg_color="#00ff41",
-            hover_color="#32ff7e",
-            text_color="#000000"
+            fg_color="#111111",
+            hover_color="#222222",
+            border_color="#444444",
+            border_width=1,
+            text_color="#ffffff"
         )
-        run_button.pack(fill='x', padx=20, pady=(10, 20))
+        run_button.pack(fill='x', padx=24, pady=(12, 8))
 
-        # Right Panel - Summary
-        summary_frame = ctk.CTkFrame(right_panel, corner_radius=10)
-        summary_frame.pack(fill='x', padx=15, pady=(15, 10))
+        # ── UTILITY BUTTONS ──────────────────────────────────────────
+        utility_frame = ctk.CTkFrame(left_panel, fg_color="#000000")
+        utility_frame.pack(fill='x', padx=24, pady=(0, 12))
 
-        ctk.CTkLabel(
-            summary_frame,
-            text="📈 Summary",
-            font=ctk.CTkFont(family="Helvetica", size=14, weight="bold"),
-            text_color="#00ff41",
-            anchor="w"
-        ).pack(fill='x', padx=15, pady=(10, 5))
+        # Clear Cache button
+        clear_cache_button = ctk.CTkButton(
+            utility_frame,
+            text="🗑️ CLEAR CACHE",
+            command=self.clear_cache,
+            height=32,
+            corner_radius=6,
+            font=ctk.CTkFont(family="Helvetica", size=11, weight="bold"),
+            fg_color="#1a1a1a",
+            hover_color="#2a2a2a",
+            border_color="#333333",
+            border_width=1,
+            text_color="#cccccc"
+        )
+        clear_cache_button.pack(side='left', expand=True, fill='x', padx=(0, 6))
+
+        # Export Data button
+        export_button = ctk.CTkButton(
+            utility_frame,
+            text="📊 EXPORT DATA",
+            command=self.export_to_csv,
+            height=32,
+            corner_radius=6,
+            font=ctk.CTkFont(family="Helvetica", size=11, weight="bold"),
+            fg_color="#1a1a1a",
+            hover_color="#2a2a2a",
+            border_color="#333333",
+            border_width=1,
+            text_color="#cccccc"
+        )
+        export_button.pack(side='right', expand=True, fill='x', padx=(6, 0))
+
+        # ── RIGHT PANEL ──────────────────────────────────────────────
+        summary_frame = ctk.CTkFrame(right_panel, corner_radius=0, fg_color="#000000")
+        summary_frame.pack(fill='x', padx=24, pady=(24, 12))
+
+        self._create_section_header(summary_frame, "SUMMARY", bottom_pad=8)
 
         self.summary_textbox = ctk.CTkTextbox(
             summary_frame,
-            height=150,
-            corner_radius=8,
-            font=ctk.CTkFont(family="Courier New", size=12),
-            fg_color="#1a1a1a",
-            text_color="#ffffff"
+            height=200,
+            corner_radius=6,
+            font=ctk.CTkFont(family="Consolas", size=30, weight="bold"),
+            fg_color="#000000",
+            text_color="#ffffff",
+            border_width=1,
+            border_color="#222222"
         )
-        self.summary_textbox.pack(fill='both', padx=15, pady=(5, 15))
+        self.summary_textbox.pack(fill='both', padx=4, pady=(4, 12))
 
-        # Metrics Section
-        metrics_frame = ctk.CTkFrame(right_panel, corner_radius=10)
-        metrics_frame.pack(fill='both', expand=True, padx=15, pady=(0, 10))
+        # Metrics section (NO SCROLL)
+        metrics_frame = ctk.CTkFrame(right_panel, corner_radius=0, fg_color="#000000")
+        metrics_frame.pack(fill='both', expand=True, padx=24, pady=(12, 24))
 
-        ctk.CTkLabel(
+        self._create_section_header(metrics_frame, "METRICS")
+
+        self.metrics_container = ctk.CTkFrame(
             metrics_frame,
-            text="📊 Detailed Metrics",
-            font=ctk.CTkFont(family="Helvetica", size=14, weight="bold"),
-            text_color="#00ff41",
-            anchor="w"
-        ).pack(fill='x', padx=15, pady=(10, 5))
-
-        self.metrics_scroll = ctk.CTkScrollableFrame(
-            metrics_frame,
-            corner_radius=8,
-            fg_color="#1a1a1a"
+            corner_radius=6,
+            fg_color="#000000"
         )
-        self.metrics_scroll.pack(fill='both', expand=True, padx=15, pady=(5, 15))
+        self.metrics_container.pack(fill='both', expand=True, padx=4, pady=(4, 12))
 
-        # Report Button
+        # Report button
         self.report_button = ctk.CTkButton(
             right_panel,
-            text="📋 Generate Professional Report",
+            text="GENERATE REPORT",
             command=self.generate_report,
-            height=40,
-            corner_radius=8,
+            height=44,
+            corner_radius=6,
             font=ctk.CTkFont(family="Helvetica", size=13, weight="bold"),
-            fg_color="#434446",
-            hover_color="#595C5E",
+            fg_color="#111111",
+            hover_color="#222222",
+            border_color="#333333",
+            border_width=1,
+            text_color="#ffffff",
             state="disabled"
         )
-        self.report_button.pack(fill='x', padx=15, pady=(0, 15))
+        self.report_button.pack(fill='x', padx=24, pady=(0, 12))
 
-        # Status Bar
-        status_frame = ctk.CTkFrame(self.master, corner_radius=0, height=35, fg_color="#111111")
+        # Progress bar frame
+        self.progress_frame = ctk.CTkFrame(right_panel, fg_color="#000000", corner_radius=6)
+        self.progress_frame.pack(fill='x', padx=24, pady=(0, 24))
+
+        # Progress label
+        self.progress_label = ctk.CTkLabel(
+            self.progress_frame,
+            text="",
+            font=ctk.CTkFont(family="Helvetica", size=11),
+            text_color="#888888",
+            anchor="w"
+        )
+        self.progress_label.pack(fill='x', pady=(8, 4))
+
+        # Progress bar
+        self.progress_bar = ctk.CTkProgressBar(
+            self.progress_frame,
+            mode="determinate",
+            height=8,
+            corner_radius=4,
+            fg_color="#111111",
+            progress_color="#00ff88"
+        )
+        self.progress_bar.pack(fill='x', pady=(0, 8))
+        self.progress_bar.set(0)
+
+        # Hide progress initially
+        self.progress_frame.pack_forget()
+
+        # ── STATUS BAR ───────────────────────────────────────────────
+        status_frame = ctk.CTkFrame(self.master, corner_radius=0, height=34, fg_color="#000000")
         status_frame.pack(side='bottom', fill='x')
 
         self.status_label = ctk.CTkLabel(
             status_frame,
             textvariable=self.status_text,
             font=ctk.CTkFont(family="Helvetica", size=11),
-            text_color="#888888",
+            text_color="#cccccc",
             anchor="w"
         )
-        self.status_label.pack(side='left', padx=20, pady=8)
+        self.status_label.pack(side='left', padx=24, pady=8)
+
+    def _create_section_header(self, parent, text, bottom_pad=12):
+        label = ctk.CTkLabel(
+            parent,
+            text=text,
+            font=ctk.CTkFont(family="Helvetica", size=15, weight="bold"),
+            text_color="#ffffff",
+            anchor="w"
+        )
+        label.pack(fill='x', pady=(8, bottom_pad))
 
     def create_input_field(self, parent, label_text, variable, is_combobox=False, values=None):
-        frame = ctk.CTkFrame(parent, fg_color="transparent")
-        frame.pack(fill='x', padx=15, pady=5)
+        frame = ctk.CTkFrame(parent, fg_color="#000000")
+        frame.pack(fill='x', pady=4)
 
-        label = ctk.CTkLabel(frame, text=label_text, width=120, anchor="w")
+        label = ctk.CTkLabel(
+            frame,
+            text=label_text,
+            width=110,
+            anchor="w",
+            font=ctk.CTkFont(family="Helvetica", size=12),
+            text_color="#ffffff"
+        )
         label.pack(side='left')
 
         if is_combobox:
-            widget = ctk.CTkComboBox(frame, variable=variable, values=values or [])
+            widget = ctk.CTkComboBox(
+                frame,
+                variable=variable,
+                values=values or [],
+                font=ctk.CTkFont(family="Helvetica", size=12),
+                fg_color="#111111",
+                border_color="#333333",
+                button_color="#222222",
+                button_hover_color="#333333",
+                text_color="#ffffff"
+            )
         else:
-            widget = ctk.CTkEntry(frame, textvariable=variable)
-        widget.pack(side='left', expand=True, fill='x', padx=(10, 0))
+            widget = ctk.CTkEntry(
+                frame,
+                textvariable=variable,
+                fg_color="#111111",
+                border_color="#333333",
+                text_color="#ffffff"
+            )
+        widget.pack(side='left', expand=True, fill='x', padx=(16, 0))
 
         return widget
-
-    def refresh_available_pairs(self):
-        """Refresh available pairs from data folder"""
-        try:
-            self.update_status("Scanning for pairs...", '#ffa502')
-            pairs = detect_available_pairs(self.data_folder)
-
-            if pairs:
-                # Update the combobox directly
-                if hasattr(self, 'pair_combo') and self.pair_combo:
-                    self.pair_combo.configure(values=pairs)
-                    # Set first pair if current selection is invalid
-                    if self.selected_pair.get() not in pairs:
-                        self.selected_pair.set(pairs[0])
-
-                self.update_status(f"✅ Found {len(pairs)} pairs: {', '.join(pairs[:5])}{'...' if len(pairs) > 5 else ''}", '#00ff41')
-            else:
-                self.update_status(f"⚠️ No pairs found in {self.data_folder}", '#ff4757')
-        except Exception as e:
-            logging.error(f"Error refreshing pairs: {e}")
-            self.update_status(f"❌ Error scanning: {str(e)}", '#ff4757')
-
-    def update_pair_info(self, *args):
-        """Update pair information display and automatically set date ranges"""
-        pair = self.selected_pair.get()
-        if not pair:
-            return
-
-        # Get actual date range from the pair's data
-        start, end = get_data_date_range(pair, self.data_folder)
-
-        # Get pip value and calculate margin info
-        pip_value = ForexCalculator.PIP_VALUES.get(pair, 0.0001)
-
-        # Example calculations
-        example_price = 1.10 if pair.startswith('EUR') else 1.30
-        leverage = self.leverage.get()
-
-        margin = ForexCalculator.calculate_margin_required(pair, 10000, example_price, leverage)
-        pip_val_usd = ForexCalculator.calculate_pip_value_in_usd(pair, 10000, example_price)
-
-        # Show which subfolder will be used
-        pair_folder = pair.replace('/', '_')
-        folder_path = self.data_folder / pair_folder
-
-        if start and end:
-            # Calculate total days
-            total_days = (end - start).days
-
-            info_text = f"""PAIR: {pair}  |  FOLDER: {pair_folder}
-
-Data Available: {start} to {end}
-Total Days: {total_days:,}
-
-Pip Value: {pip_value}
-Per 10k Units: ${pip_val_usd:.2f} per pip
-Margin (10k @ {leverage}:1): ${margin:.2f}"""
-
-            # AUTOMATICALLY UPDATE DATE FIELDS TO MATCH PAIR'S DATA RANGE
-            self.start_date_var.set(str(start))
-            self.end_date_var.set(str(end))
-
-            # Visual feedback that dates were auto-set
-            self.update_status(f"✅ {pair}: {total_days:,} days | Dates: {start} to {end}", '#00ff41')
-        else:
-            info_text = f"""PAIR: {pair}  |  FOLDER: {pair_folder}
-
-⚠️ No data found
-Path: {folder_path}"""
-            self.update_status(f"⚠️ No data found for {pair} in {pair_folder}", '#ff9f43')
-
-        self.pair_info_label.configure(text=info_text)
-
-    def update_status(self, text, color='#888888'):
-        self.status_text.set(text)
-        self.status_label.configure(text_color=color)
 
     def select_data_folder(self):
         new_folder = filedialog.askdirectory(
@@ -4214,39 +4317,245 @@ Path: {folder_path}"""
         if new_folder:
             self.data_folder = pathlib.Path(new_folder)
             folder_text = str(self.data_folder)
-            if len(folder_text) > 35:
-                folder_text = "..." + folder_text[-32:]
+            if len(folder_text) > 45:
+                folder_text = "..." + folder_text[-42:]
             self.folder_label.configure(text=folder_text)
             self.refresh_available_pairs()
-            self.update_status(f"Data folder updated", '#00ff41')
+            self.update_status(f"Data folder updated → {folder_text}", "#cccccc")
+
+    def refresh_available_pairs(self):
+        try:
+            self.update_status("Scanning for pairs...", "#cccccc")
+            pairs = detect_available_pairs(self.data_folder)
+
+            if pairs:
+                if hasattr(self, 'pair_combo') and self.pair_combo:
+                    self.pair_combo.configure(values=pairs)
+                    if self.selected_pair.get() not in pairs:
+                        self.selected_pair.set(pairs[0])
+                self.update_status(f"Found {len(pairs)} pairs", "#cccccc")
+            else:
+                self.update_status("No pairs found in selected folder", "#cccccc")
+        except Exception as e:
+            logging.error(f"Error refreshing pairs: {e}")
+            self.update_status(f"Error scanning folder: {str(e)}", "#cccccc")
+
+    def update_pair_info(self, *args):
+        pair = self.selected_pair.get()
+        if not pair:
+            return
+
+        start, end = get_data_date_range(pair, self.data_folder)
+        pip_value = ForexCalculator.PIP_VALUES.get(pair, 0.0001)
+
+        example_price = 1.10 if pair.startswith('EUR') else 1.30
+        leverage = self.leverage.get()
+        margin = ForexCalculator.calculate_margin_required(pair, 10000, example_price, leverage)
+        pip_val_usd = ForexCalculator.calculate_pip_value_in_usd(pair, 10000, example_price)
+
+        pair_folder = pair.replace('/', '_')
+        folder_path = self.data_folder / pair_folder
+
+        if start and end:
+            total_days = (end - start).days
+            info_text = f"""PAIR: {pair}  |  FOLDER: {pair_folder}
+
+Data Available: {start} to {end}
+Total Days: {total_days:,}
+
+Pip Value: {pip_value}
+Per 10k Units: ${pip_val_usd:.2f} per pip
+Margin (10k @ {leverage}:1): ${margin:.2f}"""
+
+            self.start_date_var.set(str(start))
+            self.end_date_var.set(str(end))
+
+            self.update_status(f"{pair}: {total_days:,} days of data", "#cccccc")
+        else:
+            info_text = f"""PAIR: {pair}  |  FOLDER: {pair_folder}
+
+No data found
+Path: {folder_path}"""
+            self.update_status(f"No data found for {pair}", "#cccccc")
+
+        self.pair_info_label.configure(text=info_text)
+
+    def update_status(self, text, color="#cccccc"):
+        self.status_text.set(text)
+        self.status_label.configure(text_color=color)
+
+    def clear_cache(self):
+        """Clear cached data and temp files"""
+        try:
+            import shutil
+            import tempfile
+
+            response = messagebox.askyesno(
+                "Clear Cache",
+                "This will clear temporary files and cached data.\n\nContinue?"
+            )
+
+            if not response:
+                return
+
+            # Clear Python cache
+            cache_cleared = 0
+
+            # Clear __pycache__ directories
+            for root, dirs, files in os.walk(os.getcwd()):
+                if '__pycache__' in dirs:
+                    cache_dir = os.path.join(root, '__pycache__')
+                    try:
+                        shutil.rmtree(cache_dir)
+                        cache_cleared += 1
+                    except Exception as e:
+                        logging.warning(f"Could not remove {cache_dir}: {e}")
+
+            # Clear temp files
+            temp_dir = tempfile.gettempdir()
+            temp_cleared = 0
+            for item in os.listdir(temp_dir):
+                if item.startswith('backtest_') or item.startswith('algohaus_'):
+                    try:
+                        item_path = os.path.join(temp_dir, item)
+                        if os.path.isfile(item_path):
+                            os.remove(item_path)
+                            temp_cleared += 1
+                        elif os.path.isdir(item_path):
+                            shutil.rmtree(item_path)
+                            temp_cleared += 1
+                    except Exception as e:
+                        logging.warning(f"Could not remove {item}: {e}")
+
+            messagebox.showinfo(
+                "Cache Cleared",
+                f"Successfully cleared:\n• {cache_cleared} cache directories\n• {temp_cleared} temporary files"
+            )
+            self.update_status("Cache cleared successfully", "#00ff88")
+
+        except Exception as e:
+            messagebox.showerror("Error", f"Failed to clear cache:\n{str(e)}")
+            self.update_status("Error clearing cache", "#ff3366")
+
+    def export_to_csv(self):
+        """Export trade log and backtest parameters to CSV on desktop"""
+        if self.trades_df.empty:
+            messagebox.showwarning("No Data", "No trades to export. Run a backtest first.")
+            return
+
+        try:
+            import csv
+            from datetime import datetime
+
+            # Get desktop path
+            desktop = os.path.join(os.path.expanduser("~"), "Desktop")
+            if not os.path.exists(desktop):
+                desktop = os.path.expanduser("~")
+
+            # Create filename with timestamp
+            timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+            filename = f"AlgoHaus_Backtest_{self.selected_pair.get().replace('/', '-')}_{timestamp}.csv"
+            filepath = os.path.join(desktop, filename)
+
+            # Export trades to CSV
+            with open(filepath, 'w', newline='') as f:
+                writer = csv.writer(f)
+
+                # Write header section with metadata
+                writer.writerow(["=== ALGOHAUS BACKTEST REPORT ==="])
+                writer.writerow(["Wolf Guzman - Professional Forex Backtesting System v6.0"])
+                writer.writerow([])
+                writer.writerow(["BACKTEST PARAMETERS"])
+                writer.writerow(["Parameter", "Value"])
+                writer.writerow(["Pair", self.selected_pair.get()])
+                writer.writerow(["Strategy", self.selected_strategy.get()])
+                writer.writerow(["Timeframe", self.selected_timeframe.get()])
+                writer.writerow(["Start Date", self.start_date_var.get()])
+                writer.writerow(["End Date", self.end_date_var.get()])
+                writer.writerow(["Initial Balance", f"${self.initial_balance.get():,.2f}"])
+                writer.writerow(["Leverage", f"{self.leverage.get()}:1"])
+                writer.writerow(["Risk Per Trade", f"{self.risk_percent.get()}%"])
+                writer.writerow(["Stop Loss", f"{self.sl_pips.get()} pips"])
+                writer.writerow(["Take Profit", f"{self.tp_pips.get()} pips"])
+                writer.writerow(["Spread", f"{self.spread_pips.get()} pips"])
+                writer.writerow(["Slippage", f"{self.slippage_pips.get()} pips"])
+                writer.writerow(["Export Time", datetime.now().strftime("%Y-%m-%d %H:%M:%S")])
+                writer.writerow([])
+
+                # Write performance metrics
+                if self.metrics_data:
+                    writer.writerow(["PERFORMANCE METRICS"])
+                    writer.writerow(["Metric", "Value"])
+                    for key, value in self.metrics_data.items():
+                        metric_name = key.replace('_', ' ').title()
+                        if isinstance(value, float):
+                            if '$' in key or 'balance' in key.lower() or 'pnl' in key.lower():
+                                value_str = f"${value:,.2f}"
+                            elif '%' in key or 'rate' in key.lower() or 'return' in key.lower():
+                                value_str = f"{value:.2f}%"
+                            else:
+                                value_str = f"{value:.2f}"
+                        else:
+                            value_str = str(value)
+                        writer.writerow([metric_name, value_str])
+                    writer.writerow([])
+
+                # Write trade log header
+                writer.writerow(["TRADE LOG"])
+                writer.writerow(self.trades_df.columns.tolist())
+
+                # Write trade data
+                for _, row in self.trades_df.iterrows():
+                    writer.writerow(row.tolist())
+
+            messagebox.showinfo(
+                "Export Successful",
+                f"Backtest data exported to:\n{filepath}"
+            )
+            self.update_status(f"Exported to {filename}", "#00ff88")
+
+            # Open the file location
+            if messagebox.askyesno("Open File", "Would you like to open the file location?"):
+                if os.name == 'nt':  # Windows
+                    os.startfile(desktop)
+                elif os.name == 'posix':  # macOS/Linux
+                    import subprocess
+                    subprocess.call(['open' if sys.platform == 'darwin' else 'xdg-open', desktop])
+
+        except Exception as e:
+            messagebox.showerror("Export Error", f"Failed to export data:\n{str(e)}")
+            self.update_status("Export failed", "#ff3366")
 
     def start_backtest_thread(self):
-        self.update_status("Running backtest...", '#ffa502')
-
+        self.update_status("Running backtest...", "#cccccc")
         self.summary_textbox.delete("0.0", "end")
         self.trades_df = pd.DataFrame()
 
-        for widget in self.metrics_scroll.winfo_children():
+        for widget in self.metrics_container.winfo_children():
             widget.destroy()
 
         self.report_button.configure(state="disabled")
 
+        # Show and reset progress bar
+        self.progress_frame.pack(fill='x', padx=24, pady=(0, 24))
+        self.progress_bar.set(0)
+        self.progress_label.configure(text="Initializing backtest...")
+
         try:
             start_date = datetime.strptime(self.start_date_var.get(), "%Y-%m-%d")
             end_date = datetime.strptime(self.end_date_var.get(), "%Y-%m-%d")
-
             if start_date >= end_date:
                 raise ValueError("Start date must be before End date.")
-
         except ValueError as e:
-            messagebox.showerror("Input Error", f"Invalid input: {e}")
-            self.update_status("Error: Invalid input.", '#ff4757')
+            messagebox.showerror("Input Error", f"Invalid date input: {e}")
+            self.update_status("Invalid date input", "#cccccc")
+            self.progress_frame.pack_forget()
             return
 
         self.q = queue.Queue()
-        threading.Thread(target=self.run_backtest_task, 
-                        args=(start_date, end_date), 
-                        daemon=True).start()
+        threading.Thread(target=self.run_backtest_task,
+                         args=(start_date, end_date),
+                         daemon=True).start()
         self.master.after(100, self.check_queue)
 
     def run_backtest_task(self, start_date, end_date):
@@ -4255,33 +4564,35 @@ Path: {folder_path}"""
             timeframe = self.selected_timeframe.get()
             strategy_name = self.selected_strategy.get()
 
-            # Debug: Log the exact path being used
-            pair_folder = pair.replace('/', '_')
-            expected_path = self.data_folder / pair_folder
-            logging.info(f"Attempting to load pair: {pair}")
-            logging.info(f"Base folder: {self.data_folder}")
-            logging.info(f"Expected subfolder: {expected_path}")
+            # Progress callback function
+            def progress_callback(percent, message):
+                self.q.put(('progress', percent, message))
 
+            progress_callback(0, "Loading data...")
             df, actual_start, actual_end = load_pair_data(pair, self.data_folder, start_date, end_date, timeframe)
             self.df = df
             self.actual_start = actual_start
             self.actual_end = actual_end
 
+            progress_callback(5, "Initializing strategy...")
             strategy_func = getattr(TradingStrategies, strategy_name)
 
             backtester = EnhancedBacktester(
-                df, 
-                initial_balance=self.initial_balance.get(), 
-                pip_value=ForexCalculator.PIP_VALUES.get(pair, 0.0001), 
+                df,
+                initial_balance=self.initial_balance.get(),
+                pip_value=ForexCalculator.PIP_VALUES.get(pair, 0.0001),
                 leverage=self.leverage.get(),
-                risk_percent=self.risk_percent.get()
+                risk_percent=self.risk_percent.get(),
+                spread_pips=self.spread_pips.get(),
+                slippage_pips=self.slippage_pips.get()
             )
 
             summary, metrics = backtester.run_backtest(
-                strategy_func, 
-                self.sl_pips.get(), 
-                self.tp_pips.get(), 
-                pair
+                strategy_func,
+                self.sl_pips.get(),
+                self.tp_pips.get(),
+                pair,
+                progress_callback=progress_callback
             )
 
             self.q.put(('success', summary, metrics, backtester.results))
@@ -4294,14 +4605,24 @@ Path: {folder_path}"""
         try:
             result_type, *data = self.q.get_nowait()
 
-            if result_type == 'success':
+            if result_type == 'progress':
+                percent, message = data
+                self.progress_bar.set(percent / 100)
+                self.progress_label.configure(text=message)
+                self.master.after(100, self.check_queue)
+            elif result_type == 'success':
                 summary, metrics, trades_df = data
                 self.update_results_ui(summary, metrics, trades_df)
-                self.update_status("✅ Backtest completed!", '#00ff41')
+                self.update_status("Backtest completed", "#cccccc")
+                # Hide progress bar after completion
+                self.progress_bar.set(1.0)
+                self.progress_label.configure(text="Backtest complete!")
+                self.master.after(2000, self.progress_frame.pack_forget)
             elif result_type == 'error':
                 error_msg = data[0]
                 messagebox.showerror("Backtest Error", error_msg)
-                self.update_status("❌ Backtest failed.", '#ff4757')
+                self.update_status("Backtest failed", "#cccccc")
+                self.progress_frame.pack_forget()
 
         except queue.Empty:
             self.master.after(100, self.check_queue)
@@ -4313,79 +4634,63 @@ Path: {folder_path}"""
         self.summary_textbox.delete("0.0", "end")
         self.summary_textbox.insert("0.0", summary)
 
-        for widget in self.metrics_scroll.winfo_children():
+        for widget in self.metrics_container.winfo_children():
             widget.destroy()
 
-        # Create old-school text table for metrics
+        # Metrics text - no scroll, wider display
         metrics_text = ctk.CTkTextbox(
-            self.metrics_scroll,
-            height=400,
-            width=600,
+            self.metrics_container,
             corner_radius=8,
-            font=ctk.CTkFont(family="Courier New", size=11),
-            fg_color="#0a0a0a",
+            font=ctk.CTkFont(family="Consolas", size=28, weight="bold"),
+            fg_color="#000000",
             text_color="#ffffff",
             wrap="none"
         )
-        metrics_text.pack(fill='both', expand=True, padx=5, pady=5)
+        metrics_text.pack(expand=True, fill='both', padx=20, pady=10)
 
-        # Build the text table
         table_lines = []
-        table_lines.append("=" * 70)
-        table_lines.append("METRIC".ljust(40) + "VALUE".rjust(30))
-        table_lines.append("=" * 70)
+        table_lines.append("=" * 90)
+        table_lines.append("METRIC".ljust(50) + "VALUE".rjust(40))
+        table_lines.append("=" * 90)
 
         for key, value in metrics.items():
-            # Format metric name
             metric_name = key.replace('_', ' ').title()
-
-            # Format value
             if isinstance(value, float):
                 if '$' in key or 'balance' in key.lower() or 'pnl' in key.lower():
                     value_str = f"${value:,.2f}"
                 elif '%' in key or 'rate' in key.lower() or 'return' in key.lower():
                     value_str = f"{value:.2f}%"
-                elif 'ratio' in key.lower() or 'factor' in key.lower():
-                    value_str = f"{value:.2f}"
                 else:
-                    value_str = f"{value:,.2f}"
+                    value_str = f"{value:.2f}"
             elif isinstance(value, int):
                 value_str = f"{value:,}"
             else:
                 value_str = str(value)
 
-            # Add colored indicators for P&L
-            if 'pnl' in key.lower() or 'return' in key.lower():
-                if value > 0:
-                    value_str = f"▲ {value_str}"
-                elif value < 0:
-                    value_str = f"▼ {value_str}"
-
-            line = metric_name.ljust(40) + value_str.rjust(30)
+            line = metric_name.ljust(50) + value_str.rjust(40)
             table_lines.append(line)
 
-        table_lines.append("=" * 70)
-
-        # Insert the table
+        table_lines.append("=" * 90)
         table_text = "\n".join(table_lines)
         metrics_text.insert("0.0", table_text)
-        metrics_text.configure(state="disabled")  # Make read-only
+        metrics_text.configure(state="disabled")
 
         self.report_button.configure(state="normal")
+
     def generate_report(self):
         if self.trades_df.empty:
-            messagebox.showwarning("Report Warning", "No trades to generate report.")
+            messagebox.showwarning("No Data", "No trades available to generate report.")
             return
 
         try:
-            self.update_status("Generating professional report...", '#ffa502')
+            self.update_status("Generating report...", "#cccccc")
 
             report_path = HTMLReportGenerator.generate_report(
-                self.metrics_data, 
-                self.trades_df, 
+                self.metrics_data,
+                self.trades_df,
                 self.selected_strategy.get(),
-                self.selected_timeframe.get(), 
-                self.selected_pair.get(), 
+                self.selected_timeframe.get(),
+                self.selected_pair.get(),
                 self.initial_balance.get(),
                 self.leverage.get(),
                 self.sl_pips.get(),
@@ -4396,13 +4701,16 @@ Path: {folder_path}"""
                 df=self.df
             )
 
-            messagebox.showinfo("Report Generated", f"Professional report saved!")
+            messagebox.showinfo("Success", "Professional report generated!")
             webbrowser.open_new_tab('file://' + os.path.realpath(report_path))
-            self.update_status("📊 Report generated successfully!", '#00ff41')
+            self.update_status("Report generated successfully", "#cccccc")
 
         except Exception as e:
-            messagebox.showerror("Report Error", f"Failed to generate report: {e}")
-            self.update_status("❌ Error generating report.", '#ff4757')
+            messagebox.showerror("Report Error", f"Failed to generate report:\n{str(e)}")
+            self.update_status("Error generating report", "#cccccc")
+
+
+# In[9]:
 
 
 # In[63]:
@@ -4425,7 +4733,4 @@ if __name__ == '__main__':
 
 
 # In[ ]:
-
-
-
 
