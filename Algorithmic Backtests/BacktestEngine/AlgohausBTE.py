@@ -9,13 +9,13 @@
 # Jan 2026
 # 
 
-# In[3]:
+# In[ ]:
 
 
-#new sleek ui 
 
 
-# In[4]:
+
+# In[12]:
 
 
 #!/usr/bin/env python
@@ -719,17 +719,21 @@ class EnhancedBacktester:
             total_pnl = self.results['monetary_pnl'].sum()
             total_pips = self.results['pips_pnl'].sum()
             win_rate = (self.results['pips_pnl'] > 0).mean() * 100
+            total_return_pct = ((current_balance - self.initial_balance) / self.initial_balance) * 100
 
             summary = (f"TRADES: {len(self.results)}\n"
                       f"WIN RATE: {win_rate:.1f}%\n"
                       f"P&L: ${total_pnl:,.2f}\n"
                       f"PIPS: {total_pips:,.1f}\n"
+                      f"RETURNS: {total_return_pct:+.2f}%\n"
                       f"FINAL BALANCE: ${current_balance:,.2f}")
 
             if not is_usd_major:
                 summary += "\n⚠️ Cross pair - approximate pip values"
 
             metrics = self.calculate_metrics()
+            # Add returns to metrics for color coding in UI
+            metrics['total_return_pct'] = total_return_pct
         else:
             summary = "No trades executed"
             metrics = {}
@@ -2096,7 +2100,7 @@ class HTMLReportGenerator:
 
     @staticmethod
     def generate_report(metrics, trades_df, strategy_name, timeframe, pair, initial_balance, 
-                       leverage, sl_pips, tp_pips, risk_pct, start_date, end_date, df=None):
+                       leverage, sl_pips, tp_pips, risk_pct, start_date, end_date, df=None, output_dir=None):
 
         from datetime import datetime
         import json
@@ -3532,9 +3536,15 @@ class HTMLReportGenerator:
 </html>
 """
 
-        temp_dir = tempfile.gettempdir()
+        # Use provided output_dir or fall back to temp directory
+        if output_dir and os.path.exists(output_dir):
+            save_dir = output_dir
+        else:
+            temp_dir = tempfile.gettempdir()
+            save_dir = temp_dir
+
         filename = f"AlgoHaus_{pair.replace('/', '-')}_{strategy_name}_{timestamp}.html"
-        report_path = os.path.join(temp_dir, filename)
+        report_path = os.path.join(output_dir if output_dir else tempfile.gettempdir(), filename)
 
         with open(report_path, 'w', encoding='utf-8') as f:
             f.write(html)
@@ -3995,7 +4005,7 @@ class BacktesterUI:
         self.master.after(500, self.update_pair_info)
 
         if self.data_folder.exists():
-            self.update_status("Data folder ready • " + self.data_folder.name, "#58a6ff")
+            self.update_status("Data folder ready • " + self.data_folder.name, "#238636")
         else:
             self.update_status("Data folder not found - please select", "#f85149")
 
@@ -4003,13 +4013,13 @@ class BacktesterUI:
         # ══════════════════════════════════════════════════════════════
         # MAIN CONTAINER - Deep dark background
         # ══════════════════════════════════════════════════════════════
-        main_container = ctk.CTkFrame(self.master, corner_radius=0, fg_color="#0d1117")
+        main_container = ctk.CTkFrame(self.master, corner_radius=0, fg_color="#000000")
         main_container.pack(fill='both', expand=True)
 
         # ══════════════════════════════════════════════════════════════
         # LEFT SIDEBAR - Sleek navigation
         # ══════════════════════════════════════════════════════════════
-        sidebar = ctk.CTkFrame(main_container, corner_radius=0, fg_color="#161b22", width=260)
+        sidebar = ctk.CTkFrame(main_container, corner_radius=0, fg_color="#000000", width=260)
         sidebar.pack(side='left', fill='y')
         sidebar.pack_propagate(False)
 
@@ -4019,16 +4029,16 @@ class BacktesterUI:
 
         ctk.CTkLabel(
             logo_frame,
-            text="⚡ Backtest",
+            text="⚡ algoHaus ",
             font=ctk.CTkFont(family="Helvetica", size=22, weight="bold"),
-            text_color="#58a6ff",
+            text_color="#029cff",
             anchor="w"
         ).pack(anchor='w')
 
         ctk.CTkLabel(
             logo_frame,
-            text="by Wolf Guzman",
-            font=ctk.CTkFont(family="Helvetica", size=10),
+            text="Backtest Engine by Wolf Guzman",
+            font=ctk.CTkFont(family="Helvetica", size=11),
             text_color="#6e7681",
             anchor="w"
         ).pack(anchor='w', pady=(2, 0))
@@ -4120,7 +4130,7 @@ class BacktesterUI:
         # ══════════════════════════════════════════════════════════════
         # RIGHT CONTENT AREA
         # ══════════════════════════════════════════════════════════════
-        content_area = ctk.CTkFrame(main_container, corner_radius=0, fg_color="#0d1117")
+        content_area = ctk.CTkFrame(main_container, corner_radius=0, fg_color="#000000")
         content_area.pack(side='right', fill='both', expand=True)
 
         # Content sections container
@@ -4138,7 +4148,7 @@ class BacktesterUI:
         self.show_section('config')
 
         # ── Progress Bar ──────────────────────────────────────────────
-        self.progress_container = ctk.CTkFrame(content_area, fg_color="#161b22", corner_radius=8)
+        self.progress_container = ctk.CTkFrame(content_area, fg_color="#000000", corner_radius=8)
 
         self.progress_label = ctk.CTkLabel(
             self.progress_container,
@@ -4155,7 +4165,7 @@ class BacktesterUI:
             height=6,
             corner_radius=3,
             fg_color="#21262d",
-            progress_color="#58a6ff"
+            progress_color="#238636"
         )
         self.progress_bar.pack(fill='x', padx=15, pady=(0, 12))
         self.progress_bar.set(0)
@@ -4163,7 +4173,7 @@ class BacktesterUI:
         # ══════════════════════════════════════════════════════════════
         # STATUS BAR (bottom)
         # ══════════════════════════════════════════════════════════════
-        status_bar = ctk.CTkFrame(self.master, corner_radius=0, height=38, fg_color="#161b22")
+        status_bar = ctk.CTkFrame(self.master, corner_radius=0, height=38, fg_color="#000000")
         status_bar.pack(side='bottom', fill='x')
 
         self.status_label = ctk.CTkLabel(
@@ -4233,7 +4243,7 @@ class BacktesterUI:
         ).pack(anchor='w', pady=(0, 25))
 
         # Content container
-        content = ctk.CTkFrame(section, fg_color="#161b22", corner_radius=12)
+        content = ctk.CTkFrame(section, fg_color="#000000", corner_radius=12)
         content.pack(fill='both', expand=True)
 
         # Inner padding
@@ -4325,7 +4335,7 @@ class BacktesterUI:
             anchor="w"
         ).pack(anchor='w', pady=(0, 25))
 
-        content = ctk.CTkFrame(section, fg_color="#161b22", corner_radius=12)
+        content = ctk.CTkFrame(section, fg_color="#000000", corner_radius=12)
         content.pack(fill='both', expand=True)
 
         inner = ctk.CTkFrame(content, fg_color="transparent")
@@ -4365,7 +4375,7 @@ class BacktesterUI:
             anchor="w"
         ).pack(anchor='w', pady=(0, 25))
 
-        content = ctk.CTkFrame(section, fg_color="#161b22", corner_radius=12)
+        content = ctk.CTkFrame(section, fg_color="#000000", corner_radius=12)
         content.pack(fill='both', expand=True)
 
         inner = ctk.CTkFrame(content, fg_color="transparent")
@@ -4396,7 +4406,7 @@ class BacktesterUI:
         ).pack(anchor='w', pady=(0, 20))
 
         # ── SUMMARY BOX ───────────────────────────────────────────────
-        summary_container = ctk.CTkFrame(section, fg_color="#161b22", corner_radius=12)
+        summary_container = ctk.CTkFrame(section, fg_color="#000000", corner_radius=12)
         summary_container.pack(fill='x', pady=(0, 20))
 
         ctk.CTkLabel(
@@ -4409,10 +4419,10 @@ class BacktesterUI:
 
         self.summary_textbox = ctk.CTkTextbox(
             summary_container,
-            height=180,
+            height=210,  # Increased from 180 to fit returns line
             corner_radius=8,
             font=ctk.CTkFont(family="Consolas", size=28, weight="bold"),
-            fg_color="#0d1117",
+            fg_color="#000000",
             text_color="#e6edf3",
             border_width=1,
             border_color="#30363d"
@@ -4420,7 +4430,7 @@ class BacktesterUI:
         self.summary_textbox.pack(fill='x', padx=25, pady=(0, 20))
 
         # ── METRICS TABLE ─────────────────────────────────────────────
-        metrics_container = ctk.CTkFrame(section, fg_color="#161b22", corner_radius=12)
+        metrics_container = ctk.CTkFrame(section, fg_color="#000000", corner_radius=12)
         metrics_container.pack(fill='both', expand=True)
 
         ctk.CTkLabel(
@@ -4432,7 +4442,7 @@ class BacktesterUI:
         ).pack(anchor='w', padx=25, pady=(20, 12))
 
         # Metrics display area
-        self.metrics_display = ctk.CTkFrame(metrics_container, fg_color="#0d1117", corner_radius=8)
+        self.metrics_display = ctk.CTkFrame(metrics_container, fg_color="#000000", corner_radius=8)
         self.metrics_display.pack(fill='both', expand=True, padx=25, pady=(0, 20))
 
     # ══════════════════════════════════════════════════════════════════
@@ -4503,9 +4513,33 @@ class BacktesterUI:
         self.trades_df = trades_df
         self.metrics_data = metrics
 
-        # Update summary
+        # Update summary with color-coded returns
         self.summary_textbox.delete("0.0", "end")
-        self.summary_textbox.insert("0.0", summary)
+
+        # Split summary by lines and add color to RETURNS line
+        lines = summary.split('\n')
+        for i, line in enumerate(lines):
+            if i > 0:
+                self.summary_textbox.insert("end", "\n")
+
+            if line.startswith("RETURNS:"):
+                # Extract the percentage value
+                try:
+                    returns_value = float(line.split(':')[1].strip().replace('%', '').replace('+', ''))
+                    # Set color based on positive/negative
+                    color = "#3fb950" if returns_value >= 0 else "#f85149"
+
+                    # Insert with tag for color
+                    start_pos = self.summary_textbox.index("end-1c")
+                    self.summary_textbox.insert("end", line)
+                    end_pos = self.summary_textbox.index("end-1c")
+                    self.summary_textbox.tag_add("returns_color", start_pos, end_pos)
+                    self.summary_textbox.tag_config("returns_color", foreground=color)
+                except:
+                    # Fallback if parsing fails
+                    self.summary_textbox.insert("end", line)
+            else:
+                self.summary_textbox.insert("end", line)
 
         # Clear previous metrics
         for widget in self.metrics_display.winfo_children():
@@ -4521,20 +4555,20 @@ class BacktesterUI:
         plt.style.use('dark_background')
 
         # Create figure with 2x2 subplots
-        fig = Figure(figsize=(14, 8), facecolor='#0d1117', edgecolor='#0d1117')
+        fig = Figure(figsize=(14, 8), facecolor='#000000', edgecolor='#000000')
         fig.subplots_adjust(left=0.08, right=0.96, top=0.94, bottom=0.08, hspace=0.35, wspace=0.25)
 
         # ── TOP LEFT: Cumulative Returns ─────────────────────────────
-        ax1 = fig.add_subplot(2, 2, 1, facecolor='#161b22')
+        ax1 = fig.add_subplot(2, 2, 1, facecolor='#000000')
         if not trades_df.empty:
             trades_df_sorted = trades_df.sort_values('exit_time')
             cumulative_pnl = trades_df_sorted['monetary_pnl'].cumsum()
             cumulative_returns = (cumulative_pnl / self.initial_balance.get()) * 100
 
             ax1.plot(trades_df_sorted['exit_time'], cumulative_returns, 
-                    color='#58a6ff', linewidth=2, label='Strategy Returns')
+                    color='#238636', linewidth=2, label='Strategy Returns')
             ax1.fill_between(trades_df_sorted['exit_time'], cumulative_returns, 0, 
-                            alpha=0.2, color='#58a6ff')
+                            alpha=0.2, color='#238636')
             ax1.axhline(y=0, color='#6e7681', linestyle='--', linewidth=1, alpha=0.5)
             ax1.set_title('Cumulative Returns', fontsize=13, fontweight='bold', 
                          color='#e6edf3', pad=10, fontfamily='Helvetica')
@@ -4548,12 +4582,12 @@ class BacktesterUI:
             ax1.spines['left'].set_color('#30363d')
 
         # ── TOP RIGHT: Trade PnL Distribution ────────────────────────
-        ax2 = fig.add_subplot(2, 2, 2, facecolor='#161b22')
+        ax2 = fig.add_subplot(2, 2, 2, facecolor='#000000')
         if not trades_df.empty:
             returns = trades_df['monetary_pnl']
 
             # Histogram
-            n, bins, patches = ax2.hist(returns, bins=30, color='#58a6ff', 
+            n, bins, patches = ax2.hist(returns, bins=30, color='#238636', 
                                        alpha=0.7, edgecolor='#30363d')
 
             # Color bars based on positive/negative
@@ -4565,7 +4599,7 @@ class BacktesterUI:
 
             # Add mean line
             mean_return = returns.mean()
-            ax2.axvline(x=mean_return, color='#58a6ff', linestyle='--', 
+            ax2.axvline(x=mean_return, color='#238636', linestyle='--', 
                        linewidth=2, label=f'Mean: ${mean_return:.2f}')
             ax2.axvline(x=0, color='#6e7681', linestyle='-', linewidth=1, alpha=0.5)
 
@@ -4574,7 +4608,7 @@ class BacktesterUI:
             ax2.set_xlabel('P&L ($)', fontsize=10, color='#8b949e', fontfamily='Helvetica')
             ax2.set_ylabel('Frequency', fontsize=10, color='#8b949e', fontfamily='Helvetica')
             ax2.tick_params(colors='#8b949e', labelsize=9)
-            ax2.legend(loc='upper right', fontsize=9, facecolor='#161b22', 
+            ax2.legend(loc='upper right', fontsize=9, facecolor='#000000', 
                       edgecolor='#30363d', labelcolor='#e6edf3')
             ax2.grid(True, alpha=0.15, color='#30363d', linestyle='-', linewidth=0.5)
             ax2.spines['top'].set_color('#30363d')
@@ -4583,7 +4617,7 @@ class BacktesterUI:
             ax2.spines['left'].set_color('#30363d')
 
         # ── BOTTOM LEFT: Drawdown Chart ──────────────────────────────
-        ax3 = fig.add_subplot(2, 2, 3, facecolor='#161b22')
+        ax3 = fig.add_subplot(2, 2, 3, facecolor='#000000')
         if not trades_df.empty:
             trades_df_sorted = trades_df.sort_values('exit_time')
             cumulative_pnl = trades_df_sorted['monetary_pnl'].cumsum()
@@ -4607,7 +4641,7 @@ class BacktesterUI:
             ax3.spines['left'].set_color('#30363d')
 
         # ── BOTTOM RIGHT: Win/Loss Ratio Pie Chart ───────────────────
-        ax4 = fig.add_subplot(2, 2, 4, facecolor='#161b22')
+        ax4 = fig.add_subplot(2, 2, 4, facecolor='#000000')
         if not trades_df.empty:
             wins = (trades_df['monetary_pnl'] > 0).sum()
             losses = (trades_df['monetary_pnl'] <= 0).sum()
@@ -4626,7 +4660,7 @@ class BacktesterUI:
                                                          'fontfamily': 'Helvetica'})
 
             for autotext in autotexts:
-                autotext.set_color('#0d1117')
+                autotext.set_color('#000000')
                 autotext.set_fontweight('bold')
                 autotext.set_fontsize(12)
 
@@ -4641,21 +4675,21 @@ class BacktesterUI:
         # ══════════════════════════════════════════════════════════════
         # METRICS TABLE (below charts)
         # ══════════════════════════════════════════════════════════════
-        metrics_table_container = ctk.CTkFrame(self.metrics_display, fg_color="#161b22", corner_radius=8)
+        metrics_table_container = ctk.CTkFrame(self.metrics_display, fg_color="#000000", corner_radius=8)
         metrics_table_container.pack(fill='x', padx=10, pady=(0, 10))
 
         # Title
         ctk.CTkLabel(
             metrics_table_container,
             text="PERFORMANCE METRICS",
-            font=ctk.CTkFont(family="Helvetica", size=13, weight="bold"),
+            font=ctk.CTkFont(family="Helvetica", size=12, weight="bold"),  # Reduced from 13 to 12
             text_color="#e6edf3",
             anchor="w"
-        ).pack(anchor='w', padx=20, pady=(15, 10))
+        ).pack(anchor='w', padx=20, pady=(12, 8))  # Reduced padding
 
         # Create metrics grid (2 columns)
         metrics_grid = ctk.CTkFrame(metrics_table_container, fg_color="transparent")
-        metrics_grid.pack(fill='x', padx=20, pady=(0, 15))
+        metrics_grid.pack(fill='x', padx=20, pady=(0, 12))  # Reduced bottom padding
 
         # Split metrics into two columns
         metrics_list = list(metrics.items())
@@ -4672,14 +4706,14 @@ class BacktesterUI:
         def add_metric_row(parent, key, value):
             """Add a single metric row"""
             row = ctk.CTkFrame(parent, fg_color="transparent")
-            row.pack(fill='x', pady=3)
+            row.pack(fill='x', pady=2)  # Reduced from 3 to 2
 
             # Metric name
             name = key.replace('_', ' ').title()
             ctk.CTkLabel(
                 row,
                 text=name,
-                font=ctk.CTkFont(family="Helvetica", size=11),
+                font=ctk.CTkFont(family="Helvetica", size=10),  # Reduced from 11 to 10
                 text_color="#8b949e",
                 anchor="w"
             ).pack(side='left', fill='x', expand=True)
@@ -4705,7 +4739,7 @@ class BacktesterUI:
             ctk.CTkLabel(
                 row,
                 text=value_str,
-                font=ctk.CTkFont(family="Helvetica", size=11, weight="bold"),
+                font=ctk.CTkFont(family="Helvetica", size=10, weight="bold"),
                 text_color=color,
                 anchor="e"
             ).pack(side='right')
@@ -4730,6 +4764,36 @@ class BacktesterUI:
         self.status_text.set(text)
         self.status_label.configure(text_color=color)
 
+    def get_desktop_path(self):
+        """Get the actual Desktop path - tries multiple methods for reliability"""
+        desktop = None
+
+        # Method 1: Standard Desktop path
+        desktop_path = os.path.join(os.path.expanduser("~"), "Desktop")
+        if os.path.exists(desktop_path):
+            return desktop_path
+
+        # Method 2: OneDrive Desktop (common on Windows 10/11)
+        onedrive_desktop = os.path.join(os.path.expanduser("~"), "OneDrive", "Desktop")
+        if os.path.exists(onedrive_desktop):
+            return onedrive_desktop
+
+        # Method 3: Check user shell folders (Windows Registry method)
+        if os.name == 'nt':
+            try:
+                import winreg
+                key = winreg.OpenKey(winreg.HKEY_CURRENT_USER,
+                                    r'Software\Microsoft\Windows\CurrentVersion\Explorer\Shell Folders')
+                desktop = winreg.QueryValueEx(key, 'Desktop')[0]
+                winreg.CloseKey(key)
+                if desktop and os.path.exists(desktop):
+                    return desktop
+            except:
+                pass
+
+        # Method 4: Fallback to home directory
+        return os.path.expanduser("~")
+
     def select_data_folder(self):
         new_folder = filedialog.askdirectory(
             title="Select Main Data Folder",
@@ -4742,7 +4806,7 @@ class BacktesterUI:
                 folder_text = "..." + folder_text[-47:]
             self.folder_label.configure(text=folder_text)
             self.refresh_available_pairs()
-            self.update_status(f"Data folder updated", "#58a6ff")
+            self.update_status(f"Data folder updated", "#238636")
 
     def refresh_available_pairs(self):
         try:
@@ -4780,7 +4844,7 @@ Pip Value: {pip_value}"""
 
             self.start_date_var.set(str(start))
             self.end_date_var.set(str(end))
-            self.update_status(f"{pair}: {total_days:,} days of data", "#58a6ff")
+            self.update_status(f"{pair}: {total_days:,} days of data", "#238636")
         else:
             info_text = f"PAIR: {pair}\n\nNo data found"
             self.update_status(f"No data found for {pair}", "#f85149")
@@ -4791,7 +4855,7 @@ Pip Value: {pip_value}"""
     # BACKTEST EXECUTION
     # ══════════════════════════════════════════════════════════════════
     def start_backtest_thread(self):
-        self.update_status("Running backtest...", "#58a6ff")
+        self.update_status("Running backtest...", "#238636")
         self.summary_textbox.delete("0.0", "end")
         self.trades_df = pd.DataFrame()
 
@@ -4950,9 +5014,8 @@ Pip Value: {pip_value}"""
         try:
             import csv
 
-            desktop = os.path.join(os.path.expanduser("~"), "Desktop")
-            if not os.path.exists(desktop):
-                desktop = os.path.expanduser("~")
+            # Get Desktop path using helper method
+            desktop = self.get_desktop_path()
 
             timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
             filename = f"AlgoHaus_Backtest_{self.selected_pair.get().replace('/', '-')}_{timestamp}.csv"
@@ -5028,7 +5091,10 @@ Pip Value: {pip_value}"""
             return
 
         try:
-            self.update_status("Generating report...", "#58a6ff")
+            self.update_status("Generating report...", "#238636")
+
+            # Get Desktop path
+            desktop = self.get_desktop_path()
 
             report_path = HTMLReportGenerator.generate_report(
                 self.metrics_data,
@@ -5043,10 +5109,11 @@ Pip Value: {pip_value}"""
                 self.risk_percent.get(),
                 self.start_date_var.get(),
                 self.end_date_var.get(),
-                df=self.df
+                df=self.df,
+                output_dir=desktop  # Pass Desktop path
             )
 
-            messagebox.showinfo("Success", "Report generated!")
+            messagebox.showinfo("Success", f"Report generated!\n{report_path}")
             webbrowser.open_new_tab('file://' + os.path.realpath(report_path))
             self.update_status("Report generated", "#3fb950")
 
