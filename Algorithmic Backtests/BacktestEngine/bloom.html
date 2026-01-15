@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>algoHaus • Backtest Results • Wolf Guzman</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0a0d11;
+      --panel: #0f1217;
+      --border: #1a1f27;
+      --text: #e1e6ef;
+      --text-dim: #8a96b0;
+      --green: #00ff9d;
+      --red: #ff2d55;
+      --cyan: #00d4ff;
+      --purple: #c084fc;
+      --yellow: #ffd166;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      padding: 24px 32px;
+      line-height: 1.4;
+    }
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 32px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .title {
+      font-size: 28px;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+    }
+
+    .subtitle {
+      color: var(--text-dim);
+      font-size: 14px;
+      font-weight: 400;
+    }
+
+    .badge {
+      background: rgba(0, 212, 255, 0.12);
+      color: var(--cyan);
+      padding: 4px 12px;
+      border-radius: 4px;
+      font-size: 13px;
+      font-weight: 500;
+    }
+
+    .grid-4 {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+      margin-bottom: 40px;
+    }
+
+    .card {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 24px;
+      transition: all 0.15s ease;
+    }
+
+    .card:hover {
+      border-color: #2a3344;
+      box-shadow: 0 0 0 1px rgba(0, 212, 255, 0.08);
+    }
+
+    .card-label {
+      color: var(--text-dim);
+      font-size: 13px;
+      font-weight: 500;
+      margin-bottom: 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .card-value {
+      font-size: 32px;
+      font-weight: 700;
+      letter-spacing: -1px;
+      line-height: 1;
+    }
+
+    .card-value.positive { color: var(--green); }
+    .card-value.negative { color: var(--red); }
+    .card-value.neutral  { color: var(--cyan); }
+
+    .secondary-value {
+      font-size: 15px;
+      color: var(--text-dim);
+      margin-top: 4px;
+    }
+
+    .metric-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 16px 24px;
+      margin-top: 32px;
+    }
+
+    .metric-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 10px 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 14px;
+    }
+
+    .metric-name {
+      color: var(--text-dim);
+    }
+
+    .metric-value.positive { color: var(--green); }
+    .metric-value.negative { color: var(--red); }
+
+    .footer {
+      margin-top: 60px;
+      text-align: center;
+      color: var(--text-dim);
+      font-size: 13px;
+    }
+
+    @media (max-width: 1200px) {
+      .grid-4 { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    @media (max-width: 768px) {
+      .grid-4 { grid-template-columns: 1fr; }
+      body { padding: 16px; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="header">
+  <div>
+    <div class="title">algoHaus • Backtest Results</div>
+    <div class="subtitle">Wolf Guzman v6.0 • EUR/USD • 1hr • VWAP Crossover</div>
+  </div>
+  <div class="badge">2014–2025 • $10,000 • 50:1</div>
+</div>
+
+<div class="grid-4">
+  <div class="card">
+    <div class="card-label">Final Balance</div>
+    <div class="card-value">$8,422.25</div>
+    <div class="secondary-value">from $10,000.00</div>
+  </div>
+
+  <div class="card">
+    <div class="card-label">Total Return</div>
+    <div class="card-value negative">-15.78%</div>
+  </div>
+
+  <div class="card">
+    <div class="card-label">Win Rate</div>
+    <div class="card-value negative">29.4%</div>
+    <div class="secondary-value">35 wins • 84 losses</div>
+  </div>
+
+  <div class="card">
+    <div class="card-label">Max Drawdown</div>
+    <div class="card-value negative">-20.61%</div>
+  </div>
+</div>
+
+<div class="card" style="margin-bottom: 40px;">
+  <div class="card-label">Key Performance Metrics</div>
+
+  <div class="metric-grid">
+    <div class="metric-row">
+      <span class="metric-name">Total Trades</span>
+      <span class="metric-value">119</span>
+    </div>
+    <div class="metric-row">
+      <span class="metric-name">Net P&L</span>
+      <span class="metric-value negative">-$1,577.75</span>
+    </div>
+    <div class="metric-row">
+      <span class="metric-name">Total Pips</span>
+      <span class="metric-value negative">-479.5</span>
+    </div>
+    <div class="metric-row">
+      <span class="metric-name">Profit Factor</span>
+      <span class="metric-value">0.62</span>
+    </div>
+    <div class="metric-row">
+      <span class="metric-name">Sharpe Ratio</span>
+      <span class="metric-value negative">-0.61</span>
+    </div>
+    <div class="metric-row">
+      <span class="metric-name">Sortino Ratio</span>
+      <span class="metric-value negative">-0.81</span>
+    </div>
+    <div class="metric-row">
+      <span class="metric-name">Avg Win</span>
+      <span class="metric-value positive">$202.30</span>
+    </div>
+    <div class="metric-row">
+      <span class="metric-name">Avg Loss</span>
+      <span class="metric-value negative">-$38.66</span>
+    </div>
+    <div class="metric-row">
+      <span class="metric-name">Best Trade</span>
+      <span class="metric-value positive">$202.25</span>
+    </div>
+    <div class="metric-row">
+      <span class="metric-name">Worst Trade</span>
+      <span class="metric-value negative">-$103.70</span>
+    </div>
+    <div class="metric-row">
+      <span class="metric-name">Max Consec. Wins</span>
+      <span class="metric-value">3</span>
+    </div>
+    <div class="metric-row">
+      <span class="metric-name">Max Consec. Losses</span>
+      <span class="metric-value">12</span>
+    </div>
+  </div>
+</div>
+
+<div class="footer">
+  algoHaus Professional Backtesting Engine • © Wolf Guzman • Data: 2014–2025 • Generated 2026
+</div>
+
+</body>
+</html>
