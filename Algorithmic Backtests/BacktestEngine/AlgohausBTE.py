@@ -1,15 +1,6 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# test environment! 
-# 
-
-# In[ ]:
-
-
-#!/usr/bin/env python
-# coding: utf-8
-
 # Wolf's AlgoHaus Backtester v6.0 - Professional Edition
 # Wolf Guzman
 # Features: Real Data Validation, Risk Management, QuantStats Analysis
@@ -3435,7 +3426,7 @@ class HTMLReportGenerator:
         else:
             temp_dir = tempfile.gettempdir()
             save_dir = temp_dir
-
+        
         filename = f"AlgoHaus_{pair.replace('/', '-')}_{strategy_name}_{timestamp}.html"
         report_path = os.path.join(output_dir if output_dir else tempfile.gettempdir(), filename)
 
@@ -3873,8 +3864,8 @@ class BacktesterUI:
             logo_frame,
             text="⚡ algoHaus ",
             font=ctk.CTkFont(family="Helvetica", size=22, weight="bold"),
-            text_color="#029cff",
-            anchor="w"
+            text_color="#6e7681",
+            anchor="w" 
         ).pack(anchor='w')
 
         ctk.CTkLabel(
@@ -3926,7 +3917,7 @@ class BacktesterUI:
             sidebar,
             text="📄 Generate Report",
             font=ctk.CTkFont(family="Helvetica", size=13),
-            fg_color="#1f6feb",
+            fg_color="#21262d",
             hover_color="#388bfd",
             text_color="#ffffff",
             height=40,
@@ -4054,8 +4045,8 @@ class BacktesterUI:
 
         ctk.CTkLabel(
             section,
-            text="CONFIGURATION",
-            font=ctk.CTkFont(family="Helvetica", size=24, weight="bold"),
+            text="Configuration",
+            font=ctk.CTkFont(family="Helvetica", size=18, weight="normal"),
             text_color="#e6edf3",
             anchor="w"
         ).pack(anchor='w', pady=(0, 25))
@@ -4143,7 +4134,7 @@ class BacktesterUI:
         ctk.CTkLabel(
             section,
             text="STRATEGY & RISK",
-            font=ctk.CTkFont(family="Helvetica", size=24, weight="bold"),
+            font=ctk.CTkFont(family="Helvetica", size=18, weight="normal"),
             text_color="#e6edf3",
             anchor="w"
         ).pack(anchor='w', pady=(0, 25))
@@ -4174,7 +4165,7 @@ class BacktesterUI:
         ctk.CTkLabel(
             section,
             text="ACCOUNT SETTINGS",
-            font=ctk.CTkFont(family="Helvetica", size=24, weight="bold"),
+            font=ctk.CTkFont(family="Helvetica", size=18, weight="normal"),
             text_color="#e6edf3",
             anchor="w"
         ).pack(anchor='w', pady=(0, 25))
@@ -4201,7 +4192,7 @@ class BacktesterUI:
         ctk.CTkLabel(
             section,
             text="RESULTS",
-            font=ctk.CTkFont(family="Helvetica", size=24, weight="bold"),
+            font=ctk.CTkFont(family="Helvetica", size=18, weight="normal"),
             text_color="#e6edf3",
             anchor="w"
         ).pack(anchor='w', pady=(0, 20))
@@ -4896,4 +4887,3 @@ if __name__ == '__main__':
     app = ctk.CTk()
     backtester = BacktesterUI(app)
     app.mainloop()
-
