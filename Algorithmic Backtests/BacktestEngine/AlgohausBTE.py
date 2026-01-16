@@ -3795,9 +3795,8 @@ class HTMLReportGenerator:
 
 
 
-
 # ══════════════════════════════════════════════════════════════════════
-# 6. BACKTESTER UI - COMPLETE WITH ALL FIXES
+# 6. BACKTESTER UI - COMPLETE WITH ALL FIXES AND REDESIGNED RESULTS
 # ══════════════════════════════════════════════════════════════════════
 class BacktesterUI:
     def __init__(self, master):
@@ -3836,6 +3835,7 @@ class BacktesterUI:
         self.status_text = tk.StringVar(master, value="Ready - Wolf Guzman's Trading System v6.0")
         self.metrics_data = {}
         self.trades_df = pd.DataFrame()
+        self.summary_labels = {}
 
         self.setup_ui()
         self.refresh_available_pairs()
@@ -4184,56 +4184,357 @@ class BacktesterUI:
         self.create_section_header(inner, "Position Sizing")
         self.create_sleek_input(inner, "Risk % per Trade", self.risk_percent)
 
-
+    # ══════════════════════════════════════════════════════════════════════
+    # REDESIGNED RESULTS SECTION
+    # ══════════════════════════════════════════════════════════════════════
     def create_results_section(self):
         section = ctk.CTkFrame(self.content_frame, fg_color="transparent")
         self.sections['results'] = section
 
-        ctk.CTkLabel(
+        # Main scrollable container
+        self.results_scroll = ctk.CTkScrollableFrame(
             section,
-            text="RESULTS",
-            font=ctk.CTkFont(family="Helvetica", size=18, weight="normal"),
-            text_color="#e6edf3",
-            anchor="w"
-        ).pack(anchor='w', pady=(0, 20))
-
-        summary_container = ctk.CTkFrame(section, fg_color="#000000", corner_radius=12)
-        summary_container.pack(fill='x', pady=(0, 20))
-
-        ctk.CTkLabel(
-            summary_container,
-            text="SUMMARY",
-            font=ctk.CTkFont(family="Helvetica", size=14, weight="bold"),
-            text_color="#e6edf3",
-            anchor="w"
-        ).pack(anchor='w', padx=25, pady=(20, 12))
-
-        self.summary_textbox = ctk.CTkTextbox(
-            summary_container,
-            height=210,
-            corner_radius=8,
-            font=ctk.CTkFont(family="Helvetica", size=28, weight="bold"),
-            fg_color="#000000",
-            text_color="#e6edf3",
-            border_width=1,
-            border_color="#30363d"
+            fg_color="transparent",
+            scrollbar_button_color="#30363d",
+            scrollbar_button_hover_color="#484f58"
         )
-        self.summary_textbox.pack(fill='x', padx=25, pady=(0, 20))
+        self.results_scroll.pack(fill='both', expand=True)
 
-        metrics_container = ctk.CTkFrame(section, fg_color="#000000", corner_radius=12)
-        metrics_container.pack(fill='both', expand=True)
-
+        # ── HEADER ───────────────────────────────────────────────────────
         ctk.CTkLabel(
-            metrics_container,
-            text="METRICS",
-            font=ctk.CTkFont(family="Helvetica", size=14, weight="bold"),
+            self.results_scroll,
+            text="RESULTS",
+            font=ctk.CTkFont(family="Helvetica", size=24, weight="bold"),
             text_color="#e6edf3",
             anchor="w"
-        ).pack(anchor='w', padx=25, pady=(20, 12))
+        ).pack(anchor='w', pady=(0, 25))
 
-        self.metrics_display = ctk.CTkFrame(metrics_container, fg_color="#000000", corner_radius=8)
-        self.metrics_display.pack(fill='both', expand=True, padx=25, pady=(0, 20))
+        # ── SUMMARY SECTION ──────────────────────────────────────────────
+        summary_frame = ctk.CTkFrame(self.results_scroll, fg_color="transparent")
+        summary_frame.pack(fill='x', pady=(0, 30))
 
+        ctk.CTkLabel(
+            summary_frame,
+            text="SUMMARY",
+            font=ctk.CTkFont(family="Helvetica", size=12, weight="bold"),
+            text_color="#6e7681",
+            anchor="w"
+        ).pack(anchor='w', pady=(0, 15))
+
+        # Summary stats container
+        self.summary_stats_frame = ctk.CTkFrame(summary_frame, fg_color="transparent")
+        self.summary_stats_frame.pack(fill='x')
+
+        # Placeholder labels for summary stats
+        stats_config = [
+            ('trades', 'TRADES:', '#e6edf3'),
+            ('win_rate', 'WIN RATE:', '#e6edf3'),
+            ('pnl', 'P&L:', '#e6edf3'),
+            ('pips', 'PIPS:', '#e6edf3'),
+            ('returns', 'RETURNS:', '#e6edf3'),
+            ('final_balance', 'FINAL BALANCE:', '#e6edf3')
+        ]
+
+        for key, label_text, color in stats_config:
+            row = ctk.CTkFrame(self.summary_stats_frame, fg_color="transparent")
+            row.pack(fill='x', pady=2)
+
+            self.summary_labels[key] = ctk.CTkLabel(
+                row,
+                text=f"{label_text} --",
+                font=ctk.CTkFont(family="Helvetica", size=22, weight="bold"),
+                text_color=color,
+                anchor="w"
+            )
+            self.summary_labels[key].pack(anchor='w')
+
+        # ── METRICS SECTION (Charts) ─────────────────────────────────────
+        metrics_header = ctk.CTkFrame(self.results_scroll, fg_color="transparent")
+        metrics_header.pack(fill='x', pady=(10, 15))
+
+        ctk.CTkLabel(
+            metrics_header,
+            text="METRICS",
+            font=ctk.CTkFont(family="Helvetica", size=12, weight="bold"),
+            text_color="#6e7681",
+            anchor="w"
+        ).pack(anchor='w')
+
+        # Charts container
+        self.charts_frame = ctk.CTkFrame(self.results_scroll, fg_color="transparent")
+        self.charts_frame.pack(fill='both', expand=True, pady=(0, 30))
+
+        # ── PERFORMANCE METRICS TABLE ────────────────────────────────────
+        perf_header = ctk.CTkFrame(self.results_scroll, fg_color="transparent")
+        perf_header.pack(fill='x', pady=(10, 15))
+
+        ctk.CTkLabel(
+            perf_header,
+            text="PERFORMANCE METRICS",
+            font=ctk.CTkFont(family="Helvetica", size=12, weight="bold"),
+            text_color="#6e7681",
+            anchor="w"
+        ).pack(anchor='w')
+
+        # Metrics table container
+        self.metrics_table_frame = ctk.CTkFrame(self.results_scroll, fg_color="transparent")
+        self.metrics_table_frame.pack(fill='x', pady=(0, 20))
+
+    def update_results_ui(self, summary, metrics, trades_df):
+        """Update the results section with backtest data - redesigned layout"""
+        self.trades_df = trades_df
+        self.metrics_data = metrics
+
+        # ══════════════════════════════════════════════════════════════════
+        # UPDATE SUMMARY STATS
+        # ══════════════════════════════════════════════════════════════════
+        
+        # Parse summary data
+        total_trades = len(trades_df) if not trades_df.empty else 0
+        wins = (trades_df['monetary_pnl'] > 0).sum() if not trades_df.empty else 0
+        win_rate = (wins / total_trades * 100) if total_trades > 0 else 0
+        total_pnl = trades_df['monetary_pnl'].sum() if not trades_df.empty else 0
+        total_pips = trades_df['pips'].sum() if not trades_df.empty and 'pips' in trades_df.columns else 0
+        returns_pct = (total_pnl / self.initial_balance.get()) * 100 if self.initial_balance.get() > 0 else 0
+        final_balance = self.initial_balance.get() + total_pnl
+
+        # Update summary labels
+        self.summary_labels['trades'].configure(text=f"TRADES: {total_trades}")
+        self.summary_labels['win_rate'].configure(text=f"WIN RATE: {win_rate:.1f}%")
+        
+        # P&L with color
+        pnl_color = "#3fb950" if total_pnl >= 0 else "#f85149"
+        pnl_sign = "+" if total_pnl >= 0 else ""
+        self.summary_labels['pnl'].configure(
+            text=f"P&L: {pnl_sign}${total_pnl:,.2f}",
+            text_color=pnl_color
+        )
+        
+        # Pips with color
+        pips_color = "#3fb950" if total_pips >= 0 else "#f85149"
+        pips_sign = "+" if total_pips >= 0 else ""
+        self.summary_labels['pips'].configure(
+            text=f"PIPS: {pips_sign}{total_pips:.1f}",
+            text_color=pips_color
+        )
+        
+        # Returns with color
+        returns_color = "#3fb950" if returns_pct >= 0 else "#f85149"
+        returns_sign = "+" if returns_pct >= 0 else ""
+        self.summary_labels['returns'].configure(
+            text=f"RETURNS: {returns_sign}{returns_pct:.2f}%",
+            text_color=returns_color
+        )
+        
+        self.summary_labels['final_balance'].configure(text=f"FINAL BALANCE: ${final_balance:,.2f}")
+
+        # ══════════════════════════════════════════════════════════════════
+        # UPDATE CHARTS
+        # ══════════════════════════════════════════════════════════════════
+        
+        # Clear previous charts
+        for widget in self.charts_frame.winfo_children():
+            widget.destroy()
+
+        # Configure matplotlib style
+        plt.style.use('dark_background')
+
+        # Create figure with 2x2 subplots
+        fig = Figure(figsize=(14, 7), facecolor='#0d1117', edgecolor='#0d1117')
+        fig.subplots_adjust(left=0.06, right=0.98, top=0.92, bottom=0.08, hspace=0.35, wspace=0.20)
+
+        # ── TOP LEFT: Cumulative Returns ─────────────────────────────────
+        ax1 = fig.add_subplot(2, 2, 1, facecolor='#0d1117')
+        if not trades_df.empty:
+            trades_df_sorted = trades_df.sort_values('exit_time')
+            cumulative_pnl = trades_df_sorted['monetary_pnl'].cumsum()
+            cumulative_returns = (cumulative_pnl / self.initial_balance.get()) * 100
+
+            # Fill area
+            ax1.fill_between(trades_df_sorted['exit_time'], cumulative_returns, 0,
+                            where=(cumulative_returns >= 0), color='#238636', alpha=0.3)
+            ax1.fill_between(trades_df_sorted['exit_time'], cumulative_returns, 0,
+                            where=(cumulative_returns < 0), color='#f85149', alpha=0.3)
+            
+            # Line
+            ax1.plot(trades_df_sorted['exit_time'], cumulative_returns,
+                    color='#238636', linewidth=1.5)
+            ax1.axhline(y=0, color='#30363d', linestyle='-', linewidth=0.5)
+
+        ax1.set_title('Cumulative Returns', fontsize=11, fontweight='bold',
+                     color='#e6edf3', pad=8, fontfamily='Helvetica')
+        ax1.tick_params(colors='#6e7681', labelsize=8)
+        ax1.set_ylabel('Return (%)', fontsize=9, color='#6e7681', fontfamily='Helvetica')
+        ax1.grid(False)
+        for spine in ax1.spines.values():
+            spine.set_color('#21262d')
+
+        # ── TOP RIGHT: Trade P&L Distribution ────────────────────────────
+        ax2 = fig.add_subplot(2, 2, 2, facecolor='#0d1117')
+        if not trades_df.empty:
+            returns = trades_df['monetary_pnl']
+            n, bins, patches = ax2.hist(returns, bins=25, color='#238636',
+                                       alpha=0.8, edgecolor='#0d1117', linewidth=0.5)
+
+            # Color bars based on positive/negative
+            for i, patch in enumerate(patches):
+                if bins[i] < 0:
+                    patch.set_facecolor('#f85149')
+                else:
+                    patch.set_facecolor('#3fb950')
+
+            # Mean line
+            mean_return = returns.mean()
+            ax2.axvline(x=mean_return, color='#e6edf3', linestyle='--',
+                       linewidth=1, label=f'Mean: ${mean_return:.2f}')
+            ax2.axvline(x=0, color='#30363d', linestyle='-', linewidth=0.5)
+            ax2.legend(loc='upper right', fontsize=8, facecolor='#0d1117',
+                      edgecolor='#21262d', labelcolor='#8b949e')
+
+        ax2.set_title('Trade P&L Distribution', fontsize=11, fontweight='bold',
+                     color='#e6edf3', pad=8, fontfamily='Helvetica')
+        ax2.tick_params(colors='#6e7681', labelsize=8)
+        ax2.set_xlabel('P&L ($)', fontsize=9, color='#6e7681', fontfamily='Helvetica')
+        ax2.set_ylabel('Frequency', fontsize=9, color='#6e7681', fontfamily='Helvetica')
+        ax2.grid(False)
+        for spine in ax2.spines.values():
+            spine.set_color('#21262d')
+
+        # ── BOTTOM LEFT: Drawdown Chart ──────────────────────────────────
+        ax3 = fig.add_subplot(2, 2, 3, facecolor='#0d1117')
+        if not trades_df.empty:
+            trades_df_sorted = trades_df.sort_values('exit_time')
+            cumulative_pnl = trades_df_sorted['monetary_pnl'].cumsum()
+            equity_curve = self.initial_balance.get() + cumulative_pnl
+            running_max = equity_curve.expanding().max()
+            drawdown = ((equity_curve - running_max) / running_max) * 100
+
+            ax3.fill_between(trades_df_sorted['exit_time'], drawdown, 0,
+                            color='#f85149', alpha=0.4)
+            ax3.plot(trades_df_sorted['exit_time'], drawdown,
+                    color='#f85149', linewidth=1.5)
+
+        ax3.set_title('Drawdown', fontsize=11, fontweight='bold',
+                     color='#e6edf3', pad=8, fontfamily='Helvetica')
+        ax3.tick_params(colors='#6e7681', labelsize=8)
+        ax3.set_ylabel('Drawdown (%)', fontsize=9, color='#6e7681', fontfamily='Helvetica')
+        ax3.grid(False)
+        for spine in ax3.spines.values():
+            spine.set_color('#21262d')
+
+        # ── BOTTOM RIGHT: Win/Loss Ratio Pie Chart ───────────────────────
+        ax4 = fig.add_subplot(2, 2, 4, facecolor='#0d1117')
+        if not trades_df.empty:
+            wins = (trades_df['monetary_pnl'] > 0).sum()
+            losses = (trades_df['monetary_pnl'] <= 0).sum()
+
+            colors = ['#3fb950', '#f85149']
+            explode = (0.02, 0.02)
+
+            wedges, texts, autotexts = ax4.pie(
+                [wins, losses],
+                labels=['Wins', 'Losses'],
+                autopct='%1.1f%%',
+                colors=colors,
+                explode=explode,
+                startangle=90,
+                textprops={'color': '#e6edf3', 'fontsize': 10, 'fontfamily': 'Helvetica'}
+            )
+
+            for autotext in autotexts:
+                autotext.set_color('#ffffff')
+                autotext.set_fontweight('bold')
+                autotext.set_fontsize(11)
+
+        ax4.set_title('Win/Loss Ratio', fontsize=11, fontweight='bold',
+                     color='#e6edf3', pad=8, fontfamily='Helvetica')
+
+        # Embed figure
+        canvas = FigureCanvasTkAgg(fig, master=self.charts_frame)
+        canvas.draw()
+        canvas.get_tk_widget().pack(fill='both', expand=True)
+
+        # ══════════════════════════════════════════════════════════════════
+        # UPDATE PERFORMANCE METRICS TABLE
+        # ══════════════════════════════════════════════════════════════════
+        
+        # Clear previous metrics
+        for widget in self.metrics_table_frame.winfo_children():
+            widget.destroy()
+
+        # Create 5-column grid layout
+        metrics_grid = ctk.CTkFrame(self.metrics_table_frame, fg_color="transparent")
+        metrics_grid.pack(fill='x')
+
+        # Configure columns
+        for i in range(5):
+            metrics_grid.columnconfigure(i, weight=1)
+
+        # Prepare metrics list
+        metrics_list = list(metrics.items())
+
+        def create_metric_cell(parent, key, value, row, col):
+            """Create a single metric cell"""
+            cell = ctk.CTkFrame(parent, fg_color="transparent")
+            cell.grid(row=row, column=col, sticky='nsew', padx=8, pady=6)
+
+            # Metric name
+            name = key.replace('_', ' ').title()
+            ctk.CTkLabel(
+                cell,
+                text=name,
+                font=ctk.CTkFont(family="Helvetica", size=10),
+                text_color="#6e7681",
+                anchor="w"
+            ).pack(anchor='w')
+
+            # Metric value with formatting
+            if isinstance(value, float):
+                if 'balance' in key.lower() or 'pnl' in key.lower() or 'profit' in key.lower() or 'loss' in key.lower():
+                    value_str = f"${value:,.2f}"
+                    color = "#3fb950" if value > 0 else "#f85149" if value < 0 else "#e6edf3"
+                elif 'rate' in key.lower() or 'percent' in key.lower() or '%' in key:
+                    value_str = f"{value:.2f}%"
+                    color = "#3fb950" if value > 50 else "#f85149" if value < 50 else "#e6edf3"
+                elif 'ratio' in key.lower() or 'factor' in key.lower():
+                    value_str = f"{value:.2f}"
+                    color = "#3fb950" if value > 1 else "#f85149" if value < 1 else "#e6edf3"
+                elif 'drawdown' in key.lower():
+                    value_str = f"{value:.2f}%"
+                    color = "#f85149"
+                else:
+                    value_str = f"{value:.2f}"
+                    color = "#e6edf3"
+            elif isinstance(value, int):
+                value_str = f"{value:,}"
+                color = "#e6edf3"
+            else:
+                value_str = str(value)
+                color = "#e6edf3"
+
+            ctk.CTkLabel(
+                cell,
+                text=value_str,
+                font=ctk.CTkFont(family="Helvetica", size=13, weight="bold"),
+                text_color=color,
+                anchor="w"
+            ).pack(anchor='w')
+
+        # Populate grid
+        for idx, (key, val) in enumerate(metrics_list):
+            row = idx // 5
+            col = idx % 5
+            create_metric_cell(metrics_grid, key, val, row, col)
+
+        # Enable report button
+        self.report_button.configure(state="normal")
+
+        # Switch to results view
+        self.show_section('results')
+
+    # ══════════════════════════════════════════════════════════════════════
+    # HELPER METHODS
+    # ══════════════════════════════════════════════════════════════════════
     def create_section_header(self, parent, text):
         ctk.CTkLabel(
             parent,
@@ -4289,258 +4590,6 @@ class BacktesterUI:
 
         widget.pack(side='left', padx=(15, 0))
         return widget
-
-    def update_results_ui(self, summary, metrics, trades_df):
-        """Update the results section with backtest data - includes 4 charts + metrics"""
-        self.trades_df = trades_df
-        self.metrics_data = metrics
-
-        # Update summary with color-coded returns
-        self.summary_textbox.delete("0.0", "end")
-
-        # Split summary by lines and add color to RETURNS line
-        lines = summary.split('\n')
-        for i, line in enumerate(lines):
-            if i > 0:
-                self.summary_textbox.insert("end", "\n")
-
-            if line.startswith("RETURNS:"):
-                # Extract the percentage value
-                try:
-                    returns_value = float(line.split(':')[1].strip().replace('%', '').replace('+', ''))
-                    # Set color based on positive/negative
-                    color = "#3fb950" if returns_value >= 0 else "#f85149"
-
-                    # Insert with tag for color
-                    start_pos = self.summary_textbox.index("end-1c")
-                    self.summary_textbox.insert("end", line)
-                    end_pos = self.summary_textbox.index("end-1c")
-                    self.summary_textbox.tag_add("returns_color", start_pos, end_pos)
-                    self.summary_textbox.tag_config("returns_color", foreground=color)
-                except:
-                    # Fallback if parsing fails
-                    self.summary_textbox.insert("end", line)
-            else:
-                self.summary_textbox.insert("end", line)
-
-        # Clear previous metrics
-        for widget in self.metrics_display.winfo_children():
-            widget.destroy()
-
-        # ══════════════════════════════════════════════════════════════
-        # CHARTS SECTION (4 visualizations in 2x2 grid)
-        # ══════════════════════════════════════════════════════════════
-        charts_container = ctk.CTkFrame(self.metrics_display, fg_color="transparent")
-        charts_container.pack(fill='both', expand=True, padx=0, pady=0)
-
-        # Configure matplotlib style - DARK THEME
-        plt.style.use('dark_background')
-
-        # Create figure with 2x2 subplots
-        fig = Figure(figsize=(14, 8), facecolor='#000000', edgecolor='#000000')
-        fig.subplots_adjust(left=0.08, right=0.96, top=0.94, bottom=0.08, hspace=0.35, wspace=0.25)
-
-        # ── TOP LEFT: Cumulative Returns ─────────────────────────────
-        ax1 = fig.add_subplot(2, 2, 1, facecolor='#000000')
-        if not trades_df.empty:
-            trades_df_sorted = trades_df.sort_values('exit_time')
-            cumulative_pnl = trades_df_sorted['monetary_pnl'].cumsum()
-            cumulative_returns = (cumulative_pnl / self.initial_balance.get()) * 100
-
-            ax1.plot(trades_df_sorted['exit_time'], cumulative_returns, 
-                    color='#238636', linewidth=2, label='Strategy Returns')
-            ax1.fill_between(trades_df_sorted['exit_time'], cumulative_returns, 0, 
-                            alpha=0.2, color='#238636')
-            ax1.axhline(y=0, color='#6e7681', linestyle='--', linewidth=1, alpha=0.5)
-            ax1.set_title('Cumulative Returns', fontsize=13, fontweight='bold', 
-                         color='#e6edf3', pad=10, fontfamily='Helvetica')
-            ax1.set_xlabel('Date', fontsize=10, color='#8b949e', fontfamily='Helvetica')
-            ax1.set_ylabel('Return (%)', fontsize=10, color='#8b949e', fontfamily='Helvetica')
-            ax1.tick_params(colors='#8b949e', labelsize=9)
-            ax1.grid(True, alpha=0.15, color='#30363d', linestyle='-', linewidth=0.5)
-            ax1.spines['top'].set_color('#30363d')
-            ax1.spines['right'].set_color('#30363d')
-            ax1.spines['bottom'].set_color('#30363d')
-            ax1.spines['left'].set_color('#30363d')
-
-        # ── TOP RIGHT: Trade PnL Distribution ────────────────────────
-        ax2 = fig.add_subplot(2, 2, 2, facecolor='#000000')
-        if not trades_df.empty:
-            returns = trades_df['monetary_pnl']
-
-            # Histogram
-            n, bins, patches = ax2.hist(returns, bins=30, color='#238636', 
-                                       alpha=0.7, edgecolor='#30363d')
-
-            # Color bars based on positive/negative
-            for i, patch in enumerate(patches):
-                if bins[i] < 0:
-                    patch.set_facecolor('#f85149')
-                else:
-                    patch.set_facecolor('#3fb950')
-
-            # Add mean line
-            mean_return = returns.mean()
-            ax2.axvline(x=mean_return, color='#238636', linestyle='--', 
-                       linewidth=2, label=f'Mean: ${mean_return:.2f}')
-            ax2.axvline(x=0, color='#6e7681', linestyle='-', linewidth=1, alpha=0.5)
-
-            ax2.set_title('Trade P&L Distribution', fontsize=13, fontweight='bold',
-                         color='#e6edf3', pad=10, fontfamily='Helvetica')
-            ax2.set_xlabel('P&L ($)', fontsize=10, color='#8b949e', fontfamily='Helvetica')
-            ax2.set_ylabel('Frequency', fontsize=10, color='#8b949e', fontfamily='Helvetica')
-            ax2.tick_params(colors='#8b949e', labelsize=9)
-            ax2.legend(loc='upper right', fontsize=9, facecolor='#000000', 
-                      edgecolor='#30363d', labelcolor='#e6edf3')
-            ax2.grid(True, alpha=0.15, color='#30363d', linestyle='-', linewidth=0.5)
-            ax2.spines['top'].set_color('#30363d')
-            ax2.spines['right'].set_color('#30363d')
-            ax2.spines['bottom'].set_color('#30363d')
-            ax2.spines['left'].set_color('#30363d')
-
-        # ── BOTTOM LEFT: Drawdown Chart ──────────────────────────────
-        ax3 = fig.add_subplot(2, 2, 3, facecolor='#000000')
-        if not trades_df.empty:
-            trades_df_sorted = trades_df.sort_values('exit_time')
-            cumulative_pnl = trades_df_sorted['monetary_pnl'].cumsum()
-            equity_curve = self.initial_balance.get() + cumulative_pnl
-            running_max = equity_curve.expanding().max()
-            drawdown = ((equity_curve - running_max) / running_max) * 100
-
-            ax3.fill_between(trades_df_sorted['exit_time'], drawdown, 0,
-                            color='#f85149', alpha=0.5)
-            ax3.plot(trades_df_sorted['exit_time'], drawdown,
-                    color='#f85149', linewidth=2)
-            ax3.set_title('Drawdown', fontsize=13, fontweight='bold',
-                         color='#e6edf3', pad=10, fontfamily='Helvetica')
-            ax3.set_xlabel('Date', fontsize=10, color='#8b949e', fontfamily='Helvetica')
-            ax3.set_ylabel('Drawdown (%)', fontsize=10, color='#8b949e', fontfamily='Helvetica')
-            ax3.tick_params(colors='#8b949e', labelsize=9)
-            ax3.grid(True, alpha=0.15, color='#30363d', linestyle='-', linewidth=0.5)
-            ax3.spines['top'].set_color('#30363d')
-            ax3.spines['right'].set_color('#30363d')
-            ax3.spines['bottom'].set_color('#30363d')
-            ax3.spines['left'].set_color('#30363d')
-
-        # ── BOTTOM RIGHT: Win/Loss Ratio Pie Chart ───────────────────
-        ax4 = fig.add_subplot(2, 2, 4, facecolor='#000000')
-        if not trades_df.empty:
-            wins = (trades_df['monetary_pnl'] > 0).sum()
-            losses = (trades_df['monetary_pnl'] <= 0).sum()
-
-            colors = ['#3fb950', '#f85149']
-            explode = (0.05, 0.05)
-
-            wedges, texts, autotexts = ax4.pie([wins, losses], 
-                                               labels=['Wins', 'Losses'],
-                                               autopct='%1.1f%%',
-                                               colors=colors,
-                                               explode=explode,
-                                               startangle=90,
-                                               textprops={'color': '#e6edf3', 
-                                                         'fontsize': 11,
-                                                         'fontfamily': 'Helvetica'})
-
-            for autotext in autotexts:
-                autotext.set_color('#000000')
-                autotext.set_fontweight('bold')
-                autotext.set_fontsize(12)
-
-            ax4.set_title('Win/Loss Ratio', fontsize=13, fontweight='bold',
-                         color='#e6edf3', pad=10, fontfamily='Helvetica')
-
-        # Embed the figure in tkinter
-        canvas = FigureCanvasTkAgg(fig, master=charts_container)
-        canvas.draw()
-        canvas.get_tk_widget().pack(fill='both', expand=True, padx=10, pady=10)
-
-        # ══════════════════════════════════════════════════════════════
-        # METRICS TABLE (below charts)
-        # ══════════════════════════════════════════════════════════════
-        metrics_table_container = ctk.CTkFrame(self.metrics_display, fg_color="#000000", corner_radius=8)
-        metrics_table_container.pack(fill='x', padx=10, pady=(0, 10))
-
-        # Title
-        ctk.CTkLabel(
-            metrics_table_container,
-            text="PERFORMANCE METRICS",
-            font=ctk.CTkFont(family="Helvetica", size=12, weight="bold"),
-            text_color="#e6edf3",
-            anchor="w"
-        ).pack(anchor='w', padx=20, pady=(12, 8))
-
-        # Create metrics grid (2 columns)
-        metrics_grid = ctk.CTkFrame(metrics_table_container, fg_color="transparent")
-        metrics_grid.pack(fill='x', padx=20, pady=(0, 12))
-
-        # Split metrics into two columns
-        metrics_list = list(metrics.items())
-        mid = (len(metrics_list) + 1) // 2
-
-        # Left column
-        left_col = ctk.CTkFrame(metrics_grid, fg_color="transparent")
-        left_col.pack(side='left', fill='both', expand=True, padx=(0, 10))
-
-        # Right column  
-        right_col = ctk.CTkFrame(metrics_grid, fg_color="transparent")
-        right_col.pack(side='right', fill='both', expand=True, padx=(10, 0))
-
-        def add_metric_row(parent, key, value):
-            """Add a single metric row"""
-            row = ctk.CTkFrame(parent, fg_color="transparent")
-            row.pack(fill='x', pady=2)
-
-            # Metric name
-            name = key.replace('_', ' ').title()
-            ctk.CTkLabel(
-                row,
-                text=name,
-                font=ctk.CTkFont(family="Helvetica", size=10),
-                text_color="#8b949e",
-                anchor="w"
-            ).pack(side='left', fill='x', expand=True)
-
-            # Metric value
-            if isinstance(value, float):
-                if '$' in key or 'balance' in key.lower() or 'pnl' in key.lower():
-                    value_str = f"${value:,.2f}"
-                    color = "#3fb950" if value > 0 else "#f85149"
-                elif '%' in key or 'rate' in key.lower() or 'return' in key.lower():
-                    value_str = f"{value:.2f}%"
-                    color = "#3fb950" if value > 0 else "#f85149"
-                else:
-                    value_str = f"{value:.2f}"
-                    color = "#e6edf3"
-            elif isinstance(value, int):
-                value_str = f"{value:,}"
-                color = "#e6edf3"
-            else:
-                value_str = str(value)
-                color = "#e6edf3"
-
-            ctk.CTkLabel(
-                row,
-                text=value_str,
-                font=ctk.CTkFont(family="Helvetica", size=10, weight="bold"),
-                text_color=color,
-                anchor="e"
-            ).pack(side='right')
-
-        # Populate left column
-        for i in range(mid):
-            if i < len(metrics_list):
-                key, val = metrics_list[i]
-                add_metric_row(left_col, key, val)
-
-        # Populate right column
-        for i in range(mid, len(metrics_list)):
-            key, val = metrics_list[i]
-            add_metric_row(right_col, key, val)
-
-        self.report_button.configure(state="normal")
-
-        # Auto-switch to results view
-        self.show_section('results')
 
     def update_status(self, text, color="#8b949e"):
         self.status_text.set(text)
@@ -4627,16 +4676,22 @@ Pip Value: {pip_value}"""
 
         self.pair_info_label.configure(text=info_text)
 
-    # ══════════════════════════════════════════════════════════════════
+    # ══════════════════════════════════════════════════════════════════════
     # BACKTEST EXECUTION METHODS
-    # ══════════════════════════════════════════════════════════════════
+    # ══════════════════════════════════════════════════════════════════════
     def start_backtest_thread(self):
         """Start backtest in background thread"""
         self.update_status("Running backtest...", "#238636")
-        self.summary_textbox.delete("0.0", "end")
+        
+        # Reset summary labels
+        for key in self.summary_labels:
+            self.summary_labels[key].configure(text=f"{key.upper().replace('_', ' ')}: --", text_color="#e6edf3")
+        
         self.trades_df = pd.DataFrame()
 
-        for widget in self.metrics_display.winfo_children():
+        for widget in self.charts_frame.winfo_children():
+            widget.destroy()
+        for widget in self.metrics_table_frame.winfo_children():
             widget.destroy()
 
         self.report_button.configure(state="disabled")
@@ -4878,7 +4933,6 @@ Pip Value: {pip_value}"""
         except Exception as e:
             messagebox.showerror("Report Error", f"Failed:\n{str(e)}")
             self.update_status("Report error", "#f85149")
-
 
 # ══════════════════════════════════════════════════════════════════════
 # 7 MAIN
