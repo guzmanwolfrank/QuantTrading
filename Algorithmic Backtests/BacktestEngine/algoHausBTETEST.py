@@ -381,10 +381,10 @@ class TradingStrategies:
                 })
 
         return trades
-
+    #2345678
     @staticmethod
     def opening_range_strategy(df, sl_pips, tp_pips, pip_value):
-        """Opening Range Breakout Strategy - FIXED AND OPTIMIZED"""
+        """Opening Range Breakout Strategy - FIXED"""
         df = df.copy()
         trades = []
 
@@ -401,39 +401,42 @@ class TradingStrategies:
             or_high = opening_range['high'].max()
             or_low = opening_range['low'].min()
 
-            # FIXED: Check for valid range
+            # Skip if no valid range
             if or_high == or_low:
-                continue  # Skip if no range formed
+                continue
             
             breakout_detected = False
             
-            # Start checking from bar 30 onwards
-            for i in range(30, len(day_data)):
+            # Start checking from bar 30 onwards, but stop before last bar
+            for i in range(30, len(day_data) - 1):
                 if breakout_detected:
                     break
 
                 bar = day_data.iloc[i]
 
-                # FIXED: Use high/low for breakout detection, close for entry
-                # BUY: High breaks above OR high
-                if bar['high'] > or_high:
-                    trades.append({
-                        'datetime': bar['datetime'],
-                        'entry_price': or_high,  # Enter at breakout level
-                        'signal': 'BUY',
-                        'day_data': day_data[i+1:].reset_index(drop=True)
-                    })
-                    breakout_detected = True
+                # BUY: Close breaks above OR high
+                if bar['close'] > or_high:
+                    remaining = day_data[i+1:].reset_index(drop=True)
+                    if len(remaining) > 0:
+                        trades.append({
+                            'datetime': bar['datetime'],
+                            'entry_price': bar['close'],
+                            'signal': 'BUY',
+                            'day_data': remaining
+                        })
+                        breakout_detected = True
 
-                # SELL: Low breaks below OR low
-                elif bar['low'] < or_low:
-                    trades.append({
-                        'datetime': bar['datetime'],
-                        'entry_price': or_low,  # Enter at breakout level
-                        'signal': 'SELL',
-                        'day_data': day_data[i+1:].reset_index(drop=True)
-                    })
-                    breakout_detected = True
+                # SELL: Close breaks below OR low
+                elif bar['close'] < or_low:
+                    remaining = day_data[i+1:].reset_index(drop=True)
+                    if len(remaining) > 0:
+                        trades.append({
+                            'datetime': bar['datetime'],
+                            'entry_price': bar['close'],
+                            'signal': 'SELL',
+                            'day_data': remaining
+                        })
+                        breakout_detected = True
 
         return trades
 
